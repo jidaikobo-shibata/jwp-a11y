@@ -77,9 +77,10 @@
 #a11yc_validator_results .a11yc_controller p {
 	margin: 0;
 }
-.a11yc details summary .a11yc_heading
+details summary .a11yc_heading
 {
 	display: inline-block;
+	width: calc( 100% - 20px );
 }
 
 .a11yc_source {

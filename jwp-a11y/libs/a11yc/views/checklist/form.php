@@ -103,8 +103,8 @@
 		<?php endif ?>
 		<?php /* ?>
 			<!-- rest of num -->
-			<p class="a11yc_hide_if_no_js"><a role="button" class="a11yc_disclosure"><?php echo A11YC_LANG_CHECKLIST_RESTOFNUM ?>&nbsp;:&nbsp;<span id="a11yc_rest_total">&nbsp;-&nbsp;</span></a></p>
-			<div class="a11yc_disclosure_target show a11yc_hide_if_fixedheader a11yc_hide_if_no_js">
+			<details class="a11yc_hide_if_no_js" open><summary><?php echo A11YC_LANG_CHECKLIST_RESTOFNUM ?>&nbsp;:&nbsp;<span id="a11yc_rest_total">&nbsp;-&nbsp;</span></details>
+			<div class="a11yc_hide_if_fixedheader">
 			<table id="a11yc_rest">
 				<thead>
 					<tr>
@@ -128,6 +128,7 @@
 				</tbody>
 			</table>
 			</div>
+			</details>
 			<?php */ ?>
 			<?php /*
 				$checked = $setup['checklist_behaviour'] ? ' checked="checked"' : '';
