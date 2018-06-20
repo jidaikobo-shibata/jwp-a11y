@@ -62,7 +62,7 @@ if ($errs['errors'] || $errs['notices']):
 			<dt><?php echo A11YC_LANG_CHECKLIST_SOURCE ?></dt>
 			<dd>
 		<?php else: ?>
-		<details>
+		<details id="a11yc_validation_code">
 			<summary><?php echo A11YC_LANG_CHECKLIST_SOURCE ?></summary>
 			<div class="a11yc_controller"></div>
 		<?php endif; ?>

@@ -76,68 +76,36 @@ if(!$('.a11yc')[0])
 		}
 	}
 	$.fn.a11yc_get_height();
-	console.log($('.a11yc_disclosure_target'));
 });
 
 /* === common functions === */
 jQuery(function($){
 	if( typeof a11yc_env === "undefined" ) return;
-
 	//ディスクロージャ
-	$.fn.a11yc_disclosure = function(){
-//	console.log('function:'+'$.fn.a11yc_disclosure');
-		$disclosure = $(document).find('.a11yc_disclosure');
-		$disclosure_target = $(document).find('.a11yc_disclosure_target');
-		$disclosure.each(function(index){
-			if($(this).hasClass('active')) return;
-			$(this).attr('tabindex', 0).addClass('active');
-			if ($disclosure_target.eq(index).hasClass('show'))
-			{
-				$(this).addClass('show');
-			}
-			else
-			{
-				$(this).addClass('hide');
-			}
-		});
-		$disclosure_target.each(function(){
-			if($(this).hasClass('active')) return;
-			$(this).addClass('active');
-			if (!$(this).hasClass('show')) $(this).addClass('hide').hide();
-		});
-	}
-	$.fn.a11yc_disclosure_toggle = function($obj, $t){
-//	console.log('function:'+'$.fn.a11yc_disclosure_toggle');
-		if(!$obj) return;
-		var index = $obj.index('.a11yc_disclosure');
-		$obj.toggleClass('show hide');
-		$.when(
-			$disclosure_target.eq(index).slideToggle(250).toggleClass('show hide')
-		).done(function(){
-		// ヘッダーの中の場合はメニュー位置を取得し直したほうがよさそう？
-		if($disclosure_target.eq(index).closest('#a11yc_header')[0]) $.fn.a11yc_get_height(['hh','fh','pt']);
-		//$disclosure_target.eq(index) と $t validate link の振る舞い（close時のフォーカス）
-		/*
-			if(!$obj.closest('#a11yc_header')[0]) return;
-			$.fn.a11yc_get_height ();
-			if($t)
-			{
-				a11yc_smooth_scroll($t);
-				$t.focus();
-			}
-		*/
-		});
-	}
-	var $disclosure = $(),
-			$disclosure_target = $();
-	$disclosure = $(document).find('.a11yc_disclosure');
-	$disclosure_target = $(document).find('.a11yc_disclosure_target');
-	$.fn.a11yc_disclosure();
+});
 
-	$(document).on('click keydown', '.a11yc_disclosure',  function(e){
-		if(e && e.type==='keydown' && e.keyCode!==13) return;
-		$.fn.a11yc_disclosure_toggle($(this));
-	});
+jQuery(function($){
+	if( typeof a11yc_env === "undefined" ) return;
+	//エラー・ソース欄の展開用。
+	//expand contents
+	if(!$('#a11yc_post')[0])
+	{
+		var icon_labels = [$('#a11yc_checks').data('a11ycLang').expand, $('#a11yc_checks').data('a11ycLang').compress];
+		$expand_icon = $('<a role="button" class="a11yc_expand a11yc_hasicon" tabindex="0"><span role="presentation" aria-hidden="true" class="a11yc_icon_fa a11yc_icon_expand"></span><span class="a11yc_skip">'+icon_labels[0]+'</span></a>');
+
+		 $('#a11yc_validator_results .a11yc_controller').append($expand_icon.clone());
+
+		$(document).on('click', '.a11yc_expand', function(){
+			var index = $('.a11yc_expand').index(this);
+			$(this).toggleClass('on');
+			$('.a11yc_expand').eq(index).toggleClass('expand');
+			if($(this).hasClass('on')){
+				$(this).find('.a11yc_skip').text(icon_labels[1]);
+			}else{
+				$(this).find('.a11yc_skip').text(icon_labels[0]);
+			}
+		});
+	}
 });
 
 jQuery(function($){
@@ -145,50 +113,27 @@ jQuery(function($){
 
 	//in validation error : add link anchor etc.
 	$.fn.a11yc_format_validation_error = function(){
-//	console.log('function:'+'$.fn.a11yc_format_validation_error');
+	console.log(123);
 		var $error_wrapper = $('#a11yc_validation_list');
 		if ($error_wrapper[0])
 		{
 			var $error_lists = $error_wrapper.find('dt');
 			var $error_elms = $error_wrapper.find('.a11yc_validation_error_str');
 			var $error_anchors = $('#a11yc_validation_code').find('.a11yc_source span');
-			var $disclosure = $('#a11yc_validation_code').find('.a11yc_source');
 			var $error_places = $();
-			var $controller = $('#a11yc_validator_results .a11yc_controller');
-
-		//エラー・ソース欄の展開用。これは外に追い出すといいかも
-			//expand contents
-			if(!$('#a11yc_post')[0])
-			{
-				var icon_labels = [$('#a11yc_checks').data('a11ycLang').expand, $('#a11yc_checks').data('a11ycLang').compress];
-				$expand_icon = $('<a role="button" class="a11yc_expand a11yc_hasicon" tabindex="0"><span role="presentation" aria-hidden="true" class="a11yc_icon_fa a11yc_icon_expand"></span><span class="a11yc_skip">'+icon_labels[0]+'</span></a>');
-
-				$expands = $error_wrapper.add($disclosure);
-				$controller.append($expand_icon.clone());
-
-				$(document).on('click', '.a11yc_expand', function(){
-					var index = $('.a11yc_expand').index(this);
-					$(this).toggleClass('on');
-					$expands.eq(index).toggleClass('expand');
-					if($(this).hasClass('on')){
-						$(this).find('.a11yc_skip').text(icon_labels[1]);
-					}else{
-						$(this).find('.a11yc_skip').text(icon_labels[0]);
-					}
-				});
-			}
+			var $validation_code = $('#a11yc_validation_code');
+			
 			// click validate_link
 			$(document).on('click', '.a11yc_validate_link a', function(e){
+			console.log(e.currentTarget);
 				var $t = $($(e.currentTarget).attr('href'));
 				e.stopPropagation();
 				e.preventDefault();
 				// open disclosure
-				if($disclosure.hasClass('hide'))
+				if( ! $validation_code.prop('open'))
 				{
-				 $.when($.fn.a11yc_disclosure_toggle($disclosure, $(e.currentTarget)))
-				 .done(function(){
-						$(e.currentTarget).click();
-				 });
+					$validation_code.prop('open');
+					$(e.currentTarget).click();
 				}
 				else
 				{
@@ -405,22 +350,24 @@ jQuery(function($){
 }
 //	remove fixed header
 function a11yc_remove_fixed_header(){
-	if($(window).scrollTop() === 0)
-	{
-		if(!$('.a11yc_fixed_header')[0]) return;
-		a11yc_env.$a11yc_content.removeClass('a11yc_fixed_header');
-//			$('#a11yc_header_ctrl').prependTo('#a11yc_form_checklist');
-		if(!a11yc_env.is_wp)
+	jQuery(function($){
+		if($(window).scrollTop() === 0)
 		{
-			a11yc_env.$a11yc_content.css('paddingTop', a11yc_env.menu_height);
+			if(!$('.a11yc_fixed_header')[0]) return;
+			a11yc_env.$a11yc_content.removeClass('a11yc_fixed_header');
+	//			$('#a11yc_header_ctrl').prependTo('#a11yc_form_checklist');
+			if(!a11yc_env.is_wp)
+			{
+				a11yc_env.$a11yc_content.css('paddingTop', a11yc_env.menu_height);
+			}
+			else
+			{
+				a11yc_env.$a11yc_content.css('paddingTop', 0);
+			}
+			$('#a11yc_header').css('paddingTop', 0);
+			$.fn.a11yc_get_height ();
 		}
-		else
-		{
-			a11yc_env.$a11yc_content.css('paddingTop', 0);
-		}
-		$('#a11yc_header').css('paddingTop', 0);
-		$.fn.a11yc_get_height ();
-	}
+	});
 }
 
 
