@@ -75,11 +75,8 @@ if(!$('.a11yc')[0])
 			a11yc_env.fixed_footer_top = a11yc_env.$footer.offset().top;
 		}
 	}
-
-	// ディスクロージャーを閉じてから高さを取る
-	$('.a11yc_disclosure_target').hide();
-	// get contents height all
 	$.fn.a11yc_get_height();
+	console.log($('.a11yc_disclosure_target'));
 });
 
 /* === common functions === */
