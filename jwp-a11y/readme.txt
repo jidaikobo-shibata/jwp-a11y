@@ -3,7 +3,7 @@ Contributors: jidaikobo
 Donate link: http://www.jidaikobo.com/donate.html
 Tags: accessibility, checker, WCAG, JIS X 8341-3
 Requires at least: 4.8.3
-Tested up to: 4.9.4
+Tested up to: 4.9.6
 Stable tag: 4.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -39,6 +39,12 @@ When installing the plug-in, you can automatically check individual posts when s
 4. Machine Check
 
 == Changelog ==
+
+= 3.0.2 =
+lower compatibly 2
+
+= 3.0.1 =
+lower compatibly
 
 = 3.0.0 =
 core update

@@ -2,11 +2,11 @@
 /*
 Plugin Name: jwp-a11y
 Plugin URI: https://wordpress.org/plugins/jwp-a11y/
-Description: A plugin to check accessibility.  Help to generate Evaluation Report and Check each posts.  with consideration for the JIS X 8341-3:2016 and WCAG 2.0.
+Description: A plugin to check accessibility.  Help to generate Evaluation Report (need PHP 5.6) and Check each posts (can be used PHP 5.3).  with consideration for the JIS X 8341-3:2016 and WCAG 2.0.
 Author: Jidaikobo Inc.
 Text Domain: jwp_a11y
 Domain Path: /languages/
-Version: 3.0.0
+Version: 3.0.2
 Author URI: http://www.jidaikobo.com/
 License: GPL2
 
@@ -70,7 +70,8 @@ if (\A11yc\Maintenance::isFisrtOfToday())
 }
 
 // base url
-if (empty(\A11yc\Model\Settings::fetch('base_url')))
+$base_url = \A11yc\Model\Settings::fetch('base_url');
+if (empty($base_url))
 {
 	\A11yc\Model\Settings::updateField('base_url', home_url());
 }
