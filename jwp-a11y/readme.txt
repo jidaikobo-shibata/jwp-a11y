@@ -40,6 +40,9 @@ When installing the plug-in, you can automatically check individual posts when s
 
 == Changelog ==
 
+= 3.0.3 =
+add nonce
+
 = 3.0.2 =
 lower compatibly 2
 
