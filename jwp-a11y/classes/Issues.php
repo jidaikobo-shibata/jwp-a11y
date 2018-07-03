@@ -59,6 +59,12 @@ class Issues extends \A11yc\Controller\Issues
 				static::view($users, $userinfo->ID, $is_admin);
 				$is_edit = true;
 				break;
+			case 'delete':
+				static::delete();
+			case 'undelete':
+				static::undelete();
+			case 'purge':
+				static::purge();
 			default:
 				static::index();
 				break;

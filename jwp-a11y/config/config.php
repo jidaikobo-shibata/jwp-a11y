@@ -69,18 +69,22 @@ define('A11YC_TABLE_MAINTENANCE', $wpdb->prefix.'jwp_a11yc_maintenance');
 
 // urls
 $urlbase = A11YC_URL.'?page=jwp-a11y%2F';
-define('A11YC_VALIDATE_URL',     A11YC_URL);
-define('A11YC_SETTING_URL',      $urlbase.'jwp_a11y_settings&amp;a=');
-define('A11YC_BULK_URL',         $urlbase.'jwp_a11y_bulk&amp;a=index');
-define('A11YC_PAGES_URL',        $urlbase.'jwp_a11y_pages&amp;a=index');
-define('A11YC_PAGES_ADD_URL',    $urlbase.'jwp_a11y_pages&amp;a=add');
-define('A11YC_PAGES_EDIT_URL',   $urlbase.'jwp_a11y_pages&amp;a=edit');
-define('A11YC_CHECKLIST_URL',    $urlbase.'jwp_a11y_checklist&amp;a=check&amp;url=');
-define('A11YC_RESULTS_EACH_URL', $urlbase.'jwp_a11y_checklist&amp;a=each&amp;url=');
-define('A11YC_ISSUES_ADD_URL',   $urlbase.'jwp_a11y_issues&amp;a=add&amp;url='); // and criterion
-define('A11YC_ISSUES_EDIT_URL',  $urlbase.'jwp_a11y_issues&amp;a=edit&amp;id=');
-define('A11YC_ISSUES_VIEW_URL',  $urlbase.'jwp_a11y_issues&amp;a=view&amp;id=');
-define('A11YC_IMAGELIST_URL',    $urlbase.'jwp_a11y_checklist&amp;a=images&amp;url=');
-define('A11YC_DOC_URL',          $urlbase.'jwp_a11y_docs&amp;a=each&amp;code=');
-define('A11YC_LIVE_URL',         $urlbase.'jwp_a11y_checklist&amp;a=view&amp;url=');
-define('A11YC_EXPORT_URL',       $urlbase.'jwp_a11y_checklist&amp;a=csv&amp;url=');
+define('A11YC_VALIDATE_URL',        A11YC_URL);
+define('A11YC_SETTING_URL',         $urlbase.'jwp_a11y_settings&amp;a=');
+define('A11YC_BULK_URL',            $urlbase.'jwp_a11y_bulk&amp;a=index');
+define('A11YC_PAGES_URL',           $urlbase.'jwp_a11y_pages&amp;a=index');
+define('A11YC_PAGES_ADD_URL',       $urlbase.'jwp_a11y_pages&amp;a=add');
+define('A11YC_PAGES_EDIT_URL',      $urlbase.'jwp_a11y_pages&amp;a=edit');
+define('A11YC_CHECKLIST_URL',       $urlbase.'jwp_a11y_checklist&amp;a=check&amp;url=');
+define('A11YC_RESULTS_EACH_URL',    $urlbase.'jwp_a11y_checklist&amp;a=each&amp;url=');
+define('A11YC_ISSUES_INDEX_URL',    $urlbase.'jwp_a11y_issues&amp;a=index');
+define('A11YC_ISSUES_ADD_URL',      $urlbase.'jwp_a11y_issues&amp;a=add&amp;url='); // &criterion
+define('A11YC_ISSUES_EDIT_URL',     $urlbase.'jwp_a11y_issues&amp;a=edit&amp;id=');
+define('A11YC_ISSUES_VIEW_URL',     $urlbase.'jwp_a11y_issues&amp;a=view&amp;id=');
+define('A11YC_ISSUES_DELETE_URL',   $urlbase.'jwp_a11y_issues&amp;a=delete&amp;id=');
+define('A11YC_ISSUES_UNDELETE_URL', $urlbase.'jwp_a11y_issues&amp;a=undelete&amp;id=');
+define('A11YC_ISSUES_PURGE_URL',    $urlbase.'jwp_a11y_issues&amp;a=purge&amp;id=');
+define('A11YC_IMAGELIST_URL',       $urlbase.'jwp_a11y_checklist&amp;a=images&amp;url=');
+define('A11YC_DOC_URL',             $urlbase.'jwp_a11y_docs&amp;a=each&amp;code=');
+define('A11YC_LIVE_URL',            $urlbase.'jwp_a11y_checklist&amp;a=view&amp;url=');
+define('A11YC_EXPORT_URL',          $urlbase.'jwp_a11y_checklist&amp;a=csv&amp;url=');

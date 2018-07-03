@@ -40,6 +40,12 @@ When installing the plug-in, you can automatically check individual posts when s
 
 == Changelog ==
 
+= 3.0.5 =
+fix issue edit
+
+= 3.0.4 =
+improve issue control
+
 = 3.0.3 =
 add nonce
 
