@@ -6,7 +6,7 @@ Description: A plugin to check accessibility.  Help to generate Evaluation Repor
 Author: Jidaikobo Inc.
 Text Domain: jwp_a11y
 Domain Path: /languages/
-Version: 3.0.5
+Version: 3.0.8
 Author URI: http://www.jidaikobo.com/
 License: GPL2
 
@@ -87,7 +87,7 @@ add_action(
 		add_menu_page(
 			__('Accessibility Center', 'jwp_a11y'),
 			__("<abbr title=\"Accessibility\">A11y</abbr> Center", "jwp_a11y"),
-			'edit_pages',
+			'edit_posts',
 			'jwp-a11y',
 			array('\JwpA11y\Center', 'index'));
 
@@ -95,7 +95,7 @@ add_action(
 			'jwp-a11y',
 			__('jwp-a11y Settings', 'jwp_a11y'),
 			__('jwp-a11y Settings', 'jwp_a11y'),
-			'edit_pages',
+			'edit_posts',
 			'jwp-a11y/jwp_a11y_settings',
 			array('\JwpA11y\Settings', 'front'));
 
@@ -103,7 +103,7 @@ add_action(
 			'jwp-a11y',
 			__('Pages', 'jwp_a11y'),
 			__('Pages', 'jwp_a11y'),
-			'edit_pages',
+			'edit_posts',
 			'jwp-a11y/jwp_a11y_pages',
 			array('\JwpA11y\Pages', 'index'));
 
@@ -111,7 +111,7 @@ add_action(
 			'jwp-a11y',
 			\JwpA11y\Checklist::pageTitleByAction(),
 			__('Checklist', 'jwp_a11y'),
-			'edit_pages',
+			'edit_posts',
 			'jwp-a11y/jwp_a11y_checklist',
 			array('\JwpA11y\Checklist', 'checklist'));
 
@@ -119,7 +119,7 @@ add_action(
 			'jwp-a11y',
 			__('Accessibility Bulk Checklist', 'jwp_a11y'),
 			__('Bulk', 'jwp_a11y'),
-			'edit_pages',
+			'edit_posts',
 			'jwp-a11y/jwp_a11y_bulk',
 			array('\JwpA11y\Bulk', 'checklist'));
 
@@ -127,7 +127,7 @@ add_action(
 			'jwp-a11y',
 			__('Accessibility Issues', 'jwp_a11y'),
 			__('Issues', 'jwp_a11y'),
-			'edit_pages',
+			'edit_posts',
 			'jwp-a11y/jwp_a11y_issues',
 			array('\JwpA11y\Issues', 'routing'));
 
@@ -135,7 +135,7 @@ add_action(
 			'jwp-a11y',
 			\JwpA11y\Docs::title(),
 			__('Documents', 'jwp_a11y'),
-			'edit_pages',
+			'edit_posts',
 			'jwp-a11y/jwp_a11y_docs',
 			array('\JwpA11y\docs', 'show'));
 	});
