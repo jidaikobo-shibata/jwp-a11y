@@ -44,6 +44,7 @@ When installing the plug-in, you can automatically check individual posts when s
 Refine regular expression of extraction html tag.
 Became able to check non UTF-8 page.
 Update Japanese title of Techniques for WCAG 2.0.
+Better lang check
 
 = 3.1.1 =
 add some new checks
