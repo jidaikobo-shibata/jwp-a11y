@@ -23,7 +23,7 @@ class Results extends \A11yc\Controller\Results
 	 */
 	public static function disclosure($attrs, $content = null)
 	{
-		$setup = \A11yc\Controller\Results::index();
+		\A11yc\Controller\Results::index();
 		return \A11yc\View::fetch('body');
 	}
 }

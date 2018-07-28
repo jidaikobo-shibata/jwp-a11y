@@ -6,7 +6,7 @@ Description: A plugin to check accessibility.  Help to generate Evaluation Repor
 Author: Jidaikobo Inc.
 Text Domain: jwp_a11y
 Domain Path: /languages/
-Version: 3.0.8
+Version: 3.1.2
 Author URI: http://www.jidaikobo.com/
 License: GPL2
 
@@ -280,7 +280,7 @@ add_filter( 'document_title_parts', function ($title)
 	}
 	elseif (\A11yc\Input::get('a11yc_checklist') && \A11yc\Input::get('url'))
 	{
-		$page_title = \A11yc\Util::fetch_page_title(\A11yc\Input::get('url'));
+		$page_title = \A11yc\Model\Html::fetchPageTitle(\A11yc\Input::get('url'));
 		$title['title'] = A11YC_LANG_TEST_RESULT.': '.\A11yc\Util::s($page_title);
 	}
 	return $title;
@@ -397,3 +397,7 @@ add_filter(
 	},
 	20
 );
+
+/*
+drop table wp_jwp_a11yc_bchecks; drop table wp_jwp_a11yc_bresults; drop table wp_jwp_a11yc_caches; drop table wp_jwp_a11yc_checks; drop table wp_jwp_a11yc_issues; drop table wp_jwp_a11yc_issuesbbs; drop table wp_jwp_a11yc_maintenance; drop table wp_jwp_a11yc_pages; drop table wp_jwp_a11yc_results; drop table wp_jwp_a11yc_settings; drop table wp_jwp_a11yc_uas; drop table wp_jwp_a11yc_versions;
+*/

@@ -40,6 +40,20 @@ When installing the plug-in, you can automatically check individual posts when s
 
 == Changelog ==
 
+= 3.1.2 =
+Refine regular expression of extraction html tag.
+Became able to check non UTF-8 page.
+Update Japanese title of Techniques for WCAG 2.0.
+
+= 3.1.1 =
+add some new checks
+
+= 3.1.0 =
+fix evaluate mistake
+
+= 3.0.9 =
+count notice
+
 = 3.0.8 =
 Contributors can check pages
 

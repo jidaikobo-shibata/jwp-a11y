@@ -183,6 +183,7 @@ class Validate extends \A11yc\Validate
 			{
 				$message_keys = array_keys($message);
 				$code = reset($message_keys);
+				if ( ! isset($yml['errors'][$code])) continue;
 				$lv = strtolower($yml['criterions'][$yml['errors'][$code]['criterions'][0]]['level']['name']);
 				$errs_cnts[$lv]++;
 			}
