@@ -34,7 +34,7 @@ class Upgrade
 		if ( ! file_exists(A11YC_DATA_PATH.A11YC_DATA_FILE)) return;
 
 		// 現在のDBにsetupが一行あれば移設は行わない
-		$sql = 'SELECT count(*) as row FROM '.A11YC_TABLE_SETUP.';';
+		$sql = 'SELECT count(*) as row FROM '.A11YC_TABLE_SETTINGS.';';
 		$results = \A11yc\Db::fetch($sql);
 		if ($results['row'] != 0) return;
 
@@ -70,7 +70,7 @@ class Upgrade
 		foreach ($tables as $table)
 		{
 			// import
-			$records = \A11yc\Db::fetch_all('SELECT * FROM '.$table.';', array(), 'sqlite');
+			$records = \A11yc\Db::fetchAll('SELECT * FROM '.$table.';', array(), 'sqlite');
 			static::simple_import($table, $records, 'mysql');
 		}
 		// drop table

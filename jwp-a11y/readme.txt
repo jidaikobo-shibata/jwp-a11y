@@ -40,6 +40,12 @@ When installing the plug-in, you can automatically check individual posts when s
 
 == Changelog ==
 
+= 3.1.4 =
+upgrade problem
+
+= 3.1.3 =
+upgrade problem
+
 = 3.1.2 =
 Refine regular expression of extraction html tag.
 Became able to check non UTF-8 page.

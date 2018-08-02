@@ -34,8 +34,14 @@ msgstr "ページ一覧"
 msgid "Checklist"
 msgstr "チェックする"
 
+msgid "Accessibility Issues"
+msgstr "問題点"
+
 msgid "Issues"
 msgstr "問題点"
+
+msgid "Accessibility Bulk Checklist"
+msgstr "一括処理"
 
 msgid "Bulk"
 msgstr "一括処理"
