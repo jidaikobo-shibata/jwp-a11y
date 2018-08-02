@@ -41,7 +41,9 @@ When installing the plug-in, you can automatically check individual posts when s
 == Changelog ==
 
 = 3.1.4 =
-upgrade problem
+at readme: content of was invalid string (Y-n-j -> Y-m-d)(thx @momdo_).
+at documentation: fix unexpectedlly escaped HTML and markup HTML by <code>(thx @momdo_).
+at labelless check: if action attribute was not exists, use <form> to indicate place.
 
 = 3.1.3 =
 upgrade problem
