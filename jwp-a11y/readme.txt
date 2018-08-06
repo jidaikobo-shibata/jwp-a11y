@@ -40,6 +40,9 @@ When installing the plug-in, you can automatically check individual posts when s
 
 == Changelog ==
 
+= 3.1.7 =
+improve checklist behaviour
+
 = 3.1.6 =
 refactoring
 fix bug of error messages
