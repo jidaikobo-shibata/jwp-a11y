@@ -3,6 +3,10 @@
 	list-style: disc;
 	margin-left: 2em;
 }
+body.a11y-center_page_jwp-a11y-jwp_a11y_checklist .inside.a11yc,
+body.a11y-center_page_jwp-a11y-jwp_a11y_bulk .inside.a11yc {
+	margin: auto;
+}
 body.a11y-center_page_jwp-a11y-jwp_a11y_checklist #wpbody,
 body.a11y-center_page_jwp-a11y-jwp_a11y_bulk #wpbody
 {
@@ -14,10 +18,17 @@ body.a11y-center_page_jwp-a11y-jwp_a11y_bulk #wpbody
 	padding-left: 170px;
 	padding-top: 40px;
 }
+.wp-admin #a11yc_header
+{
+	padding-top: 40px;
+}
+
 @media only screen and (max-width: 960px) {
 	.wp-admin #a11yc_header,
 	.wp-admin #a11yc_submit {
 		padding-left: 36px;
+	}
+	.wp-admin #a11yc_header {
 		padding-top: 50px;
 	}
 }
