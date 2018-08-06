@@ -3,7 +3,7 @@ Contributors: jidaikobo
 Donate link: http://www.jidaikobo.com/donate.html
 Tags: accessibility, checker, WCAG, JIS X 8341-3
 Requires at least: 4.8.3
-Tested up to: 4.9.7
+Tested up to: 4.9.8
 Stable tag: 4.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -39,6 +39,13 @@ When installing the plug-in, you can automatically check individual posts when s
 4. Machine Check
 
 == Changelog ==
+
+= 3.1.6 =
+refactoring
+fix bug of error messages
+
+= 3.1.5 =
+modify settings table
 
 = 3.1.4 =
 at readme: content of was invalid string (Y-n-j -> Y-m-d)(thx @momdo_).

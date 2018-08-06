@@ -100,20 +100,9 @@ class Validate extends \A11yc\Validate
 		self::same_page_title_in_same_site($url);
 
 		// add errors
-		if (static::getErrorIds($url))
-		{
-			foreach (static::getErrorIds($url) as $code => $errs)
-			{
-				foreach ($errs as $key => $err)
-				{
-					$err_type = isset($yml['errors'][$code]['notice']) ? 'notices' : 'errors';
-					$e->add(
-						$err_type,
-						array($code => \A11yc\Message::getText($url, $code, $err, $key))
-					);
-				}
-			}
-		}
+		$all_errs = \A11yc\Validate::getErrors($url, $codes);
+		$e->add('errors', $all_errs['errors']);
+		$e->add('notices', $all_errs['notices']);
 
 		// set transient
 		set_transient('jwp_a11y_notices', $e->get_error_messages('notices'), 10);
@@ -121,7 +110,8 @@ class Validate extends \A11yc\Validate
 		{
 			set_transient('jwp_a11y_errors', $e->get_error_messages('errors'), 10);
 		}
-		else
+
+		if (empty($all_errs['errors']))
 		{
 			$messages = array('no_errors' => true);
 			if (\A11yc\Input::post('jwp_a11y_link_check'))
@@ -169,7 +159,12 @@ class Validate extends \A11yc\Validate
 	public static function show_messages()
 	{
 		$html = '';
-		if ($messages = get_transient('jwp_a11y_errors'))
+
+		$errors = get_transient('jwp_a11y_errors');
+		$notices = get_transient('jwp_a11y_notices');
+		$no_errors = get_transient('jwp_a11y_no_errors');
+
+		if (isset($errors[0]) && ! empty($errors[0]))
 		{
 			$html.= '<div class="notice error is-dismissible" id="jwp_a11y_error"><section>';
 			$html.= '<a href="#end_line_of_a11y_checklist" class="screen-reader-shortcut">'.__("Skip accessibility checklist messages.", "jwp_a11y").'</a>';
@@ -179,7 +174,7 @@ class Validate extends \A11yc\Validate
 			// count errors
 			$yml = \A11yc\Yaml::fetch();
 			$errs_cnts = array('a' => 0, 'aa' => 0, 'aaa' => 0);
-			foreach ($messages as $message)
+			foreach ($errors as $message)
 			{
 				$message_keys = array_keys($message);
 				$code = reset($message_keys);
@@ -188,24 +183,25 @@ class Validate extends \A11yc\Validate
 				$errs_cnts[$lv]++;
 			}
 
-			$errs_cnts = array_merge(array('total' => count($messages)), $errs_cnts);
+			$errs_cnts = array_merge(array('total' => count($errors)), $errs_cnts);
 			foreach ($errs_cnts as $lv => $errs_cnt)
 			{
 				$html.= '<span class="a11yc_errs_lv">'.strtoupper($lv).'</span> <span class="a11yc_errs_cnt">'.intval($errs_cnt).'</span> ';
 			}
 
 			$html.= '<dl id="a11yc_validation_errors" class="a11yc_hide_if_fixedheader">';
-			$html = self::remove_view_src($html, $messages);
+			$html = self::remove_view_src($html, $errors);
+			$html.= '</ul></dd>';
 			$html.= '</dl>';
 			$html.= '</section><a id="end_line_of_a11y_checklist" class="screen-reader-text" tabindex="-1">'.__("End line of accessibility checklist.", "jwp_a11y").'</a></div>';
 		}
 
 		// no error
-		elseif($messages = get_transient('jwp_a11y_no_errors'))
+		elseif($no_errors)
 		{
 			$html.= '<div class="notice notice-success is-dismissible" id="jwp_a11y_no_error">';
 			$html.= '<p>'.__("In the automatic check, accessibility problems were not found.", "jwp_a11y").'</p>';
-			if (isset($messages['no_dead_link']))
+			if (isset($no_errors['no_dead_link']))
 			{
 				$html.= '<p>'.__("No dead links were found.", "jwp_a11y").'</p>';
 			}
@@ -213,12 +209,13 @@ class Validate extends \A11yc\Validate
 		}
 
 		// notice
-		if ($messages = get_transient('jwp_a11y_notices'))
+		if (isset($notices[0]) && ! empty($notices[0]))
 		{
 			$html.= '<div class="notice notice-warning is-dismissible" id="jwp_a11y_notice">';
-			$html.= '<h2>'.__("There may be no accessibility problems, but just in case, please check.", "jwp_a11y").'</h2>';
+			$html.= '<h2>'.__("There may be no accessibility problems, but just in case, please check.", "jwp_a11y").'</h2>'."\n";
 			$html.= '<dl id="a11yc_validation_notices" class="a11yc_hide_if_fixedheader">';
-			$html = self::remove_view_src($html, $messages);
+			$html = self::remove_view_src($html, $notices);
+			$html.= '</ul></dd>';
 			$html.= '</dl>';
 			$html.= '</div>';
 		}
@@ -236,14 +233,25 @@ class Validate extends \A11yc\Validate
 	 */
 	private static function remove_view_src($html, $messages)
 	{
-		foreach($messages as $message)
+		foreach($messages as $each_messages)
 		{
-			$message_keys = array_keys($message);
-			$code = reset($message_keys);
-			$html.= preg_replace(
-				'/\<a href="#.+?\<\/a\>/i',
-				'',
-				$message[$code]);
+			foreach($each_messages as $k => $message)
+			{
+				if (isset($message['dt']))
+				{
+					$html.= \A11yc\Arr::get($message, 'dt');
+				}
+				$html.= preg_replace(
+					'/\<a href="#.+?\<\/a\>/i',
+					'',
+					$message['li']);
+
+				$next = $k + 1;
+				if (isset($each_messages[$next]['dt']))
+				{
+					$html.= '</ul></dd>';
+				}
+			}
 		}
 		return $html;
 	}

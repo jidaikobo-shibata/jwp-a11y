@@ -74,13 +74,29 @@
 	font-weight: normal;
 	margin-bottom: 2px;
 }
+#a11yc_validator_results h3 {
+	padding: 5px 0;
+	border-bottom: 2px solid #cc4030;
+}
+#a11yc_validator_results h3.a11yc_notice_heading {
+	border-color: #ddda00;
+}
+
 #a11yc_validator_results .a11yc_controller p {
 	margin: 0;
+}
+details details
+{
+	padding-left: 10px;
 }
 details summary .a11yc_heading
 {
 	display: inline-block;
 	width: calc( 100% - 20px );
+}
+details ul
+{
+	padding-left: 25px;
 }
 
 .a11yc_source {
@@ -263,7 +279,7 @@ tr.a11yc_flash {
 }
 .a11yc #a11yc_header_ctrl {
 	position: relative;
-	float: right;
+/*	float: right;*/
 }
 .a11yc #a11yc_header_ctrl+.a11yc_presentation {
 	width: 100%;
@@ -307,11 +323,11 @@ tr.a11yc_flash {
 	border-bottom: none;
 	width: 100%;
 }
-.a11yc table tr.even,
-.a11yc thead+tbody tr.odd {
+.a11yc_table tr:nth-child(even),
+.a11yc_table thead+tbody tr:nth-child(odd) {
 	background-color: #f3f3f3;
 }
-.a11yc thead+tbody tr.even {
+.a11yc_table thead+tbody tr:nth-child(even) {
 	background-color: transparent;
 }
 .a11yc_table th,
@@ -607,8 +623,8 @@ table.a11yc_table_info {
 	width: calc( 100% - 20em );
 }
 #a11yc_header_right {
-	text-align: right;
-	width: 20em;
+/*	text-align: right;
+	width: 20em;*/
 }
 #a11yc_targetpage_info th {
 	text-align: left;
@@ -691,16 +707,13 @@ table#a11yc_rest {
 .a11yc_source.expand {
 	max-height: initial;
 }
-#a11yc_validation_list,
+#a11yc_validation_error_list,
 #a11yc_validation_notices_list {
 	margin: 0;
-	padding: 10px 5px;
-	background-color: #fee;
+	padding: 0;
 }
 #a11yc_validation_notices_list {
 	margin: 5px 0 0;
-	border: 1px #aaa solid;
-	background-color: #ffffdf;
 }
 #a11yc_validation_errors #a11yc_validation_notices_list dt {
 	background-color: #f0f0cb;
@@ -710,6 +723,7 @@ dl#a11yc_validation_code {
 	padding: 10px 0 0;
 	background-color: #fff;
 }
+
 /*
 #a11yc_validation_code .a11yc_disclosure_target.active {
 }
@@ -725,9 +739,9 @@ dl#a11yc_validation_code {
 #a11yc_validation_errors dd,
 #a11yc_validation_notices dt,
 #a11yc_validation_notices dd {
-	border-color:#aaa;
-	border-style: solid;
-	padding: 2px 5px;
+/*	border-color:#aaa;
+	border-style: solid;*/
+	padding: 4px 7px;
 	font-size: 105%;
 }
 
@@ -739,12 +753,18 @@ dl#a11yc_validation_code {
 #a11yc_validation_notices dd {
 	word-break: break-all;
 }
+#a11yc_validation_error_list dd {
+	background-color: #fee;
+}
+#a11yc_validation_notices_list dd {
+	background-color: #ffffdf;
+}
 #a11yc_validation_errors dt,
 #a11yc_validation_notices dt {
-	padding-right: 4.75em;
-	border-width: 1px;
-	border-bottom-style: dotted;
-	position: relative;
+/*	padding-right: 4.75em;*/
+/*	border-width: 1px 0 1px 0;
+	border-bottom-style: dotted;*/
+/*	position: relative;*/
 	font-weight: bold;
 }
 #a11yc_validation_errors dt {
@@ -760,9 +780,38 @@ dl#a11yc_validation_code {
 #a11yc_validation_code dd {
 	margin-left: 0;
 	border: none;
-/*	border-width: 0 1px 1px 1px;*/
+	margin-bottom: 10px;
 }
-
+#a11yc_validation_errors dd ul,
+#a11yc_validation_notices dd ul,
+#a11yc_validation_code dd ul
+{
+	padding-left: 25px;
+	border-top: 1px dotted #aaa;
+}
+#a11yc_validation_errors dd ul li,
+#a11yc_validation_notices dd ul li,
+#a11yc_validation_code dd ul li
+{
+	position: relative;
+	padding: 10px  4.75em 10px 0;
+	margin: 0;
+}
+#a11yc_validation_errors dd ul li:after,
+#a11yc_validation_notices dd ul li:after,
+#a11yc_validation_code dd ul li:after
+{
+	content: '';
+	display: block;
+	position: absolute;
+	left: 0;
+	rignt: 0;
+	bottom: 0;
+	width: calc(100% + 25px);
+	height: 0;
+	margin-left: -25px;
+	border-bottom: 1px dotted #aaa;
+}
 #a11yc_validator_results dl dt {
 	font-weight: bold;
 }
@@ -773,7 +822,7 @@ dl#a11yc_validation_code {
 .a11yc_validation_error_link {
 	position: absolute;
 	right: 5px;
-	bottom: 5px;
+	top: 10px;
 }
 #a11yc_menu_principles {
 	margin: 0;
@@ -1308,7 +1357,7 @@ span.a11yc_icon_expand:before {
 	margin-top: 0;
 	margin-bottom: .75em;
 }
-#a11yc_additional_criterions_list li.odd {
+#a11yc_additional_criterions_list li:nth-child(odd) {
 	clear: left;
 }
 .a11yc_policy_sample {

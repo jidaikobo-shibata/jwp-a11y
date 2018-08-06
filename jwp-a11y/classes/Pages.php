@@ -53,15 +53,20 @@ class Pages extends \A11yc\Controller\Pages
 		if ($ramdom_num)
 		{
 			$args = array(
-				'posts_per_page' => $ramdom_num,
+				'posts_per_page' => 100,
 				'post_type'      => 'any',
 				'post_status'    => 'publish',
 				'orderby'        => 'rand'
 			);
 			$pages = array();
+			$n = 0;
 			foreach (get_posts($args) as $v)
 			{
+				$post_type = get_post_type_object($v->post_type);
+				if ( ! $post_type->show_ui || ! $post_type->show_in_nav_menus) continue;
 				$pages[] = get_permalink($v->ID);
+				$n++;
+				if ($n >= $ramdom_num) break;
 			}
 			parent::addPages($is_force = false, $pages);
 		}
