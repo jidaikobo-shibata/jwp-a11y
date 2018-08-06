@@ -3,19 +3,26 @@
 	list-style: disc;
 	margin-left: 2em;
 }
-.wp-admin .a11yc_fixed_header #a11yc_header,
+body.a11y-center_page_jwp-a11y-jwp_a11y_checklist #wpbody,
+body.a11y-center_page_jwp-a11y-jwp_a11y_bulk #wpbody
+{
+	padding-top: 100px;
+}
+.wp-admin #a11yc_header,
 .wp-admin #a11yc_submit {
 	padding-right: 10px;
 	padding-left: 170px;
+	padding-top: 40px;
 }
 @media only screen and (max-width: 960px) {
-	.wp-admin .a11yc_fixed_header #a11yc_header,
+	.wp-admin #a11yc_header,
 	.wp-admin #a11yc_submit {
 		padding-left: 36px;
+		padding-top: 50px;
 	}
 }
 @media screen and (max-width: 782px) {
-	.wp-admin .a11yc_fixed_header #a11yc_header,
+	.wp-admin #a11yc_header,
 	.wp-admin #a11yc_submit {
 		padding-left: 0;
 	}
