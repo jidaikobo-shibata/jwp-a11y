@@ -44,7 +44,7 @@ class Checklist extends \A11yc\Controller\Checklist
 		$html.= '<div class="wrap">';
 		$html.= '<div id="icon-themes" class="icon32"><br /></div>';
 		$html.= '<h1 class="a11yc_skip">'.self::pageTitleByAction().'</h1>';
-		$html.= '<div class="postbox" style="margin-top: 15px;">';
+		$html.= '<div class="postbox">';
 		$html.= '<div class="inside a11yc">';
 
 		$close = '';
