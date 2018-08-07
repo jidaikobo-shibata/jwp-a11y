@@ -1,4 +1,4 @@
-#jwp-a11y_error ul li
+.a11yc_validation_list ul li
 {
 	list-style: disc;
 	margin-left: 2em;
@@ -17,29 +17,27 @@ body.a11y-center_page_jwp-a11y-jwp_a11y_bulk .update-nag
 {
 	display: none;
 }
-.wp-admin #a11yc_header,
-.wp-admin #a11yc_submit {
-	padding-right: 10px;
-	padding-left: 180px;
-}
-.wp-admin #a11yc_header
+.wp-admin.sticky-menu #a11yc_header
 {
+	padding-left: 182px;
 	padding-top: 30px;
-	background-color: #fff;
 }
-
-@media only screen and (max-width: 960px) {
-	.wp-admin #a11yc_submit {
-		padding-left: 36px;
-	}
-	.wp-admin #a11yc_header {
-		padding-top: 50px;
-	}
+.wp-admin #a11yc_header {
+	padding-top: 42px;
+}
+#a11yc_header_inner
+{
+	max-width: 100%;
+	margin: 0;
+}
+.wp-admin #a11yc_submit {
+	padding: 0 10px;
 }
 @media screen and (max-width: 782px) {
 	.wp-admin #a11yc_header,
 	.wp-admin #a11yc_submit {
 		padding-left: 0;
+		padding-right: 0;
 	}
 }
 
