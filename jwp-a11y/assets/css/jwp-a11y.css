@@ -17,12 +17,13 @@ body.a11y-center_page_jwp-a11y-jwp_a11y_bulk .update-nag
 {
 	display: none;
 }
-.wp-admin.sticky-menu #a11yc_header
+.wp-admin #a11yc_header,
+.wp-admin.sticky-menu.js #a11yc_header
 {
 	padding-left: 182px;
 	padding-top: 30px;
 }
-.wp-admin #a11yc_header {
+.wp-admin.jwp_a11y_js #a11yc_header {
 	padding-top: 42px;
 }
 #a11yc_header_inner
