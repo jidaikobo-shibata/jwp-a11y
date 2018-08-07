@@ -6,7 +6,7 @@ Description: A plugin to check accessibility.  Help to generate Evaluation Repor
 Author: Jidaikobo Inc.
 Text Domain: jwp_a11y
 Domain Path: /languages/
-Version: 3.1.6
+Version: 3.1.8
 Author URI: http://www.jidaikobo.com/
 License: GPL2
 
@@ -56,11 +56,7 @@ include 'classes/Settings.php';
 include 'classes/Validate.php';
 include 'classes/Uninstall.php';
 include 'classes/Upgrade.php';
-//include 'classes/Notation.php';
 include 'classes/Issues.php';
-
-// dashboard
-//\JwpA11y\Notation::dashboard();
 
 // backup and version check, this must not run so frequently.
 if (\A11yc\Maintenance::isFisrtOfToday())
@@ -164,6 +160,10 @@ function jwp_a11y_enqueue_scripts()
 	wp_enqueue_script(
 		'jwp-a11y_js',
 		A11YC_ASSETS_URL.'/js/a11yc.js'
+	);
+	wp_enqueue_script(
+		'jwp-jwp-a11y_js',
+		A11YC_ASSETS_URL.'/js/jwp-a11y.js'
 	);
 }
 add_action('wp_enqueue_scripts', 'jwp_a11y_enqueue_styles');
