@@ -2,7 +2,7 @@
 Contributors: jidaikobo
 Donate link: http://www.jidaikobo.com/donate.html
 Tags: accessibility, checker, WCAG, JIS X 8341-3
-Requires PHP: 5.5.0
+Requires PHP: 5.4.0
 Requires at least: 4.8.3
 Tested up to: 4.9.8
 Stable tag: 4.9
@@ -40,6 +40,12 @@ When installing the plug-in, you can automatically check individual posts when s
 4. Machine Check
 
 == Changelog ==
+
+= 3.2.0 =
+fix result
+
+= 3.1.9 =
+lower compatible (array_column() php 5.5)
 
 = 3.1.8 =
 remove ajax
