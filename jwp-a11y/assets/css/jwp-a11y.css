@@ -1,7 +1,11 @@
-.a11yc_validation_list ul li
+.a11yc_validation_list ul li,
+#a11yc_checks details ul li
 {
 	list-style: disc;
-	margin-left: 2em;
+}
+#a11yc_checks details ul li
+{
+	margin-left: 0;
 }
 body.a11y-center_page_jwp-a11y-jwp_a11y_checklist .inside.a11yc,
 body.a11y-center_page_jwp-a11y-jwp_a11y_bulk .inside.a11yc {
