@@ -41,6 +41,22 @@ When installing the plug-in, you can automatically check individual posts when s
 
 == Changelog ==
 
+= 3.2.4 =
+fix error count problem
+fix sort pages
+
+= 3.2.3 =
+delete unused files
+at html5, ignore check of existence of table's summary attribute
+
+= 3.2.2 =
+no space between attribute
+better comment out logic
+ignore CDATA section
+
+= 3.2.1 =
+fix each result
+
 = 3.2.0 =
 fix result
 

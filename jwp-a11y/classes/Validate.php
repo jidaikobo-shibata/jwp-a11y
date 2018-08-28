@@ -174,16 +174,15 @@ class Validate extends \A11yc\Validate
 			// count errors
 			$yml = \A11yc\Yaml::fetch();
 			$errs_cnts = array('a' => 0, 'aa' => 0, 'aaa' => 0);
-			foreach ($errors as $message)
+			foreach ($errors[0] as $message)
 			{
-				$message_keys = array_keys($message);
-				$code = reset($message_keys);
+				$code = $message['code_str'];
 				if ( ! isset($yml['errors'][$code])) continue;
 				$lv = strtolower($yml['criterions'][$yml['errors'][$code]['criterions'][0]]['level']['name']);
 				$errs_cnts[$lv]++;
 			}
 
-			$errs_cnts = array_merge(array('total' => count($errors)), $errs_cnts);
+			$errs_cnts = array_merge(array('total' => count($errors[0])), $errs_cnts);
 			foreach ($errs_cnts as $lv => $errs_cnt)
 			{
 				$html.= '<span class="a11yc_errs_lv">'.strtoupper($lv).'</span> <span class="a11yc_errs_cnt">'.intval($errs_cnt).'</span> ';
