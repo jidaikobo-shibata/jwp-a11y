@@ -1,6 +1,6 @@
 === jwp-a11y ===
 Contributors: jidaikobo
-Donate link: http://www.jidaikobo.com/donate.html
+Donate link: https://www.jidaikobo.com/donate.html
 Tags: accessibility, checker, WCAG, JIS X 8341-3
 Requires PHP: 5.4.0
 Requires at least: 4.8.3
@@ -40,6 +40,18 @@ When installing the plug-in, you can automatically check individual posts when s
 4. Machine Check
 
 == Changelog ==
+
+= 3.2.8 =
+many refactoring
+
+= 3.2.7 =
+fix empty_link_element
+
+= 3.2.6 =
+start to support aria-label and aria-labelledby
+
+= 3.2.5 =
+fix donate link
 
 = 3.2.4 =
 fix error count problem

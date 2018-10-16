@@ -100,7 +100,7 @@ class Validate extends \A11yc\Validate
 		self::same_page_title_in_same_site($url);
 
 		// add errors
-		$all_errs = \A11yc\Validate::getErrors($url, $codes);
+		$all_errs = \A11yc\Validate\Get::errors($url, $codes);
 		$e->add('errors', $all_errs['errors']);
 		$e->add('notices', $all_errs['notices']);
 
