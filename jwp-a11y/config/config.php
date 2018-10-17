@@ -80,7 +80,7 @@ define('A11YC_RESULTS_EACH_URL',    $urlbase.'jwp_a11y_checklist&amp;a=each&amp;
 define('A11YC_ISSUES_INDEX_URL',    $urlbase.'jwp_a11y_issues&amp;a=index');
 define('A11YC_ISSUES_ADD_URL',      $urlbase.'jwp_a11y_issues&amp;a=add&amp;url='); // &criterion
 define('A11YC_ISSUES_EDIT_URL',     $urlbase.'jwp_a11y_issues&amp;a=edit&amp;id=');
-define('A11YC_ISSUES_VIEW_URL',     $urlbase.'jwp_a11y_issues&amp;a=view&amp;id=');
+define('A11YC_ISSUES_READ_URL',     $urlbase.'jwp_a11y_issues&amp;a=read&amp;id=');
 define('A11YC_ISSUES_DELETE_URL',   $urlbase.'jwp_a11y_issues&amp;a=delete&amp;id=');
 define('A11YC_ISSUES_UNDELETE_URL', $urlbase.'jwp_a11y_issues&amp;a=undelete&amp;id=');
 define('A11YC_ISSUES_PURGE_URL',    $urlbase.'jwp_a11y_issues&amp;a=purge&amp;id=');

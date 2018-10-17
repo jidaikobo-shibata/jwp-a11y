@@ -41,6 +41,9 @@ When installing the plug-in, you can automatically check individual posts when s
 
 == Changelog ==
 
+= 3.2.9 =
+fix about html escape
+
 = 3.2.8 =
 many refactoring
 

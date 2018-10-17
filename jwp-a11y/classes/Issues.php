@@ -55,8 +55,8 @@ class Issues extends \A11yc\Controller\Issues
 				static::edit($is_add = false, $users, $userinfo->ID);
 				$is_edit = true;
 				break;
-			case 'view':
-				static::view($users, $userinfo->ID, $is_admin);
+			case 'read':
+				\A11yc\Controller\Issues\Read::issue($users, $userinfo->ID, $is_admin);
 				$is_edit = true;
 				break;
 			case 'delete':
