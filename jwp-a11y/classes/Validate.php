@@ -85,6 +85,12 @@ class Validate extends \A11yc\Validate
 		\A11yc\Validate::$do_link_check = \A11yc\Input::post('jwp_a11y_link_check', false);
 		\A11yc\Validate::$do_css_check  = \A11yc\Input::post('jwp_a11y_css_check', false);
 
+		// check same title
+		\A11yc\Validate::$codes_alias['SamePageTitleInSameSite'] = array(
+			'\\JwpA11y\\Validate',
+			'same_page_title_in_same_site'
+		);
+
 		// get all custom_fields
 		$meta_values = '';
 		foreach (get_post_meta($obj->ID) as $meta_key => $meta_value)
@@ -96,11 +102,8 @@ class Validate extends \A11yc\Validate
 		$url = get_permalink($obj->ID);
 		static::html($url, apply_filters('the_content', $obj->post_content).$meta_values);
 
-		// check same title
-		self::same_page_title_in_same_site($url);
-
 		// add errors
-		$all_errs = \A11yc\Validate\Get::errors($url, $codes);
+		$all_errs = \A11yc\Validate\Get::errors($url);
 		$e->add('errors', $all_errs['errors']);
 		$e->add('notices', $all_errs['notices']);
 
@@ -128,7 +131,7 @@ class Validate extends \A11yc\Validate
 	 * @param  String $url
 	 * @return Void
 	 */
-	private static function same_page_title_in_same_site($url)
+	public static function same_page_title_in_same_site($url)
 	{
 		global $wpdb;
 		$title = \A11yc\Input::post('post_title');
@@ -145,10 +148,15 @@ class Validate extends \A11yc\Validate
 				$strs[] = $v->ID;
 			}
 
-			static::$error_ids[$url]['same_page_title_in_same_site'][0]['id'] = \A11yc\Util::s($title);
-			static::$error_ids[$url]['same_page_title_in_same_site'][0]['str'] = 'IDs: '.join(', ', $strs);
+			\A11yc\Validate\Set::error(
+				$url,
+				'same_page_title_in_same_site',
+				0,
+				\A11yc\Util::s($title),
+				'IDs: '.join(', ', $strs)
+			);
 		}
-		static::addErrorToHtml($url, 'same_page_title_in_same_site', static::$error_ids[$url]);
+		static::addErrorToHtml($url, 'SamePageTitleInSameSite', static::$error_ids[$url]);
 	}
 
 	/**
@@ -189,7 +197,7 @@ class Validate extends \A11yc\Validate
 			}
 
 			$html.= '<dl id="a11yc_validation_errors" class="a11yc_hide_if_fixedheader">';
-			$html = self::remove_view_src($html, $errors);
+			$html = self::removeViewSrc($html, $errors);
 			$html.= '</ul></dd>';
 			$html.= '</dl>';
 			$html.= '</section><a id="end_line_of_a11y_checklist" class="screen-reader-text" tabindex="-1">'.__("End line of accessibility checklist.", "jwp_a11y").'</a></div>';
@@ -213,7 +221,7 @@ class Validate extends \A11yc\Validate
 			$html.= '<div class="notice notice-warning is-dismissible" id="jwp_a11y_notice">';
 			$html.= '<h2>'.__("There may be no accessibility problems, but just in case, please check.", "jwp_a11y").'</h2>'."\n";
 			$html.= '<dl id="a11yc_validation_notices" class="a11yc_hide_if_fixedheader">';
-			$html = self::remove_view_src($html, $notices);
+			$html = self::removeViewSrc($html, $notices);
 			$html.= '</ul></dd>';
 			$html.= '</dl>';
 			$html.= '</div>';
@@ -230,7 +238,7 @@ class Validate extends \A11yc\Validate
 	 * @param array $messages
 	 * @return  string
 	 */
-	private static function remove_view_src($html, $messages)
+	private static function removeViewSrc($html, $messages)
 	{
 		foreach($messages as $each_messages)
 		{
