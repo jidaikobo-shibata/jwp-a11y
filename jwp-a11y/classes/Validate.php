@@ -77,10 +77,8 @@ class Validate extends \A11yc\Validate
 	{
 		// accessibility check
 		$e = new \WP_Error();
-		$yml = \A11yc\Yaml::fetch();
 
 		// code and function
-		$codes = \A11yc\Validate::$codes;
 		\A11yc\Validate::$is_partial    = true;
 		\A11yc\Validate::$do_link_check = \A11yc\Input::post('jwp_a11y_link_check', false);
 		\A11yc\Validate::$do_css_check  = \A11yc\Input::post('jwp_a11y_css_check', false);
@@ -166,52 +164,24 @@ class Validate extends \A11yc\Validate
 	 */
 	public static function show_messages()
 	{
-		$html = '';
-
 		$errors = get_transient('jwp_a11y_errors');
 		$notices = get_transient('jwp_a11y_notices');
 		$no_errors = get_transient('jwp_a11y_no_errors');
 
+		$html = '';
+		$show_link_to_issue = true;
+
+		// error or not
 		if (isset($errors[0]) && ! empty($errors[0]))
 		{
-			$html.= '<div class="notice error is-dismissible" id="jwp_a11y_error"><section>';
-			$html.= '<a href="#end_line_of_a11y_checklist" class="screen-reader-shortcut">'.__("Skip accessibility checklist messages.", "jwp_a11y").'</a>';
-			$html.= '<h1>'.__("Accessibility Checklist", "jwp_a11y").'</h1>';
-			$html.= '<p>'.__("This checklist is according to WCAG2.0 (Web Content Accessibility Guidelines).", "jwp_a11y").'</p>';
-
-			// count errors
-			$yml = \A11yc\Yaml::fetch();
-			$errs_cnts = array('a' => 0, 'aa' => 0, 'aaa' => 0);
-			foreach ($errors[0] as $message)
-			{
-				$code = $message['code_str'];
-				if ( ! isset($yml['errors'][$code])) continue;
-				$lv = strtolower($yml['criterions'][$yml['errors'][$code]['criterions'][0]]['level']['name']);
-				$errs_cnts[$lv]++;
-			}
-
-			$errs_cnts = array_merge(array('total' => count($errors[0])), $errs_cnts);
-			foreach ($errs_cnts as $lv => $errs_cnt)
-			{
-				$html.= '<span class="a11yc_errs_lv">'.strtoupper($lv).'</span> <span class="a11yc_errs_cnt">'.intval($errs_cnt).'</span> ';
-			}
-
-			$html.= '<dl id="a11yc_validation_errors" class="a11yc_hide_if_fixedheader">';
-			$html = self::removeViewSrc($html, $errors);
-			$html.= '</ul></dd>';
-			$html.= '</dl>';
-			$html.= '</section><a id="end_line_of_a11y_checklist" class="screen-reader-text" tabindex="-1">'.__("End line of accessibility checklist.", "jwp_a11y").'</a></div>';
+			$html.= '<div class="notice error is-dismissible" id="jwp_a11y_error">';
+			$html.= \A11yc\Message\Plugin::error($errors[0], $show_link_to_issue);
+			$html.= '</div>';
 		}
-
-		// no error
-		elseif($no_errors)
+		elseif ($no_errors)
 		{
 			$html.= '<div class="notice notice-success is-dismissible" id="jwp_a11y_no_error">';
-			$html.= '<p>'.__("In the automatic check, accessibility problems were not found.", "jwp_a11y").'</p>';
-			if (isset($no_errors['no_dead_link']))
-			{
-				$html.= '<p>'.__("No dead links were found.", "jwp_a11y").'</p>';
-			}
+			$html.= \A11yc\Message\Plugin::noError(\A11yc\Arr::get($no_errors, 0));
 			$html.= '</div>';
 		}
 
@@ -219,47 +189,11 @@ class Validate extends \A11yc\Validate
 		if (isset($notices[0]) && ! empty($notices[0]))
 		{
 			$html.= '<div class="notice notice-warning is-dismissible" id="jwp_a11y_notice">';
-			$html.= '<h2>'.__("There may be no accessibility problems, but just in case, please check.", "jwp_a11y").'</h2>'."\n";
-			$html.= '<dl id="a11yc_validation_notices" class="a11yc_hide_if_fixedheader">';
-			$html = self::removeViewSrc($html, $notices);
-			$html.= '</ul></dd>';
-			$html.= '</dl>';
+			$html.= \A11yc\Message\Plugin::notice($notices[0], $show_link_to_issue);
 			$html.= '</div>';
 		}
 
 		echo $html;
 		delete_transient('jwp_a11y_errors');
-	}
-
-	/**
-	 * Remove "view source"
-	 *
-	 * @param string $html
-	 * @param array $messages
-	 * @return  string
-	 */
-	private static function removeViewSrc($html, $messages)
-	{
-		foreach($messages as $each_messages)
-		{
-			foreach($each_messages as $k => $message)
-			{
-				if (isset($message['dt']))
-				{
-					$html.= \A11yc\Arr::get($message, 'dt');
-				}
-				$html.= preg_replace(
-					'/\<a href="#.+?\<\/a\>/i',
-					'',
-					$message['li']);
-
-				$next = $k + 1;
-				if (isset($each_messages[$next]['dt']))
-				{
-					$html.= '</ul></dd>';
-				}
-			}
-		}
-		return $html;
 	}
 }
