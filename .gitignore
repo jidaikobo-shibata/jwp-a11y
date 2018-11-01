@@ -1,5 +1,2 @@
-*
-!jwp-a11y
-jwp-a11y/assets/css/a11yc.css
-jwp-a11y/assets/js/a11yc.js
-jwp-a11y/libs/*
+.DS_Store
+a11yc
