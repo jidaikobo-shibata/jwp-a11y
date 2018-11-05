@@ -9,6 +9,9 @@ Stable tag: 4.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
+[![WP compatibility](https://plugintests.com/plugins/jwp-a11y/wp-badge.svg)](https://plugintests.com/plugins/jwp-a11y/latest)
+[![PHP compatibility](https://plugintests.com/plugins/jwp-a11y/php-badge.svg)](https://plugintests.com/plugins/jwp-a11y/latest)
+
 Check accessibility of target page and generate accessibility evaluate page and policy.
 
 == Description ==
