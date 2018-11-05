@@ -23,9 +23,8 @@ define('A11YC_TARGET_OUT', '');
 define('A11YC_ASSETS_URL', plugins_url('jwp-a11y').'/assets');
 
 // pathes
-define('A11YC_LIB_PATH',      WP_PLUGIN_DIR.'/jwp-a11y/libs');
+define('A11YC_LIB_PATH',      WP_PLUGIN_DIR.'/jwp-a11y/a11yc/libs');
 define('A11YC_PATH',          A11YC_LIB_PATH.'/a11yc');
-define('A11YC_CONFIG_PATH',   dirname(__FILE__));
 define('A11YC_CLASSES_PATH',  A11YC_PATH.'/classes');
 
 // out of date. but leave it for lower compatibility

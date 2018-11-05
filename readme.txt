@@ -41,6 +41,12 @@ When installing the plug-in, you can automatically check individual posts when s
 
 == Changelog ==
 
+= 3.3.4 =
+fix defined bug
+
+= 3.3.3 =
+move lib directories
+
 = 3.3.2 =
 fix tiny bugs
 

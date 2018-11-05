@@ -22,7 +22,7 @@ class Locale
 	{
 		// language
 		$lang = 'en';
-		$langs = glob(WP_PLUGIN_DIR.'/jwp-a11y/libs/a11yc/resources/*');
+		$langs = glob(WP_PLUGIN_DIR.'/jwp-a11y/a11yc/libs/a11yc/resources/*');
 		$langs = array_map('basename', $langs);
 
 		if (in_array($locale, $langs))

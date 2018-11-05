@@ -68,7 +68,7 @@ class Pages extends \A11yc\Controller\Pages
 				$n++;
 				if ($n >= $ramdom_num) break;
 			}
-			parent::addPages($is_force = false, $pages);
+			\A11yc\Controller\Pages\Add::addPages($is_force = false, $pages);
 		}
 		// parent edit
 		elseif (\A11yc\Input::get('a') == 'edit')
@@ -78,7 +78,7 @@ class Pages extends \A11yc\Controller\Pages
 		// parent add
 		elseif (\A11yc\Input::get('a') == 'add')
 		{
-			parent::add();
+			\A11yc\Controller\Pages\Add::targetPages();
 		}
 		else
 		{
