@@ -44,6 +44,9 @@ When installing the plug-in, you can automatically check individual posts when s
 
 == Changelog ==
 
+= 3.3.6 =
+fix lack of constant
+
 = 3.3.5 =
 fix soome undefined bugs
 
