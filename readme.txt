@@ -34,15 +34,14 @@ When installing the plug-in, you can automatically check individual posts when s
 
 == Screenshots ==
 
-1. Plugin Center Page
+1. Checklist - en
 
-2. Checklist
-
-3. Pages List
-
-4. Machine Check
+2. Checklist - ja
 
 == Changelog ==
+
+= 3.3.7 =
+change screen shots
 
 = 3.3.6 =
 fix lack of constant
