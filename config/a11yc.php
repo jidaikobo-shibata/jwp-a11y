@@ -41,6 +41,10 @@ define('A11YC_DB_PASSWORD', DB_PASSWORD);
 define('A11YC_DATA_PATH', dirname(WP_PLUGIN_DIR).'/jwp-a11y_db');
 define('A11YC_DATA_FILE', '/db.sqlite');
 
+// download
+define('A11YC_NON_DOWNLOAD_START', '<!-- a11yc non download -->');
+define('A11YC_NON_DOWNLOAD_END',   '<!-- /a11yc non download -->');
+
 // old tables
 global $wpdb;
 define('A11YC_TABLE_SETUP_OLD',       $wpdb->prefix.'jwp_a11y_setup');

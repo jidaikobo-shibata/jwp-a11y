@@ -24,6 +24,13 @@ When installing the plug-in, you can automatically check individual posts when s
 
 [translate by using GlotPress](https://translate.wordpress.org/projects/wp-plugins/jwp-a11y)
 
+thx:
+* [spyc](https://github.com/mustangostang/spyc)
+* [guzzle](https://github.com/guzzle/guzzle)
+* [PluginTests](https://plugintests.com/plugins/jwp-a11y)
+* [GitHub](https://github.com)
+* [OWASP ZAP](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project)
+
 == Installation ==
 
 1. Upload the plugin files to the `/wp-content/plugins/plugin-name` directory, or install the plugin through the WordPress plugins screen directly.
@@ -39,6 +46,12 @@ When installing the plug-in, you can automatically check individual posts when s
 2. Checklist - ja
 
 == Changelog ==
+
+= 3.3.9 =
+better cache control
+
+= 3.3.8 =
+maintenance
 
 = 3.3.7 =
 change screen shots
