@@ -15,9 +15,12 @@ define('A11YC_LANG', \JwpA11y\Locale::get_simple_locale(get_locale()));
 // time zone
 define('A11YC_TIMEZONE', date_default_timezone_get());
 
-// target
-define('A11YC_TARGET',     '');
-define('A11YC_TARGET_OUT', '');
+// mysql for WordPress
+define('A11YC_DB_TYPE', 'mysql');
+define('A11YC_DB_NAME', DB_NAME);
+define('A11YC_DB_USER', DB_USER);
+define('A11YC_DB_HOST', DB_HOST);
+define('A11YC_DB_PASSWORD', DB_PASSWORD);
 
 // for css and js
 define('A11YC_ASSETS_URL', plugins_url('jwp-a11y').'/assets');
@@ -30,20 +33,9 @@ define('A11YC_CLASSES_PATH',  A11YC_PATH.'/classes');
 // out of date. but leave it for lower compatibility
 define('A11YC_CACHE_PATH', dirname(WP_PLUGIN_DIR).'/jwp-a11y_cache');
 
-// mysql for WordPress
-define('A11YC_DB_TYPE', 'mysql');
-define('A11YC_DB_NAME', DB_NAME);
-define('A11YC_DB_USER', DB_USER);
-define('A11YC_DB_HOST', DB_HOST);
-define('A11YC_DB_PASSWORD', DB_PASSWORD);
-
 // sqlite for lower compatibility
 define('A11YC_DATA_PATH', dirname(WP_PLUGIN_DIR).'/jwp-a11y_db');
 define('A11YC_DATA_FILE', '/db.sqlite');
-
-// download
-define('A11YC_NON_DOWNLOAD_START', '<!-- a11yc non download -->');
-define('A11YC_NON_DOWNLOAD_END',   '<!-- /a11yc non download -->');
 
 // old tables
 global $wpdb;
@@ -80,6 +72,7 @@ define('A11YC_PAGES_ADD_URL',       $urlbase.'jwp_a11y_pages&amp;a=add');
 define('A11YC_PAGES_EDIT_URL',      $urlbase.'jwp_a11y_pages&amp;a=edit');
 define('A11YC_CHECKLIST_URL',       $urlbase.'jwp_a11y_checklist&amp;a=check&amp;url=');
 define('A11YC_RESULTS_EACH_URL',    $urlbase.'jwp_a11y_checklist&amp;a=each&amp;url=');
+define('A11YC_ISSUES_BASE_URL',     $urlbase.'jwp_a11y_issues&amp;a=');
 define('A11YC_ISSUES_INDEX_URL',    $urlbase.'jwp_a11y_issues&amp;a=index');
 define('A11YC_ISSUES_ADD_URL',      $urlbase.'jwp_a11y_issues&amp;a=add&amp;url='); // &criterion
 define('A11YC_ISSUES_EDIT_URL',     $urlbase.'jwp_a11y_issues&amp;a=edit&amp;id=');

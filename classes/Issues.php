@@ -66,7 +66,7 @@ class Issues extends \A11yc\Controller\Issues
 			case 'purge':
 				static::purge();
 			default:
-				static::index();
+				\A11yc\Controller\Issues\Index::any(0);
 				break;
 		}
 

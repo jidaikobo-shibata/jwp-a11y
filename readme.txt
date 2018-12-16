@@ -47,6 +47,9 @@ thx:
 
 == Changelog ==
 
+= 3.4.0 =
+move some directories
+
 = 3.3.9 =
 better cache control
 
