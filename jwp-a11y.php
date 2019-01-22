@@ -34,7 +34,7 @@ if (defined('WP_INSTALLING') && WP_INSTALLING)
 
 // load core
 define('A11YC_CONFIG_PATH', __DIR__.'/config/a11yc.php');
-require 'a11yc/libs/a11yc/main.php';
+require 'a11yc/main.php';
 
 // session
 add_action('init', array('\Kontiki\Session', 'forge'), 10, 0);

@@ -27,7 +27,7 @@ define('A11YC_ASSETS_URL', plugins_url('jwp-a11y').'/assets');
 
 // pathes
 define('A11YC_LIB_PATH',      WP_PLUGIN_DIR.'/jwp-a11y/a11yc/libs');
-define('A11YC_PATH',          A11YC_LIB_PATH.'/a11yc');
+define('A11YC_PATH',          WP_PLUGIN_DIR.'/jwp-a11y/a11yc');
 define('A11YC_CLASSES_PATH',  A11YC_PATH.'/classes');
 
 $wp_upload_dir = wp_upload_dir();
