@@ -1,6 +1,6 @@
 <?php
 /**
- * \JwpA11y\Docs
+ * \JwpA11y\Doc
  *
  * @package    WordPress
  * @version    1.0
@@ -11,7 +11,7 @@
  */
 namespace JwpA11y;
 
-class Docs extends \A11yc\Controller\Docs
+class Doc extends \A11yc\Controller\Doc
 {
 	/**
 	 * Show document or document Index

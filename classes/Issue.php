@@ -1,6 +1,6 @@
 <?php
 /**
- * \JwpA11y\Issues
+ * \JwpA11y\Issue
  *
  * @package    WordPress
  * @version    1.0
@@ -11,7 +11,7 @@
  */
 namespace JwpA11y;
 
-class Issues extends \A11yc\Controller\Issues
+class Issue extends \A11yc\Controller\Issue
 {
 	/**
 	 * routing
@@ -37,7 +37,7 @@ class Issues extends \A11yc\Controller\Issues
 		{
 			if (
 				! isset($_POST['jwp_a11y_nonce']) ||
-				! wp_verify_nonce($_POST['jwp_a11y_nonce'], 'jwp_a11y_issues_action')
+				! wp_verify_nonce($_POST['jwp_a11y_nonce'], 'jwp_a11y_issue_action')
 			)
 			{
 				print 'nonce check failed.';
@@ -56,7 +56,7 @@ class Issues extends \A11yc\Controller\Issues
 				$is_edit = true;
 				break;
 			case 'read':
-				\A11yc\Controller\Issues\Read::issue($users, $userinfo->ID, $is_admin);
+				\A11yc\Controller\Issue\Read::issue($users, $userinfo->ID, $is_admin);
 				$is_edit = true;
 				break;
 			case 'delete':
@@ -66,7 +66,7 @@ class Issues extends \A11yc\Controller\Issues
 			case 'purge':
 				static::purge();
 			default:
-				\A11yc\Controller\Issues\Index::any(0);
+				\A11yc\Controller\Issue\Index::any(0);
 				break;
 		}
 
@@ -81,12 +81,12 @@ class Issues extends \A11yc\Controller\Issues
 
 		if ($is_edit)
 		{
-			$html.= '<form action="'.\A11yc\Util::uri().'" method="POST" class="a11yc">';
+			$html.= '<form action="'.\A11yc\Util::uri().'" method="POST" class="a11yc" enctype="multipart/form-data">';
 
 			$html.= \A11yc\View::fetch('form');
 			$html.= '<div id="a11yc_submit">';
 
-			$html.= wp_nonce_field('jwp_a11y_issues_action', 'jwp_a11y_nonce', true, false);
+			$html.= wp_nonce_field('jwp_a11y_issue_action', 'jwp_a11y_nonce', true, false);
 
 			$html.= '<input type="submit" value="'.A11YC_LANG_CTRL_SEND.'" class="button button-primary button-large" />';
 			$html.= '</div>';

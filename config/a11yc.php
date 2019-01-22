@@ -30,6 +30,10 @@ define('A11YC_LIB_PATH',      WP_PLUGIN_DIR.'/jwp-a11y/a11yc/libs');
 define('A11YC_PATH',          A11YC_LIB_PATH.'/a11yc');
 define('A11YC_CLASSES_PATH',  A11YC_PATH.'/classes');
 
+$wp_upload_dir = wp_upload_dir();
+define('A11YC_UPLOAD_PATH',   $wp_upload_dir['basedir'].'/jwp_a11y/screenshots');
+define('A11YC_UPLOAD_URL',    $wp_upload_dir['baseurl'].'/jwp_a11y/screenshots');
+
 // out of date. but leave it for lower compatibility
 define('A11YC_CACHE_PATH', dirname(WP_PLUGIN_DIR).'/jwp-a11y_cache');
 
@@ -61,26 +65,22 @@ define('A11YC_TABLE_ISSUES',      $wpdb->prefix.'jwp_a11yc_issues');
 define('A11YC_TABLE_ISSUESBBS',   $wpdb->prefix.'jwp_a11yc_issuesbbs');
 define('A11YC_TABLE_SETTINGS',    $wpdb->prefix.'jwp_a11yc_settings');
 define('A11YC_TABLE_MAINTENANCE', $wpdb->prefix.'jwp_a11yc_maintenance');
+define('A11YC_TABLE_ICLS',        $wpdb->prefix.'jwp_a11yc_icls');
+define('A11YC_TABLE_ICLSSIT',     $wpdb->prefix.'jwp_a11yc_iclssit');
+
+// table
+define('A11YC_TABLE_DATA', $wpdb->prefix.'jwp_a11yc_data');
 
 // urls
 $urlbase = A11YC_URL.'?page=jwp-a11y%2F';
-define('A11YC_VALIDATE_URL',        A11YC_URL);
-define('A11YC_SETTING_URL',         $urlbase.'jwp_a11y_settings&amp;a=');
-define('A11YC_BULK_URL',            $urlbase.'jwp_a11y_bulk&amp;a=index');
-define('A11YC_PAGES_URL',           $urlbase.'jwp_a11y_pages&amp;a=index');
-define('A11YC_PAGES_ADD_URL',       $urlbase.'jwp_a11y_pages&amp;a=add');
-define('A11YC_PAGES_EDIT_URL',      $urlbase.'jwp_a11y_pages&amp;a=edit');
-define('A11YC_CHECKLIST_URL',       $urlbase.'jwp_a11y_checklist&amp;a=check&amp;url=');
-define('A11YC_RESULTS_EACH_URL',    $urlbase.'jwp_a11y_checklist&amp;a=each&amp;url=');
-define('A11YC_ISSUES_BASE_URL',     $urlbase.'jwp_a11y_issues&amp;a=');
-define('A11YC_ISSUES_INDEX_URL',    $urlbase.'jwp_a11y_issues&amp;a=index');
-define('A11YC_ISSUES_ADD_URL',      $urlbase.'jwp_a11y_issues&amp;a=add&amp;url='); // &criterion
-define('A11YC_ISSUES_EDIT_URL',     $urlbase.'jwp_a11y_issues&amp;a=edit&amp;id=');
-define('A11YC_ISSUES_READ_URL',     $urlbase.'jwp_a11y_issues&amp;a=read&amp;id=');
-define('A11YC_ISSUES_DELETE_URL',   $urlbase.'jwp_a11y_issues&amp;a=delete&amp;id=');
-define('A11YC_ISSUES_UNDELETE_URL', $urlbase.'jwp_a11y_issues&amp;a=undelete&amp;id=');
-define('A11YC_ISSUES_PURGE_URL',    $urlbase.'jwp_a11y_issues&amp;a=purge&amp;id=');
-define('A11YC_IMAGELIST_URL',       $urlbase.'jwp_a11y_checklist&amp;a=images&amp;url=');
-define('A11YC_DOC_URL',             $urlbase.'jwp_a11y_docs&amp;a=each&amp;code=');
-define('A11YC_LIVE_URL',            $urlbase.'jwp_a11y_checklist&amp;a=view&amp;url=');
-define('A11YC_EXPORT_URL',          $urlbase.'jwp_a11y_checklist&amp;a=csv&amp;url=');
+define('A11YC_SETTING_URL',     $urlbase.'jwp_a11y_setting&amp;a=');
+define('A11YC_BULK_URL',        $urlbase.'jwp_a11y_bulk&amp;a=');
+define('A11YC_PAGE_URL',        $urlbase.'jwp_a11y_page&amp;a=');
+define('A11YC_ISSUE_URL',       $urlbase.'jwp_a11y_issue&amp;a=');
+define('A11YC_EXPORT_URL',      $urlbase.'jwp_a11y_export&amp;a=');
+define('A11YC_ICL_URL',         $urlbase.'jwp_a11y_icl&amp;a=');
+define('A11YC_CHECKLIST_URL',   $urlbase.'jwp_a11y_checklist&amp;a=check&amp;url=');
+define('A11YC_RESULT_EACH_URL', $urlbase.'jwp_a11y_result&amp;a=each&amp;url=');
+define('A11YC_IMAGELIST_URL',   $urlbase.'jwp_a11y_image&amp;a=view&amp;url=');
+define('A11YC_DOC_URL',         $urlbase.'jwp_a11y_doc&amp;a=each&amp;criterion=');
+define('A11YC_LIVE_URL',        $urlbase.'jwp_a11y_live&amp;a=view&amp;url=');

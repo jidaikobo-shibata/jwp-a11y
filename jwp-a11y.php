@@ -50,14 +50,14 @@ load_plugin_textdomain(
 include 'classes/Bulk.php';
 include 'classes/Center.php';
 include 'classes/Checklist.php';
-include 'classes/Results.php';
-include 'classes/Docs.php';
-include 'classes/Pages.php';
-include 'classes/Settings.php';
+include 'classes/Result.php';
+include 'classes/Doc.php';
+include 'classes/Page.php';
+include 'classes/Setting.php';
 include 'classes/Validate.php';
 include 'classes/Uninstall.php';
 include 'classes/Upgrade.php';
-include 'classes/Issues.php';
+include 'classes/Issue.php';
 
 // backup and version check, this must not run so frequently.
 if (\A11yc\Maintenance::isFisrtOfToday())
@@ -67,10 +67,11 @@ if (\A11yc\Maintenance::isFisrtOfToday())
 }
 
 // base url
-$base_url = \A11yc\Model\Settings::fetch('base_url');
-if (empty($base_url))
+$base_url = \A11yc\Model\Data::baseUrl();
+if ($base_url == 'https://example.com')
 {
-	\A11yc\Model\Settings::updateField('base_url', home_url());
+	$sites[] = \A11yc\Util::urldec(home_url());
+	\A11yc\Model\Data::update('sites', 'global', $sites);
 }
 
 // view
@@ -90,19 +91,19 @@ add_action(
 
 		add_submenu_page(
 			'jwp-a11y',
-			__('jwp-a11y Settings', 'jwp_a11y'),
-			__('jwp-a11y Settings', 'jwp_a11y'),
+			__('jwp-a11y Setting', 'jwp_a11y'),
+			__('jwp-a11y Setting', 'jwp_a11y'),
 			'edit_posts',
-			'jwp-a11y/jwp_a11y_settings',
-			array('\JwpA11y\Settings', 'front'));
+			'jwp-a11y/jwp_a11y_setting',
+			array('\JwpA11y\Setting', 'front'));
 
 		add_submenu_page(
 			'jwp-a11y',
-			__('Pages', 'jwp_a11y'),
-			__('Pages', 'jwp_a11y'),
+			__('Page', 'jwp_a11y'),
+			__('Page', 'jwp_a11y'),
 			'edit_posts',
-			'jwp-a11y/jwp_a11y_pages',
-			array('\JwpA11y\Pages', 'index'));
+			'jwp-a11y/jwp_a11y_page',
+			array('\JwpA11y\Page', 'index'));
 
 		add_submenu_page(
 			'jwp-a11y',
@@ -122,19 +123,19 @@ add_action(
 
 		add_submenu_page(
 			'jwp-a11y',
-			__('Accessibility Issues', 'jwp_a11y'),
-			__('Issues', 'jwp_a11y'),
+			__('Accessibility Issue', 'jwp_a11y'),
+			__('Issue', 'jwp_a11y'),
 			'edit_posts',
-			'jwp-a11y/jwp_a11y_issues',
-			array('\JwpA11y\Issues', 'routing'));
+			'jwp-a11y/jwp_a11y_issue',
+			array('\JwpA11y\Issue', 'routing'));
 
 		add_submenu_page(
 			'jwp-a11y',
-			\JwpA11y\Docs::title(),
-			__('Documents', 'jwp_a11y'),
+			\JwpA11y\Doc::title(),
+			__('Document', 'jwp_a11y'),
 			'edit_posts',
-			'jwp-a11y/jwp_a11y_docs',
-			array('\JwpA11y\docs', 'show'));
+			'jwp-a11y/jwp_a11y_doc',
+			array('\JwpA11y\Doc', 'show'));
 	});
 
 // header
@@ -187,8 +188,8 @@ add_action(
 		$url = $is_admin ? get_permalink($post->ID) : \A11yc\Util::uri();
 
 		// level
-		$result = \A11yc\Model\Pages::fetch($url);
-		$settings = \A11yc\Model\Settings::fetchAll();
+		$result = \A11yc\Model\Page::fetch($url);
+		$settings = \A11yc\Model\Setting::fetchAll();
 		if ( ! $result)
 		{
 			$level = '-';
@@ -261,8 +262,8 @@ add_action(
 	100);
 
 // shortcode
-add_shortcode("jwp_a11y_disclosure", array('\JwpA11y\Results', 'disclosure')); // lower compati
-add_shortcode("jwp_a11y_results", array('\JwpA11y\Results', 'disclosure'));
+add_shortcode("jwp_a11y_disclosure", array('\JwpA11y\Result', 'disclosure')); // lower compati
+add_shortcode("jwp_a11y_results", array('\JwpA11y\Result', 'disclosure'));
 
 // titles for disclosure
 add_filter( 'document_title_parts', function ($title)
@@ -400,5 +401,5 @@ add_filter(
 );
 
 /*
-drop table wp_jwp_a11yc_bchecks; drop table wp_jwp_a11yc_bresults; drop table wp_jwp_a11yc_caches; drop table wp_jwp_a11yc_checks; drop table wp_jwp_a11yc_issues; drop table wp_jwp_a11yc_issuesbbs; drop table wp_jwp_a11yc_maintenance; drop table wp_jwp_a11yc_pages; drop table wp_jwp_a11yc_results; drop table wp_jwp_a11yc_settings; drop table wp_jwp_a11yc_uas; drop table wp_jwp_a11yc_versions;
+drop table wp_jwp_a11yc_data; drop table wp_jwp_a11yc_bchecks; drop table wp_jwp_a11yc_bresults; drop table wp_jwp_a11yc_caches; drop table wp_jwp_a11yc_checks; drop table wp_jwp_a11yc_issues; drop table wp_jwp_a11yc_issuesbbs; drop table wp_jwp_a11yc_maintenance; drop table wp_jwp_a11yc_pages; drop table wp_jwp_a11yc_results; drop table wp_jwp_a11yc_settings; drop table wp_jwp_a11yc_uas; drop table wp_jwp_a11yc_versions;
 */

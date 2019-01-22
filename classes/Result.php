@@ -1,6 +1,6 @@
 <?php
 /**
- * \JwpA11y\Results
+ * \JwpA11y\Result
  *
  * @package    WordPress
  * @version    1.0
@@ -11,7 +11,7 @@
  */
 namespace JwpA11y;
 
-class Results extends \A11yc\Controller\Results
+class Result extends \A11yc\Controller\Result
 {
 
 	/**
@@ -23,7 +23,7 @@ class Results extends \A11yc\Controller\Results
 	 */
 	public static function disclosure($attrs, $content = null)
 	{
-		\A11yc\Controller\Results::index();
+		parent::index();
 		return \A11yc\View::fetch('body');
 	}
 }

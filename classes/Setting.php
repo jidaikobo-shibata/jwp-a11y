@@ -1,6 +1,6 @@
 <?php
 /**
- * \JwpA11y\Settings
+ * \JwpA11y\Setting
  *
  * @package    WordPress
  * @version    1.0
@@ -11,7 +11,7 @@
  */
 namespace JwpA11y;
 
-class Settings extends \A11yc\Controller\Settings
+class Setting extends \A11yc\Controller\Setting
 {
 	/**
 	 * Set up basic information
@@ -21,7 +21,7 @@ class Settings extends \A11yc\Controller\Settings
 	public static function front()
 	{
 		$action = \A11yc\Input::get('a');
-		if (in_array($action, array('ua', 'versions')))
+		if (in_array($action, array('ua', 'versions', 'sites')))
 		{
 			parent::$action();
 		}
@@ -49,13 +49,13 @@ class Settings extends \A11yc\Controller\Settings
 		$html = '';
 		$html.= '<div class="wrap">';
 		$html.= '<div id="icon-themes" class="icon32"><br /></div>';
-		$html.= '<h1>'.__("jwp-a11y Settings", "jwp_a11y").'</h1>';
+		$html.= '<h1>'.__("jwp-a11y Setting", "jwp_a11y").'</h1>';
 		$html.= '<div class="postbox" style="margin-top: 15px;">';
 		$html.= '<div class="inside">';
 		$html.= \A11yc\View::fetchTpl('messages.php');
 		$html.= \A11yc\View::fetch('submenu');
 
-		$html.= '<form action="'.\A11yc\Util::uri().'" method="POST" class="a11yc">';
+		$html.= '<form action="'.A11YC_SETTING_URL.'form" method="POST" class="a11yc">';
 		if ($action == 'versions')
 		{
 			$html.= \A11yc\View::fetch('protect_form');

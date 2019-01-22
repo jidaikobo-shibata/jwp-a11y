@@ -22,13 +22,13 @@ msgstr "<abbr title=\"Accessibility\">A11y</abbr> Center"
 msgid "Accessibility Center"
 msgstr "アクセシビリティ センター"
 
-msgid "Settings"
+msgid "Setting"
 msgstr "設定"
 
-msgid "jwp-a11y Settings"
+msgid "jwp-a11y Setting"
 msgstr "jwp-a11y 設定"
 
-msgid "Pages"
+msgid "Page"
 msgstr "ページ一覧"
 
 msgid "Checklist"
@@ -37,7 +37,7 @@ msgstr "チェックする"
 msgid "Accessibility Issues"
 msgstr "問題点"
 
-msgid "Issues"
+msgid "Issue"
 msgstr "問題点"
 
 msgid "Accessibility Bulk Checklist"
@@ -46,7 +46,7 @@ msgstr "一括処理"
 msgid "Bulk"
 msgstr "一括処理"
 
-msgid "Documents"
+msgid "Document"
 msgstr "参考資料"
 
 #:=== instruction ===

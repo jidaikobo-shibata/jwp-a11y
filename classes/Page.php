@@ -1,6 +1,6 @@
 <?php
 /**
- * \JwpA11y\Pages
+ * \JwpA11y\Page
  *
  * @package    WordPress
  * @version    1.0
@@ -11,7 +11,7 @@
  */
 namespace JwpA11y;
 
-class Pages extends \A11yc\Controller\Pages
+class Page extends \A11yc\Controller\Page
 {
 	/**
 	 * Manage Target Pages.
@@ -26,8 +26,8 @@ class Pages extends \A11yc\Controller\Pages
 			if (
 				! isset($_POST['jwp_a11y_nonce']) ||
 				(
-					! wp_verify_nonce($_POST['jwp_a11y_nonce'], 'jwp_a11y_pages_add') &&
-					! wp_verify_nonce($_POST['jwp_a11y_nonce'], 'jwp_a11y_pages_get')
+					! wp_verify_nonce($_POST['jwp_a11y_nonce'], 'jwp_a11y_page_add') &&
+					! wp_verify_nonce($_POST['jwp_a11y_nonce'], 'jwp_a11y_page_get')
 				)
 			)
 			{
@@ -39,17 +39,17 @@ class Pages extends \A11yc\Controller\Pages
 		// nonce
 		\A11yc\View::assign(
 			'add_nonce',
-			wp_nonce_field('jwp_a11y_pages_add', 'jwp_a11y_nonce', true, false),
+			wp_nonce_field('jwp_a11y_page_add', 'jwp_a11y_nonce', true, false),
 			false
 		);
 
 		\A11yc\View::assign(
 			'get_nonce',
-			wp_nonce_field('jwp_a11y_pages_get', 'jwp_a11y_nonce', true, false),
+			wp_nonce_field('jwp_a11y_page_get', 'jwp_a11y_nonce', true, false),
 			false
 		);
 
-		$ramdom_num = \A11yc\Input::post('jwp_a11y_pages_ramdom_add_num', 0);
+		$ramdom_num = \A11yc\Input::post('jwp_a11y_page_ramdom_add_num', 0);
 		if ($ramdom_num)
 		{
 			$args = array(
@@ -68,7 +68,7 @@ class Pages extends \A11yc\Controller\Pages
 				$n++;
 				if ($n >= $ramdom_num) break;
 			}
-			\A11yc\Controller\Pages\Add::addPages($is_force = false, $pages);
+			\A11yc\Controller\Page\Add::addPages($is_force = false, $pages);
 		}
 		// parent edit
 		elseif (\A11yc\Input::get('a') == 'edit')
@@ -78,7 +78,7 @@ class Pages extends \A11yc\Controller\Pages
 		// parent add
 		elseif (\A11yc\Input::get('a') == 'add')
 		{
-			\A11yc\Controller\Pages\Add::targetPages();
+			\A11yc\Controller\Page\Add::targetPages();
 		}
 		else
 		{
@@ -97,17 +97,17 @@ class Pages extends \A11yc\Controller\Pages
 
 		if (\A11yc\Input::get('a') == 'add')
 		{
-			$html.= '<form action="'.A11YC_PAGES_ADD_URL.'" method="POST">';
+			$html.= '<form action="'.A11YC_PAGE_URL.'add" method="POST">';
 			$html.= '<h2>'.__('Get Urls Ramdom (WordPress Pages Only)', 'jwp_a11y').'</h2>';
-			$html.= '<label for="jwp_a11y_pages_ramdom_add_num">'.__('Num', 'jwp_a11y').'</label> ';
-			$html.= '<select id="jwp_a11y_pages_ramdom_add_num" name="jwp_a11y_pages_ramdom_add_num">';
+			$html.= '<label for="jwp_a11y_page_ramdom_add_num">'.__('Num', 'jwp_a11y').'</label> ';
+			$html.= '<select id="jwp_a11y_page_ramdom_add_num" name="jwp_a11y_page_ramdom_add_num">';
 			for ($n = 1; $n <= 30; $n++)
 			{
 				$html.= '<option value="'.$n.'" />'.$n.'</option>';
 			}
 			$html.= '</select>';
 			$html.= \A11yc\View::fetch('add_nonce');
-			$html.= '<input type="submit" value="'.A11YC_LANG_PAGES_URLS_ADD.'" />';
+			$html.= '<input type="submit" value="'.A11YC_LANG_CTRL_SEND.'" />';
 			$html.= '</form>';
 		}
 
