@@ -27,7 +27,7 @@ class Setting extends \A11yc\Controller\Setting
 		}
 		else
 		{
-			parent::form();
+			parent::base();
 		}
 
 		if (\A11yc\Input::isPostExists())

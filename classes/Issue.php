@@ -56,7 +56,7 @@ class Issue extends \A11yc\Controller\Issue
 				$is_edit = true;
 				break;
 			case 'read':
-				\A11yc\Controller\Issue\Read::issue($users, $userinfo->ID, $is_admin);
+				\A11yc\Controller\IssueRead::issue($users, $userinfo->ID, $is_admin);
 				$is_edit = true;
 				break;
 			case 'delete':
@@ -66,7 +66,7 @@ class Issue extends \A11yc\Controller\Issue
 			case 'purge':
 				static::purge();
 			default:
-				\A11yc\Controller\Issue\Index::any(0);
+				\A11yc\Controller\IssueIndex::any(0);
 				break;
 		}
 
