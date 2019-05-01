@@ -6,11 +6,11 @@ Description: A plugin to check accessibility.  Help to generate Evaluation Repor
 Author: Jidaikobo Inc.
 Text Domain: jwp_a11y
 Domain Path: /languages/
-Version: 3.4.0
+Version: 4.0.0
 Author URI: http://www.jidaikobo.com/
 License: GPL2
 
-Copyright 2018 jidaikobo (email : support@jidaikobo.com)
+Copyright 2019 jidaikobo (email : support@jidaikobo.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License, version 2, as
@@ -49,6 +49,7 @@ load_plugin_textdomain(
 // classes
 include 'classes/Bulk.php';
 include 'classes/Center.php';
+include 'classes/Icl.php';
 include 'classes/Checklist.php';
 include 'classes/Result.php';
 include 'classes/Doc.php';
@@ -58,6 +59,7 @@ include 'classes/Validate.php';
 include 'classes/Uninstall.php';
 include 'classes/Upgrade.php';
 include 'classes/Issue.php';
+include 'classes/Download.php';
 
 // backup and version check, this must not run so frequently.
 if (\A11yc\Maintenance::isFisrtOfToday())
@@ -99,6 +101,14 @@ add_action(
 
 		add_submenu_page(
 			'jwp-a11y',
+			__('<abbr title="Inplement Check List">ICL</abbr>', 'jwp_a11y'),
+			__('<abbr title="Inplement Check List">ICL</abbr>', 'jwp_a11y'),
+			'edit_posts',
+			'jwp-a11y/jwp_a11y_icl',
+			array('\JwpA11y\Icl', 'index'));
+
+		add_submenu_page(
+			'jwp-a11y',
 			__('Page', 'jwp_a11y'),
 			__('Page', 'jwp_a11y'),
 			'edit_posts',
@@ -128,6 +138,14 @@ add_action(
 			'edit_posts',
 			'jwp-a11y/jwp_a11y_issue',
 			array('\JwpA11y\Issue', 'routing'));
+
+		add_submenu_page(
+			'jwp-a11y',
+			__('Download Issue', 'jwp_a11y'),
+			__('Download Issue', 'jwp_a11y'),
+			'edit_posts',
+			'jwp-a11y/jwp_a11y_download',
+			array('\JwpA11y\Download', 'issue'));
 
 		add_submenu_page(
 			'jwp-a11y',
@@ -399,7 +417,3 @@ add_filter(
 	},
 	20
 );
-
-/*
-drop table wp_jwp_a11yc_data; drop table wp_jwp_a11yc_bchecks; drop table wp_jwp_a11yc_bresults; drop table wp_jwp_a11yc_caches; drop table wp_jwp_a11yc_checks; drop table wp_jwp_a11yc_issues; drop table wp_jwp_a11yc_issuesbbs; drop table wp_jwp_a11yc_maintenance; drop table wp_jwp_a11yc_pages; drop table wp_jwp_a11yc_results; drop table wp_jwp_a11yc_settings; drop table wp_jwp_a11yc_uas; drop table wp_jwp_a11yc_versions;
-*/

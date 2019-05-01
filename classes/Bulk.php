@@ -38,6 +38,7 @@ class Bulk
 		}
 		$html.= '<form action="'.\A11yc\Util::uri().'" method="POST">';
 
+		\A11yc\Controller\Bulk::check('bulk');
 		\A11yc\Controller\Bulk::form('bulk', $users, $userinfo->ID);
 		$html.= \A11yc\View::fetch('form');
 		$html.= '<div id="a11yc_submit">';

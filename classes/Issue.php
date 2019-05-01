@@ -45,7 +45,7 @@ class Issue extends \A11yc\Controller\Issue
 			}
 		}
 
-		switch (\A11yc\Input::get('a', ''))
+		switch ($action = \A11yc\Input::get('a', 'yet'))
 		{
 			case 'add':
 				static::edit($is_add = true, $users, $userinfo->ID);
@@ -60,13 +60,22 @@ class Issue extends \A11yc\Controller\Issue
 				$is_edit = true;
 				break;
 			case 'delete':
-				static::delete();
+				static::actionDelete();
 			case 'undelete':
-				static::undelete();
+				static::actionUndelete();
 			case 'purge':
-				static::purge();
+				static::actionPurge();
+			case 'index':
+				static::failures();
+				break;
 			default:
-				\A11yc\Controller\IssueIndex::any(0);
+				$issue_types = array(
+					'yet'      => 0,
+					'progress' => 1,
+					'done'     => 2,
+					'trash'    => 3,
+				);
+				\A11yc\Controller\IssueIndex::any($issue_types[$action]);
 				break;
 		}
 

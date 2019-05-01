@@ -127,6 +127,7 @@ class Checklist extends \A11yc\Controller\Checklist
 		{
 			$users[$v->data->ID] = esc_html($v->data->user_nicename);
 		}
+		parent::check($url);
 		parent::form($url, $users, $userinfo->ID);
 
 		$page = \A11yc\View::fetch('page');

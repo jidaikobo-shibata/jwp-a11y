@@ -28,6 +28,9 @@ msgstr "設定"
 msgid "jwp-a11y Setting"
 msgstr "jwp-a11y 設定"
 
+msgid "<abbr title=\"Inplement Check List\">ICL</abbr>"
+msgstr "実装チェックリスト"
+
 msgid "Page"
 msgstr "ページ一覧"
 
