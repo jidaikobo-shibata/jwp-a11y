@@ -70,15 +70,24 @@ class Page extends \A11yc\Controller\Page
 			}
 			\A11yc\Controller\Page\Add::addPages($is_force = false, $pages);
 		}
+
 		// parent edit
 		elseif (\A11yc\Input::get('a') == 'edit')
 		{
 			parent::edit();
 		}
+
 		// parent add
 		elseif (\A11yc\Input::get('a') == 'add')
 		{
-			\A11yc\Controller\Page\Add::targetPages();
+			\A11yc\Controller\PageAdd::targetPages();
+		}
+
+		// update html
+		elseif (\A11yc\Input::get('a') == 'updatehtml')
+		{
+			$url = \A11yc\Util::enuniqueUri(\A11yc\Input::param('url', ''));
+			\A11yc\Controller\PageUpdate::updateHtml($url);
 		}
 		else
 		{

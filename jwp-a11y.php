@@ -6,7 +6,7 @@ Description: A plugin to check accessibility.  Help to generate Evaluation Repor
 Author: Jidaikobo Inc.
 Text Domain: jwp_a11y
 Domain Path: /languages/
-Version: 4.0.0
+Version: 4.0.1
 Author URI: http://www.jidaikobo.com/
 License: GPL2
 
@@ -60,6 +60,8 @@ include 'classes/Uninstall.php';
 include 'classes/Upgrade.php';
 include 'classes/Issue.php';
 include 'classes/Download.php';
+include 'classes/Image.php';
+include 'classes/Live.php';
 
 // backup and version check, this must not run so frequently.
 if (\A11yc\Maintenance::isFisrtOfToday())
@@ -141,19 +143,44 @@ add_action(
 
 		add_submenu_page(
 			'jwp-a11y',
-			__('Download Issue', 'jwp_a11y'),
-			__('Download Issue', 'jwp_a11y'),
-			'edit_posts',
-			'jwp-a11y/jwp_a11y_download',
-			array('\JwpA11y\Download', 'issue'));
-
-		add_submenu_page(
-			'jwp-a11y',
 			\JwpA11y\Doc::title(),
 			__('Document', 'jwp_a11y'),
 			'edit_posts',
 			'jwp-a11y/jwp_a11y_doc',
 			array('\JwpA11y\Doc', 'show'));
+
+
+		add_submenu_page(
+			'jwp-a11y',
+			__('Download Issue', 'jwp_a11y'),
+			__('Download Issue', 'jwp_a11y'),
+			'edit_posts',
+			'jwp-a11y/jwp_a11y_download',
+			array('\JwpA11y\Download', 'index'));
+
+		add_submenu_page(
+			'jwp-a11y',
+			__('Show Result', 'jwp_a11y'),
+			__('Show Result', 'jwp_a11y'),
+			'edit_posts',
+			'jwp-a11y/jwp_a11y_result',
+			array('\JwpA11y\Result', 'index'));
+
+		add_submenu_page(
+			'jwp-a11y',
+			__('Show Images', 'jwp_a11y'),
+			__('Show Images', 'jwp_a11y'),
+			'edit_posts',
+			'jwp-a11y/jwp_a11y_image',
+			array('\JwpA11y\Image', 'view'));
+
+		add_submenu_page(
+			'jwp-a11y',
+			__('Show Live', 'jwp_a11y'),
+			__('Show Live', 'jwp_a11y'),
+			'edit_posts',
+			'jwp-a11y/jwp_a11y_live',
+			array('\JwpA11y\Live', 'view'));
 	});
 
 // header
@@ -364,6 +391,7 @@ add_action(
     $current_plugin_path_name = plugin_basename( __FILE__ );
 		if ($options['action'] == 'update' && $options['type'] == 'plugin' )
 		{
+			if ( ! isset($options['plugins'])) continue;
 			foreach($options['plugins'] as $each_plugin)
 			{
 				if ($each_plugin == $current_plugin_path_name)

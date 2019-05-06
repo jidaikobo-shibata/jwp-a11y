@@ -81,7 +81,7 @@ define('A11YC_DATA_URL',        $urlbase.'jwp_a11y_data&amp;a=');
 define('A11YC_DOWNLOAD_URL',    $urlbase.'jwp_a11y_download&amp;a=');
 define('A11YC_ICL_URL',         $urlbase.'jwp_a11y_icl&amp;a=');
 define('A11YC_CHECKLIST_URL',   $urlbase.'jwp_a11y_checklist&amp;a=check&amp;url=');
-define('A11YC_RESULT_EACH_URL', $urlbase.'jwp_a11y_result&amp;a=each&amp;url=');
+define('A11YC_RESULT_EACH_URL', $urlbase.'jwp_a11y_result&amp;a=each&amp;a11yc_each=1&amp;url=');
 define('A11YC_IMAGELIST_URL',   $urlbase.'jwp_a11y_image&amp;a=view&amp;url=');
 define('A11YC_DOC_URL',         $urlbase.'jwp_a11y_doc&amp;a=each&amp;criterion=');
 define('A11YC_LIVE_URL',        $urlbase.'jwp_a11y_live&amp;a=view&amp;url=');

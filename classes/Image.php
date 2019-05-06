@@ -1,6 +1,6 @@
 <?php
 /**
- * \JwpA11y\Result
+ * \JwpA11y\Image
  *
  * @package    WordPress
  * @version    1.0
@@ -11,35 +11,22 @@
  */
 namespace JwpA11y;
 
-class Result extends \A11yc\Controller\Result
+class Image extends \A11yc\Controller\Image
 {
 	/**
-	 * shortcode for disclosure page
+	 * view
 	 *
-	 * @param   array  $attrs
-	 * @param   string $content
-	 * @return  string
-	 */
-	public static function disclosure($attrs, $content = null)
-	{
-		$action = \A11yc\Input::get('a11yc_page', '').\A11yc\Input::get('a11yc_each', '');
-		parent::report(home_url(), empty($action));
-		return \A11yc\View::fetch('body');
-	}
-
-	/**
-	 * results
-	 *
+	 * @param String $url
 	 * @return Void
 	 */
-	public static function index()
+	public static function view($url)
 	{
-		parent::report(home_url());
+		parent::view(\A11yc\Util::enuniqueUri(\A11yc\Input::param('url', '')));
 
 		$html = '';
 		$html.= '<div class="wrap">';
 		$html.= '<div id="icon-themes" class="icon32"><br /></div>';
-//		$html.= '<h1>'.self::title().'</h1>';
+		$html.= '<h1>Image List</h1>';
 		$html.= '<div class="postbox" style="margin-top: 15px;">';
 		$html.= '<div class="inside">';
 		$html.= \A11yc\View::fetchTpl('messages.php');

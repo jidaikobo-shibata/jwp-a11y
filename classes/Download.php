@@ -13,4 +13,24 @@ namespace JwpA11y;
 
 class Download extends \A11yc\Controller\Download
 {
+	/**
+	 * index
+	 *
+	 * @return Void
+	 */
+	public static function index()
+	{
+    if (\A11yc\Input::get('a') == 'issue')
+    {
+      // trait: DownloadIssue
+      static::issue();
+    }
+    else
+    {
+      // trait: DownloadCsv
+      static::csv();
+    }
+
+	}
+
 }

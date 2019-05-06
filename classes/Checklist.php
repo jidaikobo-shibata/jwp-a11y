@@ -98,10 +98,6 @@ class Checklist extends \A11yc\Controller\Checklist
 				return A11YC_LANG_CHECKLIST_TITLE;
 			case 'images':
 				return A11YC_LANG_IMAGES_TITLE;
-			case 'csv':
-				return A11YC_LANG_EXPORT_ERRORS_CSV;
-			case 'view':
-				return A11YC_LANG_PAGES_LIVE;
 			default:
 				return A11YC_LANG_CHECKLIST_TITLE;
 		}

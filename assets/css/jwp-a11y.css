@@ -140,7 +140,11 @@ li.dashicons.dashicons-yes>a:before
 /* hide menu item */
 
 #adminmenu .wp-submenu li a[href$="page=jwp-a11y"],
-#adminmenu .wp-submenu li a[href$="jwp_a11y_checklist"]
+#adminmenu .wp-submenu li a[href$="jwp_a11y_checklist"],
+#adminmenu .wp-submenu li a[href$="jwp_a11y_download"],
+#adminmenu .wp-submenu li a[href$="jwp_a11y_result"],
+#adminmenu .wp-submenu li a[href$="jwp_a11y_live"],
+#adminmenu .wp-submenu li a[href$="jwp_a11y_image"]
 {
 	display: none;
 }
