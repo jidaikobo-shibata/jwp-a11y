@@ -391,12 +391,14 @@ add_action(
     $current_plugin_path_name = plugin_basename( __FILE__ );
 		if ($options['action'] == 'update' && $options['type'] == 'plugin' )
 		{
-			if ( ! isset($options['plugins'])) continue;
-			foreach($options['plugins'] as $each_plugin)
+			if (isset($options['plugins']) && is_array($options['plugins']))
 			{
-				if ($each_plugin == $current_plugin_path_name)
+				foreach($options['plugins'] as $each_plugin)
 				{
-					\JwpA11y\Upgrade::upgrade();
+					if ($each_plugin == $current_plugin_path_name)
+					{
+						\JwpA11y\Upgrade::upgrade();
+					}
 				}
 			}
 		}
