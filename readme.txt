@@ -47,6 +47,9 @@ thx:
 
 == Changelog ==
 
+= 4.0.2 =
+fix wrong class name
+
 = 4.0.1 =
 fix some tiny bugs and MySQL field size problem
 
