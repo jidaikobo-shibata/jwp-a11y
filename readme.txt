@@ -2,9 +2,9 @@
 Contributors: jidaikobo
 Donate link: https://www.jidaikobo.com/donate.html
 Tags: accessibility, checker, WCAG, JIS X 8341-3
-Requires PHP: 5.4.0
+Requires PHP: 5.6.0
 Requires at least: 4.8.3
-Tested up to: 5.1.1
+Tested up to: 5.2.2
 Stable tag: 4.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -18,9 +18,9 @@ Check accessibility of target page and generate accessibility evaluate page and 
 
 Check accessibility of target page and generate accessibility evaluate page and policy.
 
-"Accessibility policy" and "accessibility report" required by WCAG 2.0 and JIS X 8341-3:2016 can be created. to use this, need PHP 5.6.
+"Accessibility policy" and "accessibility report" required by WCAG 2.0 and JIS X 8341-3:2016 can be created.
 
-When installing the plug-in, you can automatically check individual posts when saving, so that you can constantly manage the site with accessibility awareness. to use this, need PHP 5.3.
+When installing the plug-in, you can automatically check individual posts when saving, so that you can constantly manage the site with accessibility awareness.
 
 [translate by using GlotPress](https://translate.wordpress.org/projects/wp-plugins/jwp-a11y)
 
@@ -46,6 +46,9 @@ thx:
 2. Checklist - ja
 
 == Changelog ==
+
+= 4.0.3 =
+fix wrong class name: CssFormat
 
 = 4.0.2 =
 fix wrong class name
