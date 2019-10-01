@@ -22,8 +22,9 @@ class Result extends \A11yc\Controller\Result
 	 */
 	public static function disclosure($attrs, $content = null)
 	{
+		global $post;
 		$action = \A11yc\Input::get('a11yc_page', '').\A11yc\Input::get('a11yc_each', '');
-		parent::report(home_url(), empty($action));
+		parent::report(get_permalink($post->ID), empty($action));
 		return \A11yc\View::fetch('body');
 	}
 
