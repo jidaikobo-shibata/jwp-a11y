@@ -47,6 +47,9 @@ thx:
 
 == Changelog ==
 
+= 4.0.5 =
+fix unused upgrade method
+
 = 4.0.4 =
 fix report page
 
