@@ -21,7 +21,7 @@ class Upgrade
 	public static function upgrade()
 	{
 //		static::mysql2sqlite();
-		static::sqlite2mysql();
+//		static::sqlite2mysql();
 	}
 
 	/**
@@ -31,6 +31,7 @@ class Upgrade
 	 */
 	private static function sqlite2mysql()
 	{
+		if ( ! defined(A11YC_TABLE_SETUP)) return;
 		if ( ! file_exists(A11YC_DATA_PATH.A11YC_DATA_FILE)) return;
 
 		// 現在のDBにsetupが一行あれば移設は行わない
