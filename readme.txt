@@ -4,7 +4,7 @@ Donate link: https://www.jidaikobo.com/donate.html
 Tags: accessibility, checker, WCAG, JIS X 8341-3
 Requires PHP: 5.6.0
 Requires at least: 4.8.3
-Tested up to: 5.2.3
+Tested up to: 5.3
 Stable tag: 4.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -46,6 +46,10 @@ thx:
 2. Checklist - ja
 
 == Changelog ==
+
+= 4.0.6 =
+fix redirect trouble
+fix in case filter_input(INPUT_SERVER) is not working
 
 = 4.0.5 =
 fix unused upgrade method
