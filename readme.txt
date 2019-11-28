@@ -47,6 +47,9 @@ thx:
 
 == Changelog ==
 
+= 4.0.7 =
+fix add page function by using admin tool bar
+
 = 4.0.6 =
 fix redirect trouble
 fix in case filter_input(INPUT_SERVER) is not working
