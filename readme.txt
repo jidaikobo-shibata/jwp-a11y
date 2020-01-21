@@ -4,7 +4,7 @@ Donate link: https://www.jidaikobo.com/donate.html
 Tags: accessibility, checker, WCAG, JIS X 8341-3
 Requires PHP: 5.6.0
 Requires at least: 4.8.3
-Tested up to: 5.3
+Tested up to: 5.3.2
 Stable tag: 4.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -46,6 +46,9 @@ thx:
 2. Checklist - ja
 
 == Changelog ==
+
+= 4.0.8 =
+fix some messages
 
 = 4.0.7 =
 fix add page function by using admin tool bar
