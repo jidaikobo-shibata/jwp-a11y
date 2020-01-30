@@ -47,6 +47,9 @@ thx:
 
 == Changelog ==
 
+= 4.0.9 =
+fix english resource lack
+
 = 4.0.8 =
 fix some messages
 
