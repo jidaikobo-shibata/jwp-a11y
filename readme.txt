@@ -47,6 +47,9 @@ thx:
 
 == Changelog ==
 
+= 4.1.0 =
+fix template bug
+
 = 4.0.9 =
 fix english resource lack
 

@@ -6,11 +6,11 @@ Description: A plugin to check accessibility.  Help to generate Evaluation Repor
 Author: Jidaikobo Inc.
 Text Domain: jwp_a11y
 Domain Path: /languages/
-Version: 4.0.9
+Version: 4.1.0
 Author URI: http://www.jidaikobo.com/
 License: GPL2
 
-Copyright 2019 jidaikobo (email : support@jidaikobo.com)
+Copyright 2020 jidaikobo (email : support@jidaikobo.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License, version 2, as
