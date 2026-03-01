@@ -51,9 +51,13 @@ thx:
 == Changelog ==
 
 = 5.0.0 =
-refocus on WordPress editor accessibility checks
+refocus the plugin on WordPress editor accessibility checks
+stop creating plugin tables automatically on new installs
+support validation notices in the block editor after saving posts
+keep document/help pages available without legacy plugin tables
 disable legacy high-risk admin screens in the WordPress plugin
-improve WordPress admin security hardening
+harden WordPress admin security (XSS, CSRF, permissions, redirects)
+update WordPress and PHP requirement metadata
 
 = 4.1.7 =
 fix PHP 8.0 Deprecated errors again
