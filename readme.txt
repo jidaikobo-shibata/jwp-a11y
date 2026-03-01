@@ -12,15 +12,18 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 [![WP compatibility](https://plugintests.com/plugins/jwp-a11y/wp-badge.svg)](https://plugintests.com/plugins/jwp-a11y/latest)
 [![PHP compatibility](https://plugintests.com/plugins/jwp-a11y/php-badge.svg)](https://plugintests.com/plugins/jwp-a11y/latest)
 
-Check accessibility of target page and generate accessibility evaluate page and policy.
+Check the accessibility of WordPress post content while editing.
+WordPress の投稿内容を編集時にチェックし、アクセシビリティ上の問題を確認できます。
 
 == Description ==
 
-Check accessibility of target page and generate accessibility evaluate page and policy.
+This plugin checks the accessibility of WordPress post content and helps editors find issues while writing and updating posts.
 
-"Accessibility policy" and "accessibility report" required by WCAG 2.0 and JIS X 8341-3:2016 can be created.
+It is designed to support day-to-day content editing by analyzing post content when editing or saving, so accessibility issues can be noticed earlier in the publishing workflow.
 
-When installing the plug-in, you can automatically check individual posts when saving, so that you can constantly manage the site with accessibility awareness.
+このプラグインは、WordPress の投稿内容を対象にアクセシビリティをチェックし、編集時に問題を見つけやすくするためのものです。
+
+投稿の編集時や保存時に内容を解析し、公開前の段階でアクセシビリティ上の問題に気づけるよう支援します。
 
 [translate by using GlotPress](https://translate.wordpress.org/projects/wp-plugins/jwp-a11y)
 

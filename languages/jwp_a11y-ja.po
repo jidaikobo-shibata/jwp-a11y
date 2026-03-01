@@ -8,8 +8,8 @@ msgstr ""
 
 # msgfmt -o ./jwp_a11y-ja.mo ./jwp_a11y-ja.po
 
-msgid "A plugin to check accessibility.  Help to generate Evaluation Report (need PHP 5.6) and Check each posts (can be used PHP 5.3).  with consideration for the JIS X 8341-3:2016 and WCAG 2.0."
-msgstr "WCAG 2.0 と JIS X 8341-3:2016 に配慮したサイト構築をたすけるプラグインです。アクセシビリティ方針、アクセシビリティ報告書の作成支援（要PHP 5.6）と、個々の投稿のアクセシビリティチェックを行います（要PHP 5.3）。"
+msgid "Check the accessibility of WordPress post content and point out issues while editing. WordPress の投稿内容を対象にアクセシビリティ上の問題をチェックします。"
+msgstr "WordPress の投稿内容を対象に、編集時にアクセシビリティ上の問題をチェックして指摘するプラグインです。"
 
 msgid "Jidaikobo Inc."
 msgstr "時代工房"
