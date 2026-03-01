@@ -1,0 +1,101 @@
+# jwp_a11y
+msgid ""
+msgstr ""
+"Project-Id-Version: jwp_a11y\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# msgfmt -o ./jwp_a11y-ja.mo ./jwp_a11y-ja.po
+
+msgid "A plugin to check accessibility.  Help to generate Evaluation Report (need PHP 5.6) and Check each posts (can be used PHP 5.3).  with consideration for the JIS X 8341-3:2016 and WCAG 2.0."
+msgstr "WCAG 2.0 と JIS X 8341-3:2016 に配慮したサイト構築をたすけるプラグインです。アクセシビリティ方針、アクセシビリティ報告書の作成支援（要PHP 5.6）と、個々の投稿のアクセシビリティチェックを行います（要PHP 5.3）。"
+
+msgid "Jidaikobo Inc."
+msgstr "時代工房"
+
+#:=== menu strings ===
+
+msgid "<abbr title=\"Accessibility\">A11y</abbr> Center"
+msgstr "<abbr title=\"Accessibility\">A11y</abbr> Center"
+
+msgid "Accessibility Center"
+msgstr "アクセシビリティ センター"
+
+msgid "Setting"
+msgstr "設定"
+
+msgid "jwp-a11y Setting"
+msgstr "jwp-a11y 設定"
+
+msgid "<abbr title=\"Inplement Check List\">ICL</abbr>"
+msgstr "実装チェックリスト"
+
+msgid "Page"
+msgstr "ページ一覧"
+
+msgid "Checklist"
+msgstr "チェックする"
+
+msgid "Accessibility Issues"
+msgstr "問題点"
+
+msgid "Issue"
+msgstr "問題点"
+
+msgid "Accessibility Bulk Checklist"
+msgstr "一括処理"
+
+msgid "Bulk"
+msgstr "一括処理"
+
+msgid "Document"
+msgstr "参考資料"
+
+#:=== instruction ===
+
+msgid "To show accessibility information: <code>[jwp_a11y_results]</code>"
+msgstr "アクセシビリティ方針、報告書等を表示するページには、次のショートコードを入れてください: <code>[jwp_a11y_results]</code>"
+
+msgid "Specify URL"
+msgstr "URLを指定してください"
+
+#:=== admin bar ===
+
+msgid "Check here by jwp-a11yc"
+msgstr "jwp-a11ycでこのページのチェックを行う"
+
+msgid "Accessibility Check"
+msgstr "アクセシビリティ チェック"
+
+msgid "Check and Edit"
+msgstr "編集画面でチェック"
+
+msgid "Go to edit page and do accessibility check"
+msgstr "編集画面に行き、アクセシビリティのチェックも行う"
+
+msgid " (current: "
+msgstr " (現状: "
+
+msgid "Not added yet"
+msgstr "未登録"
+
+msgid "In checking"
+msgstr "チェック中"
+
+msgid "Additional Accessibility Check"
+msgstr "追加アクセシビリティチェック"
+
+#:=== dashboard ===
+
+msgid "Ramdom Accessibility Check"
+msgstr "ランダムアクセシビリティチェック"
+
+msgid "Let us set target level"
+msgstr "アクセシビリティの目標適合レベルを設定しましょう"
+
+msgid "Get Urls Ramdom (WordPress Pages Only)"
+msgstr "ランダムにウェブページを取得する（WordPressで管理されているページ）"
+
+msgid "Num"
+msgstr "ページ数"
