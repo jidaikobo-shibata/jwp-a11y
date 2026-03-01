@@ -6,7 +6,7 @@ Description: Check the accessibility of WordPress post content and point out iss
 Author: Jidaikobo Inc.
 Text Domain: jwp_a11y
 Domain Path: /languages/
-Version: 4.1.7
+Version: 5.0.0
 Requires at least: 6.0
 Requires PHP: 7.4
 Author URI: https://www.jidaikobo.com/

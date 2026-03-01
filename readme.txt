@@ -5,7 +5,7 @@ Tags: accessibility, checker, WCAG, JIS X 8341-3
 Requires PHP: 7.4
 Requires at least: 6.0
 Tested up to: 6.8
-Stable tag: 4.9
+Stable tag: 5.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,11 @@ thx:
 2. Checklist - ja
 
 == Changelog ==
+
+= 5.0.0 =
+refocus on WordPress editor accessibility checks
+disable legacy high-risk admin screens in the WordPress plugin
+improve WordPress admin security hardening
 
 = 4.1.7 =
 fix PHP 8.0 Deprecated errors again
