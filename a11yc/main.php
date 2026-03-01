@@ -70,21 +70,25 @@ $skip_db_bootstrap = defined('A11YC_SKIP_DB_BOOTSTRAP') && A11YC_SKIP_DB_BOOTSTR
 if ( ! $skip_db_bootstrap)
 {
 	Db::initTable();
+	$has_data_table = Db::hasDataTable();
 
-	// update
-	Update::check();
-
-	// setup
-	if ( ! defined('A11YC_IS_GUEST_VALIDATION') && KONTIKI_DB_TYPE != 'none')
+	if ($has_data_table)
 	{
-		if ( ! Input::post('target_level') && ! Arr::get(Model\Setting::fetchAll(), 'target_level'))
-		{
-			Session::add('messages', 'errors', A11YC_LANG_ERROR_NON_TARGET_LEVEL);
-		}
+		// update
+		Update::check();
 
-		if (Model\Version::current() != 0)
+		// setup
+		if ( ! defined('A11YC_IS_GUEST_VALIDATION') && KONTIKI_DB_TYPE != 'none')
 		{
-			Session::add('messages', 'errors', A11YC_LANG_SETTING_VERSION_ALERT);
+			if ( ! Input::post('target_level') && ! Arr::get(Model\Setting::fetchAll(), 'target_level'))
+			{
+				Session::add('messages', 'errors', A11YC_LANG_ERROR_NON_TARGET_LEVEL);
+			}
+
+			if (Model\Version::current() != 0)
+			{
+				Session::add('messages', 'errors', A11YC_LANG_SETTING_VERSION_ALERT);
+			}
 		}
 	}
 }

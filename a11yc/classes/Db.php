@@ -16,6 +16,48 @@ class Db extends \Kontiki\Db
 {
 	protected static $version = null;
 
+	public static function hasDataTable($name = 'default')
+	{
+		if (A11YC_DB_TYPE == 'none') return false;
+		return static::isTableExist(A11YC_TABLE_DATA, $name);
+	}
+
+	public static function hasLegacyTables($name = 'default')
+	{
+		if (A11YC_DB_TYPE == 'none') return false;
+
+		$tables = array(
+			A11YC_TABLE_SETUP_OLD,
+			A11YC_TABLE_PAGES_OLD,
+			A11YC_TABLE_CHECKS_OLD,
+			A11YC_TABLE_CHECKS_NGS_OLD,
+			A11YC_TABLE_BULK_OLD,
+			A11YC_TABLE_BULK_NGS_OLD,
+			A11YC_TABLE_MAINTENANCE_OLD,
+			A11YC_TABLE_PAGES,
+			A11YC_TABLE_UAS,
+			A11YC_TABLE_CACHES,
+			A11YC_TABLE_VERSIONS,
+			A11YC_TABLE_RESULTS,
+			A11YC_TABLE_BRESULTS,
+			A11YC_TABLE_CHECKS,
+			A11YC_TABLE_BCHECKS,
+			A11YC_TABLE_BNGS,
+			A11YC_TABLE_ISSUES,
+			A11YC_TABLE_ISSUESBBS,
+			A11YC_TABLE_SETTINGS,
+			A11YC_TABLE_MAINTENANCE,
+			A11YC_TABLE_ICLS,
+			A11YC_TABLE_ICLSSIT,
+		);
+
+		foreach ($tables as $table)
+		{
+			if (static::isTableExist($table, $name)) return true;
+		}
+		return false;
+	}
+
 	/**
 	 * init table
 	 *
@@ -26,8 +68,12 @@ class Db extends \Kontiki\Db
 	{
 		if (A11YC_DB_TYPE == 'none') return;
 		// init default tables
-		if (static::isTableExist(A11YC_TABLE_DATA, $name)) return;
-		if (defined('A11YC_AUTO_CREATE_TABLES') && A11YC_AUTO_CREATE_TABLES === false) return;
+		if (static::hasDataTable($name)) return;
+		if (
+			defined('A11YC_AUTO_CREATE_TABLES') &&
+			A11YC_AUTO_CREATE_TABLES === false &&
+			! static::hasLegacyTables($name)
+		) return;
 		self::initDefault($name);
 	}
 

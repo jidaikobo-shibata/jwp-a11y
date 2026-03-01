@@ -22,6 +22,13 @@ define('A11YC_DB_USER', DB_USER);
 define('A11YC_DB_HOST', DB_HOST);
 define('A11YC_DB_PASSWORD', DB_PASSWORD);
 
+// New installs should not create plugin tables by default. Existing installs
+// that already have jwp-a11y tables can still bootstrap them.
+if ( ! defined('A11YC_AUTO_CREATE_TABLES'))
+{
+	define('A11YC_AUTO_CREATE_TABLES', false);
+}
+
 // for css and js
 define('A11YC_ASSETS_URL', plugins_url('jwp-a11y').'/assets');
 

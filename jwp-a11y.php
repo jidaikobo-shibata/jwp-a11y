@@ -72,29 +72,36 @@ include 'classes/Download.php';
 include 'classes/Image.php';
 include 'classes/Live.php';
 
+$a11yc_has_data_store = \A11yc\Db::hasDataTable();
+
 // backup and version check, this must not run so frequently.
-if (\A11yc\Maintenance::isFisrtOfToday())
+if ($a11yc_has_data_store && \A11yc\Maintenance::isFisrtOfToday())
 {
 	// security check
 	\A11yc\Security::denyHttpDirectories();
 }
 
 // base url
-$base_url = \A11yc\Model\Data::baseUrl();
-if ($base_url == 'https://example.com')
+if ($a11yc_has_data_store)
 {
-	$sites[] = \A11yc\Util::urldec(home_url());
-	\A11yc\Model\Data::update('sites', 'global', $sites);
+	$base_url = \A11yc\Model\Data::baseUrl();
+	if ($base_url == 'https://example.com')
+	{
+		$sites[] = \A11yc\Util::urldec(home_url());
+		\A11yc\Model\Data::update('sites', 'global', $sites);
+	}
 }
 
 // view
 \A11yc\View::addTplPath(__DIR__.'/views');
 
 // admin_menu
-add_action(
-	'admin_menu',
-	function ()
-	{
+if ($a11yc_has_data_store)
+{
+	add_action(
+		'admin_menu',
+		function ()
+		{
 		add_menu_page(
 			__('Accessibility Center', 'jwp_a11y'),
 			__("<abbr title=\"Accessibility\">A11y</abbr> Center", "jwp_a11y"),
@@ -190,7 +197,8 @@ add_action(
 			'edit_posts',
 			'jwp-a11y/jwp_a11y_live',
 			array('\JwpA11y\Live', 'view'));
-	});
+		});
+}
 
 // header
 function jwp_a11y_enqueue_styles()
@@ -227,10 +235,12 @@ add_action('admin_enqueue_scripts', 'jwp_a11y_enqueue_styles');
 add_action('admin_enqueue_scripts', 'jwp_a11y_enqueue_scripts');
 
 // admin bar
-add_action(
-	'admin_bar_menu',
-	function ($wp_admin_bar)
-	{
+if ($a11yc_has_data_store)
+{
+	add_action(
+		'admin_bar_menu',
+		function ($wp_admin_bar)
+		{
 		global $post;
 
 		// not for list or so
@@ -312,16 +322,22 @@ add_action(
 				)
 				));
 		}
-	},
-	100);
+		},
+		100);
+}
 
 // shortcode
-add_shortcode("jwp_a11y_disclosure", array('\JwpA11y\Result', 'disclosure')); // lower compati
-add_shortcode("jwp_a11y_results", array('\JwpA11y\Result', 'disclosure'));
+if ($a11yc_has_data_store)
+{
+	add_shortcode("jwp_a11y_disclosure", array('\JwpA11y\Result', 'disclosure')); // lower compati
+	add_shortcode("jwp_a11y_results", array('\JwpA11y\Result', 'disclosure'));
+}
 
 // titles for disclosure
-add_filter( 'document_title_parts', function ($title)
+if ($a11yc_has_data_store)
 {
+	add_filter( 'document_title_parts', function ($title)
+	{
 	if (\A11yc\Input::get('a11yc_report'))
 	{
 		$title['title'] = A11YC_LANG_REPORT;
@@ -340,9 +356,10 @@ add_filter( 'document_title_parts', function ($title)
 		$title['title'] = A11YC_LANG_TEST_RESULT.': '.\A11yc\Util::s($page_title);
 	}
 	return $title;
-},
-	PHP_INT_MAX
-);
+	},
+		PHP_INT_MAX
+	);
+}
 
 // non save_post check
 add_action('admin_head', array('\JwpA11y\Validate', 'non_post_validate'));
@@ -356,7 +373,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], 'post.php') !== false)
 }
 
 // custom field for link check
-if (\A11yc\Guzzle::envCheck())
+if ($a11yc_has_data_store && \A11yc\Guzzle::envCheck())
 {
 	add_action('admin_menu', 'jwp_a11y_add_custom_box');
 	function jwp_a11y_add_custom_box()
@@ -393,10 +410,12 @@ if (function_exists('register_uninstall_hook'))
 }
 
 // upgrade
-add_action(
-	'upgrader_process_complete',
-	function ($upgrader_object, $options)
-	{
+if ($a11yc_has_data_store)
+{
+	add_action(
+		'upgrader_process_complete',
+		function ($upgrader_object, $options)
+		{
     $current_plugin_path_name = plugin_basename( __FILE__ );
 		if ($options['action'] == 'update' && $options['type'] == 'plugin' )
 		{
@@ -411,10 +430,11 @@ add_action(
 				}
 			}
 		}
-	},
-	10,
-	2
-);
+		},
+		10,
+		2
+	);
+}
 
 // out buffer for in controller redirection
 add_filter(
