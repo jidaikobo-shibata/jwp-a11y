@@ -5,11 +5,19 @@
 <?php
 echo $submenu;
 echo A11YC_LANG_LAST_UPDATE.Model\Html::lastUpdate($url).' ';
-echo '<a href="'.A11YC_PAGE_URL.'updatehtml&amp;url='.Util::s(Util::urlenc($url)).'">'.A11YC_LANG_REFRESH_HTML.'</a>';
+if (isset($updatehtml_nonce) && ! empty($updatehtml_nonce)):
+	echo '<form action="'.Util::s(A11YC_PAGE_URL.'updatehtml&amp;url='.Util::urlenc($url)).'" method="POST" style="display:inline;">';
+	echo $updatehtml_nonce;
+	echo '<button type="submit" class="button-link">'.A11YC_LANG_REFRESH_HTML.'</button>';
+	echo '</form>';
+else:
+	echo '<a href="'.A11YC_PAGE_URL.'updatehtml&amp;url='.Util::s(Util::urlenc($url)).'">'.A11YC_LANG_REFRESH_HTML.'</a>';
+endif;
 ?>
 
 <!-- add pages form -->
-<form action="<?php echo A11YC_PAGE_URL ?>edit&amp;url=<?php echo $url ?>" method="POST" enctype="multipart/form-data">
+<form action="<?php echo A11YC_PAGE_URL ?>edit&amp;url=<?php echo Util::s(Util::urlenc($url)) ?>" method="POST" enctype="multipart/form-data">
+<?php echo isset($edit_nonce) ? $edit_nonce : ''; ?>
 <h2><label for="a11yc_title"><?php echo A11YC_LANG_PAGE_PAGETITLE ?></label></h2>
 <input type="text" name="title" id="a11yc_title" style="width: 100%;" value="<?php echo Util::s($page_title) ?>" />
 
@@ -21,18 +29,16 @@ echo '<a href="'.A11YC_PAGE_URL.'updatehtml&amp;url='.Util::s(Util::urlenc($url)
 
 <h2><label for="a11yc_add_pages">HTML</label></h2>
 <p><?php echo A11YC_LANG_PAGE_LABEL_HTML_EXP ?></p>
-<textarea id="a11yc_add_pages" name="html" rows="7" style="width: 100%;"><?php echo $html ?></textarea>
+<textarea id="a11yc_add_pages" name="html" rows="7" style="width: 100%;"><?php echo Util::s($html) ?></textarea>
 
 <h2><label for="a11yc_title"><?php echo A11YC_LANG_ISSUE_SCREENSHOT ?></label></h2>
 <input type="text" name="file_path" value="<?php echo Util::s(Arr::get($page, 'image_path', '')) ?>"/>
 <input type="file" name="file" value=""/>
 <?php
 if (Arr::get($page, 'image_path', '')):
-	echo '<div><img src="'.A11YC_UPLOAD_URL.'/'.Model\Data::groupId().'/pages/'.$url_path.'/'.Arr::get($page, 'image_path', '').'" alt="" /></div>';
+	echo '<div><img src="'.Util::s(A11YC_UPLOAD_URL.'/'.Model\Data::groupId().'/pages/'.$url_path.'/'.Arr::get($page, 'image_path', '')).'" alt="" /></div>';
 endif;
 ?>
-
-<?php echo isset($add_nonce) ? $add_nonce : ''; ?>
 
 <div id="a11yc_submit">
 	<input type="submit" class="button button-primary button-large" value="<?php echo A11YC_LANG_CTRL_SEND ?>" />

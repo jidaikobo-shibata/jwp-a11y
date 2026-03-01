@@ -1,6 +1,6 @@
 <?php namespace A11yc; ?>
 
-<h2 id="a11yc_index_title"><?php echo $title ?></h2>
+<h2 id="a11yc_index_title"><?php echo Util::s($title) ?></h2>
 <?php include('inc_submenu.php'); ?>
 
 <?php
@@ -42,13 +42,13 @@ else:
 		echo A11YC_LANG_ISSUE_IS_COMMON;
 	else:
 		$page = Model\Page::fetch($url);
-		echo $page['title'].'<br><a href="'.Util::urldec($url).'">'.Util::s($url).'</a>';
+		echo Util::s($page['title']).'<br><a href="'.Util::s(Util::urldec($url)).'">'.Util::s($url).'</a>';
 	endif;
 	?>
 	</th>
 	<td class="a11yc_result" rowspan="<?php echo $rowspan ?>">
 	<?php if ($url != 'common' && ! empty($url)): ?>
-		 <a href="<?php echo A11YC_CHECKLIST_URL.Util::urlenc($url) ?>" class="a11yc_hasicon"><span class="a11yc_skip"><?php echo A11YC_LANG_CTRL_CHECK ?></span><span class="a11yc_icon_check a11yc_icon_fa" role="presentation" aria-hidden="true"></span></a>
+		 <a href="<?php echo Util::s(A11YC_CHECKLIST_URL.Util::urlenc($url)) ?>" class="a11yc_hasicon"><span class="a11yc_skip"><?php echo A11YC_LANG_CTRL_CHECK ?></span><span class="a11yc_icon_check a11yc_icon_fa" role="presentation" aria-hidden="true"></span></a>
 	<?php endif; ?>
 	</td>
 <?php
@@ -65,12 +65,13 @@ if( $r !== 0 ) echo '<tr>';
 			$type = $each_issue['n_or_e'] == 0 ?
 							'<span class="a11yc_validation_code_notice">NOTICE</span>':
 							'<span class="a11yc_validation_code_error">ERROR!</span>';
+			$can_manage_issue = $is_admin || intval($each_issue['uid']) === intval($current_user_id);
 		?>
 		<?php echo $type ?>
 			<?php if ($each_issue['trash'] != 1): ?>
-			<a href="<?php echo A11YC_ISSUE_URL.'read&amp;id='.intval($each_issue['id']) ?>">
+			<a href="<?php echo Util::s(A11YC_ISSUE_URL.'read&amp;id='.intval($each_issue['id'])) ?>">
 			<?php endif; ?>
-				<?php echo $each_issue['id'].': '.$each_issue['title'] ?>
+				<?php echo intval($each_issue['id']).': '.Util::s($each_issue['title']) ?>
 			<?php if ($each_issue['trash'] != 1): ?>
 			</a>
 			<?php endif; ?>
@@ -78,12 +79,21 @@ if( $r !== 0 ) echo '<tr>';
 	</td>
 
 	<td class="a11yc_result" style="white-space: nowrap;">
-		<?php if ($each_issue['trash'] != 0): ?>
-			<a href="<?php echo A11YC_ISSUE_URL.'undelete&amp;id='.intval($each_issue['id']) ?>"><?php echo A11YC_LANG_CTRL_UNDELETE ?></a><?php echo ' - '; ?>
-			<a href="<?php echo A11YC_ISSUE_URL.'purge&amp;id='.intval($each_issue['id']) ?>" data-a11yc-confirm="<?php echo sprintf(A11YC_LANG_CTRL_CONFIRM, A11YC_LANG_CTRL_PURGE) ?>"><?php echo A11YC_LANG_CTRL_PURGE ?></a>
-		<?php else: ?>
-			<a href="<?php echo A11YC_ISSUE_URL.'edit&amp;id='.intval($each_issue['id']) ?>"><?php echo A11YC_LANG_CTRL_LABEL_EDIT ?></a><?php echo ' - '; ?>
-			<a href="<?php echo A11YC_ISSUE_URL.'delete&amp;id='.intval($each_issue['id']) ?>"><?php echo A11YC_LANG_CTRL_DELETE ?></a>
+		<?php if ($can_manage_issue && $each_issue['trash'] != 0): ?>
+			<form action="<?php echo Util::s(A11YC_ISSUE_URL.'undelete&amp;id='.intval($each_issue['id'])) ?>" method="POST" style="display:inline;">
+				<?php echo $issue_action_nonce ?>
+				<button type="submit" class="button-link"><?php echo A11YC_LANG_CTRL_UNDELETE ?></button>
+			</form><?php echo ' - '; ?>
+			<form action="<?php echo Util::s(A11YC_ISSUE_URL.'purge&amp;id='.intval($each_issue['id'])) ?>" method="POST" style="display:inline;">
+				<?php echo $issue_action_nonce ?>
+				<button type="submit" class="button-link" data-a11yc-confirm="<?php echo Util::s(sprintf(A11YC_LANG_CTRL_CONFIRM, A11YC_LANG_CTRL_PURGE)) ?>"><?php echo A11YC_LANG_CTRL_PURGE ?></button>
+			</form>
+		<?php elseif ($can_manage_issue): ?>
+			<a href="<?php echo Util::s(A11YC_ISSUE_URL.'edit&amp;id='.intval($each_issue['id'])) ?>"><?php echo A11YC_LANG_CTRL_LABEL_EDIT ?></a><?php echo ' - '; ?>
+			<form action="<?php echo Util::s(A11YC_ISSUE_URL.'delete&amp;id='.intval($each_issue['id'])) ?>" method="POST" style="display:inline;">
+				<?php echo $issue_action_nonce ?>
+				<button type="submit" class="button-link"><?php echo A11YC_LANG_CTRL_DELETE ?></button>
+			</form>
 		<?php endif; ?>
 	</td>
 </tr>

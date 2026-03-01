@@ -9,26 +9,36 @@ $html = '';
 if ( ! $is_view):
 	include('inc_submenu.php');
 	$html.= '<form action="'.A11YC_ICL_URL.'index" method="POST">';
+	$html.= isset($icl_action_nonce) ? $icl_action_nonce : '';
 endif;
 
 foreach (Model\Icl::fetchTree( ! $is_view) as $criterion => $parents):
 
-	$html.= '<h2>'.Util::key2code($criterion).' '.$criterions[$criterion]['name'].' ['.$criterions[$criterion]['level']['name'].']</h2>';
+	$html.= '<h2>'.Util::key2code($criterion).' '.Util::s($criterions[$criterion]['name']).' ['.Util::s($criterions[$criterion]['level']['name']).']</h2>';
 
 	// main loop
 	foreach ($parents as $parent => $ids):
 
 		// draw situation
 		if (isset($icls[$parent])):
-			$html.= '<input type="hidden" name="icls[]" id="icls_'.$parent.'" value="'.$parent.'">';
-			$html.= '<h3>'.$icls[$parent]['title'];
+			$html.= '<input type="hidden" name="icls[]" id="icls_'.intval($parent).'" value="'.intval($parent).'">';
+			$html.= '<h3>'.Util::s($icls[$parent]['title']);
 			if ( ! $is_view):
 				if (Arr::get($icls[$parent], 'trash', 0) != 0):
-					$html.= '<a href="'.A11YC_ICL_URL.'undelete&amp;is_sit=1&amp;id='.intval($parent).'">'.A11YC_LANG_CTRL_UNDELETE.'</a> - ';
-					$html.= '<a href="'.A11YC_ICL_URL.'purge&amp;is_sit=1&amp;id='.intval($parent).'" data-a11yc-confirm="'.sprintf(A11YC_LANG_CTRL_CONFIRM, A11YC_LANG_CTRL_PURGE).'">'.A11YC_LANG_CTRL_PURGE.'</a>';
+					if (isset($icl_action_nonce) && ! empty($icl_action_nonce)):
+						$html.= '<form action="'.Util::s(A11YC_ICL_URL.'undelete&amp;is_sit=1&amp;id='.intval($parent)).'" method="POST" style="display:inline;">'.$icl_action_nonce.'<button type="submit" class="button-link">'.A11YC_LANG_CTRL_UNDELETE.'</button></form> - ';
+						$html.= '<form action="'.Util::s(A11YC_ICL_URL.'purge&amp;is_sit=1&amp;id='.intval($parent)).'" method="POST" style="display:inline;">'.$icl_action_nonce.'<button type="submit" class="button-link" data-a11yc-confirm="'.Util::s(sprintf(A11YC_LANG_CTRL_CONFIRM, A11YC_LANG_CTRL_PURGE)).'">'.A11YC_LANG_CTRL_PURGE.'</button></form>';
+					else:
+						$html.= '<a href="'.A11YC_ICL_URL.'undelete&amp;is_sit=1&amp;id='.intval($parent).'">'.A11YC_LANG_CTRL_UNDELETE.'</a> - ';
+						$html.= '<a href="'.A11YC_ICL_URL.'purge&amp;is_sit=1&amp;id='.intval($parent).'" data-a11yc-confirm="'.sprintf(A11YC_LANG_CTRL_CONFIRM, A11YC_LANG_CTRL_PURGE).'">'.A11YC_LANG_CTRL_PURGE.'</a>';
+					endif;
 				else:
-					$html.= '<a href="'.A11YC_ICL_URL.'edit&amp;is_sit=1&amp;id='.intval($parent).'">'.A11YC_LANG_CTRL_LABEL_EDIT.'</a>'.' - ';
-					$html.= '<a href="'.A11YC_ICL_URL.'delete&amp;is_sit=1&amp;id='.intval($parent).'">'.A11YC_LANG_CTRL_DELETE.'</a>';
+					$html.= '<a href="'.Util::s(A11YC_ICL_URL.'edit&amp;is_sit=1&amp;id='.intval($parent)).'">'.A11YC_LANG_CTRL_LABEL_EDIT.'</a>'.' - ';
+					if (isset($icl_action_nonce) && ! empty($icl_action_nonce)):
+						$html.= '<form action="'.Util::s(A11YC_ICL_URL.'delete&amp;is_sit=1&amp;id='.intval($parent)).'" method="POST" style="display:inline;">'.$icl_action_nonce.'<button type="submit" class="button-link">'.A11YC_LANG_CTRL_DELETE.'</button></form>';
+					else:
+						$html.= '<a href="'.A11YC_ICL_URL.'delete&amp;is_sit=1&amp;id='.intval($parent).'">'.A11YC_LANG_CTRL_DELETE.'</a>';
+					endif;
 				endif;
 			endif;
 			$html.= '</h3>';
@@ -61,16 +71,16 @@ foreach (Model\Icl::fetchTree( ! $is_view) as $criterion => $parents):
 			$html.= '<tr><td>';
 			if ( ! $is_view):
 				$checked = in_array($id, $checks) ? ' checked="checked"' : '';
-				$html.= '<input type="checkbox" name="icls[]" id="icls_'.$id.'" value="'.$id.'"'.$checked.'></td>';
-				$html.= '<td><label for="icls_'.$id.'">'.$val['title_short'].'</label>';
+				$html.= '<input type="checkbox" name="icls[]" id="icls_'.intval($id).'" value="'.intval($id).'"'.$checked.'></td>';
+				$html.= '<td><label for="icls_'.intval($id).'">'.Util::s($val['title_short']).'</label>';
 			else:
-				$html.= $val['title_short'];
+				$html.= Util::s($val['title_short']);
 			endif;
 			$html.= '</td><td>';
 
 			if ($is_view):
 				// identifier
-				$html.= $val['identifier'];
+					$html.= Util::s($val['identifier']);
 				$html.= '</td><td>';
 
 				// techs
@@ -78,27 +88,36 @@ foreach (Model\Icl::fetchTree( ! $is_view) as $criterion => $parents):
 				foreach ($val['techs'] as $tech):
 					if ( ! isset($techs[$tech])) continue;
 
-					$ul.= '<li>'.$techs[$tech]['title'].'</li>';
+						$ul.= '<li>'.Util::s($techs[$tech]['title']).'</li>';
 				endforeach;
 				$html.= ! empty($ul) ? '<ul>'.$ul.'</ul>' : '';
 				$html.= '</td><td>';
 			endif;
 
 			// inspection
-			$html.= $val['inspection'];
+			$html.= nl2br(Util::s($val['inspection']));
 			$html.= '</td>';
 
 			// ctrl
 			if ( ! $is_view):
 				$html.= '<td class="a11yc_result" style="white-space: nowrap;">';
 				if (Arr::get($val, 'trash', 0) != 0):
-					$html.= '<a href="'.A11YC_ICL_URL.'undelete&amp;id='.intval($id).'">'.A11YC_LANG_CTRL_UNDELETE.'</a> - ';
-					$html.= '<a href="'.A11YC_ICL_URL.'purge&amp;id='.intval($id).'" data-a11yc-confirm="'.sprintf(A11YC_LANG_CTRL_CONFIRM, A11YC_LANG_CTRL_PURGE).'">'.A11YC_LANG_CTRL_PURGE.'</a>';
-				else:
-					$html.= '<a href="'.A11YC_ICL_URL.'read&amp;id='.intval($id).'">'.A11YC_LANG_CTRL_VIEW.'</a>'.' - ';
-					$html.= '<a href="'.A11YC_ICL_URL.'edit&amp;id='.intval($id).'">'.A11YC_LANG_CTRL_LABEL_EDIT.'</a>'.' - ';
-					$html.= '<a href="'.A11YC_ICL_URL.'delete&amp;id='.intval($id).'">'.A11YC_LANG_CTRL_DELETE.'</a>';
-				endif;
+						if (isset($icl_action_nonce) && ! empty($icl_action_nonce)):
+							$html.= '<form action="'.Util::s(A11YC_ICL_URL.'undelete&amp;id='.intval($id)).'" method="POST" style="display:inline;">'.$icl_action_nonce.'<button type="submit" class="button-link">'.A11YC_LANG_CTRL_UNDELETE.'</button></form> - ';
+							$html.= '<form action="'.Util::s(A11YC_ICL_URL.'purge&amp;id='.intval($id)).'" method="POST" style="display:inline;">'.$icl_action_nonce.'<button type="submit" class="button-link" data-a11yc-confirm="'.Util::s(sprintf(A11YC_LANG_CTRL_CONFIRM, A11YC_LANG_CTRL_PURGE)).'">'.A11YC_LANG_CTRL_PURGE.'</button></form>';
+						else:
+							$html.= '<a href="'.A11YC_ICL_URL.'undelete&amp;id='.intval($id).'">'.A11YC_LANG_CTRL_UNDELETE.'</a> - ';
+							$html.= '<a href="'.A11YC_ICL_URL.'purge&amp;id='.intval($id).'" data-a11yc-confirm="'.sprintf(A11YC_LANG_CTRL_CONFIRM, A11YC_LANG_CTRL_PURGE).'">'.A11YC_LANG_CTRL_PURGE.'</a>';
+						endif;
+					else:
+						$html.= '<a href="'.Util::s(A11YC_ICL_URL.'read&amp;id='.intval($id)).'">'.A11YC_LANG_CTRL_VIEW.'</a>'.' - ';
+						$html.= '<a href="'.Util::s(A11YC_ICL_URL.'edit&amp;id='.intval($id)).'">'.A11YC_LANG_CTRL_LABEL_EDIT.'</a>'.' - ';
+						if (isset($icl_action_nonce) && ! empty($icl_action_nonce)):
+							$html.= '<form action="'.Util::s(A11YC_ICL_URL.'delete&amp;id='.intval($id)).'" method="POST" style="display:inline;">'.$icl_action_nonce.'<button type="submit" class="button-link">'.A11YC_LANG_CTRL_DELETE.'</button></form>';
+						else:
+							$html.= '<a href="'.A11YC_ICL_URL.'delete&amp;id='.intval($id).'">'.A11YC_LANG_CTRL_DELETE.'</a>';
+						endif;
+					endif;
 				$html.= '</td>';
 			endif;
 

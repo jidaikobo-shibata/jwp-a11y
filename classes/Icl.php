@@ -13,6 +13,17 @@ namespace JwpA11y;
 
 class Icl extends \A11yc\Controller\Icl
 {
+	private static function verify_nonce()
+	{
+		if ( ! \A11yc\Input::isPostExists()) return;
+		$nonce = \A11yc\Input::post('jwp_a11y_nonce', false);
+		if ( ! $nonce || ! wp_verify_nonce($nonce, 'jwp_a11y_icl_action'))
+		{
+			print 'nonce check failed.';
+			exit;
+		}
+	}
+
 	/**
 	 * Check Target Page.
 	 *
@@ -21,8 +32,15 @@ class Icl extends \A11yc\Controller\Icl
 	public static function index()
 	{
 		$a = \A11yc\Input::get('a', 'index');
+		\A11yc\View::assign(
+			'icl_action_nonce',
+			wp_nonce_field('jwp_a11y_icl_action', 'jwp_a11y_nonce', true, false),
+			false
+		);
+		self::verify_nonce();
 		if ($a == 'import')
 		{
+			if ( ! \A11yc\Input::isPostExists()) \A11yc\Util::error('wrong request');
 			parent::actionImport(); // redirect
 		}
 		else if ($a == 'edit')
@@ -35,7 +53,18 @@ class Icl extends \A11yc\Controller\Icl
 		}
 		else if ($a == 'delete')
 		{
+			if ( ! \A11yc\Input::isPostExists()) \A11yc\Util::error('wrong request');
 			parent::delete();
+		}
+		else if ($a == 'undelete')
+		{
+			if ( ! \A11yc\Input::isPostExists()) \A11yc\Util::error('wrong request');
+			parent::undelete();
+		}
+		else if ($a == 'purge')
+		{
+			if ( ! \A11yc\Input::isPostExists()) \A11yc\Util::error('wrong request');
+			parent::purge();
 		}
 		else if ($a == 'view')
 		{

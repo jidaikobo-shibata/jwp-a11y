@@ -1,11 +1,12 @@
 <?php
 namespace A11yc;
 
-$selection_reasons     = Values::filteredSelectionReasons();
-$additional_criterions = join('","', Model\Setting::fetch('additional_criterions'));
+$selection_reasons      = Values::filteredSelectionReasons();
+$additional_criterions  = (array) Model\Setting::fetch('additional_criterions');
+$additional_criterions_json = json_encode(array_values($additional_criterions));
 ?>
 
-<div id="a11yc_checks" data-a11yc-target_level="<?php echo str_repeat('a',$target_level) ?>" data-a11yc-additional_criterions='[<?php echo $additional_criterions ? '"'.$additional_criterions.'"' : ''?>]' data-a11yc-current-user="<?php echo $current_user_id ?>" data-a11yc-lang='{"expand":"<?php echo A11YC_LANG_CTRL_EXPAND ?>", "compress": "<?php echo A11YC_LANG_CTRL_COMPRESS ?>", "conformance": "<?php echo A11YC_LANG_CHECKLIST_CONFORMANCE.','.A11YC_LANG_CHECKLIST_CONFORMANCE_PARTIAL ?>"}'>
+<div id="a11yc_checks" data-a11yc-target_level="<?php echo Util::s(str_repeat('a',$target_level)) ?>" data-a11yc-additional_criterions='<?php echo Util::s($additional_criterions_json) ?>' data-a11yc-current-user="<?php echo intval($current_user_id) ?>" data-a11yc-lang='{"expand":"<?php echo A11YC_LANG_CTRL_EXPAND ?>", "compress": "<?php echo A11YC_LANG_CTRL_COMPRESS ?>", "conformance": "<?php echo A11YC_LANG_CHECKLIST_CONFORMANCE.','.A11YC_LANG_CHECKLIST_CONFORMANCE_PARTIAL ?>"}'>
 
 <!-- header -->
 <div id="a11yc_header">
@@ -17,7 +18,7 @@ $additional_criterions = join('","', Model\Setting::fetch('additional_criterions
 			<table id="a11yc_targetpage_info">
 			<tr>
 				<th class=""><?php echo A11YC_LANG_CHECKLIST_TARGETPAGE ?></th>
-				<td title="<?php echo $target_title ?>"><?php echo $target_title ?></td>
+				<td title="<?php echo Util::s($target_title) ?>"><?php echo Util::s($target_title) ?></td>
 			</tr>
 			<tr>
 				<th class=""><?php echo A11YC_LANG_PAGE_URLS ?></th>
@@ -48,7 +49,7 @@ $additional_criterions = join('","', Model\Setting::fetch('additional_criterions
 			<!-- standard -->
 			<p id="a11yc_header_done_date" class="">
 				<label for="a11yc_done_date"><?php echo A11YC_LANG_TEST_DATE ?></label>
-				<input type="text" name="done_date" id="a11yc_done_date" size="10" value="<?php echo $done_date ?>" />
+				<input type="text" name="done_date" id="a11yc_done_date" size="10" value="<?php echo Util::s($done_date) ?>" />
 			</p>
 			<!-- standard -->
 			<p id="a11yc_header_select_standard" class="">
@@ -58,7 +59,7 @@ $additional_criterions = join('","', Model\Setting::fetch('additional_criterions
 				foreach ($standards as $k => $v):
 					$selected = $k == @$page['standard'] ? ' selected="selected"' : '';
 				?>
-					<option<?php echo $selected ?> value="<?php echo $k ?>"><?php echo $v ?></option>
+					<option<?php echo $selected ?> value="<?php echo intval($k) ?>"><?php echo Util::s($v) ?></option>
 				<?php endforeach; ?>
 				</select>
 			</p>
@@ -71,7 +72,7 @@ $additional_criterions = join('","', Model\Setting::fetch('additional_criterions
 				foreach ($selection_reasons as $k => $v):
 					$selected = $k == Arr::get($page, 'selection_reason') ? ' selected="selected"' : '';
 				?>
-					<option<?php echo $selected ?> value="<?php echo $k ?>"><?php echo $v ?></option>
+					<option<?php echo $selected ?> value="<?php echo intval($k) ?>"><?php echo Util::s($v) ?></option>
 				<?php endforeach; ?>
 				</select>
 			</p>

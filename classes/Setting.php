@@ -20,14 +20,9 @@ class Setting extends \A11yc\Controller\Setting
 	 */
 	public static function front()
 	{
-		$action = \A11yc\Input::get('a');
-		if (in_array($action, array('ua', 'versions', 'sites')))
+		if ( ! current_user_can('manage_options'))
 		{
-			parent::$action();
-		}
-		else
-		{
-			parent::base();
+			wp_die(esc_html__('You do not have sufficient permissions to access this page.'));
 		}
 
 		if (\A11yc\Input::isPostExists())
@@ -44,6 +39,16 @@ class Setting extends \A11yc\Controller\Setting
 				print 'nonce check failed.';
 				exit;
 			}
+		}
+
+		$action = \A11yc\Input::get('a');
+		if (in_array($action, array('ua', 'versions', 'sites')))
+		{
+			parent::$action();
+		}
+		else
+		{
+			parent::base();
 		}
 
 		$html = '';

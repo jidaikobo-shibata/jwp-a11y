@@ -5,7 +5,7 @@
 <tr>
 	<th><label for="a11yc_title"><?php echo A11YC_LANG_ISSUE_TITLE_EACH ?></label></th>
 	<td>
-		<input type="text" id="a11yc_title" name="title" style="width: 100%;" value="<?php echo Arr::get($item, 'title', '') ?>" />
+		<input type="text" id="a11yc_title" name="title" style="width: 100%;" value="<?php echo Util::s(Arr::get($item, 'title', '')) ?>" />
 	</td>
 </tr>
 
@@ -30,7 +30,7 @@
 <tr>
 	<th><label for="a11yc_url">URL</label></th>
 	<td>
-		<input type="text" id="a11yc_url" name="url" style="width: 100%;" value="<?php echo Arr::get($item, 'url', '') ?>" />
+		<input type="text" id="a11yc_url" name="url" style="width: 100%;" value="<?php echo Util::s(Arr::get($item, 'url', '')) ?>" />
 	</td>
 </tr>
 
@@ -51,7 +51,7 @@
 	<th><label for="a11yc_html"><?php echo A11YC_LANG_ISSUE_HTML ?></label></th>
 	<td>
 		<p><?php echo A11YC_LANG_ISSUE_HTML_EXP ?></p>
-		<textarea name="html" id="a11yc_html" cols="35" rows="7"><?php echo Arr::get($item, 'html', '') ?></textarea>
+		<textarea name="html" id="a11yc_html" cols="35" rows="7"><?php echo Util::s(Arr::get($item, 'html', '')) ?></textarea>
 	</td>
 </tr>
 
@@ -59,7 +59,7 @@
 	<th><label for="a11yc_error_message"><?php echo A11YC_LANG_ISSUE_ERRMSG ?></label></th>
 	<td>
 		<p><?php echo A11YC_LANG_ISSUE_ERRMSG_EXP ?></p>
-		<textarea name="error_message" id="a11yc_error_message" cols="35" rows="7"><?php echo Arr::get($item, 'error_message', '') ?></textarea>
+		<textarea name="error_message" id="a11yc_error_message" cols="35" rows="7"><?php echo Util::s(Arr::get($item, 'error_message', '')) ?></textarea>
 	</td>
 </tr>
 
@@ -70,7 +70,7 @@
 		<?php
 		foreach ($users as $each_uid => $user):
 			$selected = $each_uid == Arr::get($item, 'uid', 0) ? ' selected="selected"': '';
-			echo '<option'.$selected.' value="'.$each_uid.'">'.$user.'</option>';
+			echo '<option'.$selected.' value="'.intval($each_uid).'">'.Util::s($user).'</option>';
 		endforeach;
 		?>
 	</select>
@@ -94,11 +94,11 @@
 <tr>
 	<th><label for="a11yc_file_path"><?php echo A11YC_LANG_ISSUE_SCREENSHOT ?></label></th>
 	<td>
-		<input id="a11yc_file_path" type="text" name="file_path" value="<?php echo Arr::get($item, 'image_path', '') ?>"/>
+		<input id="a11yc_file_path" type="text" name="file_path" value="<?php echo Util::s(Arr::get($item, 'image_path', '')) ?>"/>
 		<input type="file" name="file" value=""/>
 		<?php
 		if (Arr::get($item, 'image_path', false)):
-			echo '<div><img src="'.A11YC_UPLOAD_URL.'/'.Model\Data::groupId().'/issues/'.$item['image_path'].'" alt="" /></div>';
+			echo '<div><img src="'.Util::s(A11YC_UPLOAD_URL.'/'.Model\Data::groupId().'/issues/'.$item['image_path']).'" alt="" /></div>';
 		endif;
 		?>
 	</td>
@@ -107,14 +107,14 @@
 <tr>
 	<th><label for="a11yc_other_urls"><?php echo A11YC_LANG_ISSUE_OTHER_URLS ?></label></th>
 	<td>
-		<textarea name="other_urls" id="a11yc_other_urls" cols="35" rows="7"><?php echo Arr::get($item, 'other_urls', '') ?></textarea>
+		<textarea name="other_urls" id="a11yc_other_urls" cols="35" rows="7"><?php echo Util::s(Arr::get($item, 'other_urls', '')) ?></textarea>
 	</td>
 </tr>
 
 <tr>
 	<th><label for="a11yc_memo"><?php echo A11YC_LANG_ISSUE_MEMO ?></label></th>
 	<td>
-		<textarea name="memo" id="a11yc_memo" cols="35" rows="7"><?php echo Arr::get($item, 'memo', '') ?></textarea>
+		<textarea name="memo" id="a11yc_memo" cols="35" rows="7"><?php echo Util::s(Arr::get($item, 'memo', '')) ?></textarea>
 	</td>
 </tr>
 

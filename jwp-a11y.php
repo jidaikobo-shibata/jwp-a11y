@@ -7,6 +7,8 @@ Author: Jidaikobo Inc.
 Text Domain: jwp_a11y
 Domain Path: /languages/
 Version: 4.1.7
+Requires at least: 6.0
+Requires PHP: 7.4
 Author URI: https://www.jidaikobo.com/
 License: GPL2
 
@@ -109,13 +111,13 @@ if ($a11yc_has_data_store)
 			'jwp-a11y',
 			array('\JwpA11y\Center', 'index'));
 
-		add_submenu_page(
-			'jwp-a11y',
-			__('jwp-a11y Setting', 'jwp_a11y'),
-			__('jwp-a11y Setting', 'jwp_a11y'),
-			'edit_posts',
-			'jwp-a11y/jwp_a11y_setting',
-			array('\JwpA11y\Setting', 'front'));
+			add_submenu_page(
+				'jwp-a11y',
+				__('jwp-a11y Setting', 'jwp_a11y'),
+				__('jwp-a11y Setting', 'jwp_a11y'),
+				'manage_options',
+				'jwp-a11y/jwp_a11y_setting',
+				array('\JwpA11y\Setting', 'front'));
 
 		add_submenu_page(
 			'jwp-a11y',
@@ -168,35 +170,12 @@ if ($a11yc_has_data_store)
 
 		add_submenu_page(
 			'jwp-a11y',
-			__('Download Issue', 'jwp_a11y'),
-			__('Download Issue', 'jwp_a11y'),
-			'edit_posts',
-			'jwp-a11y/jwp_a11y_download',
-			array('\JwpA11y\Download', 'index'));
-
-		add_submenu_page(
-			'jwp-a11y',
 			__('Show Result', 'jwp_a11y'),
 			__('Show Result', 'jwp_a11y'),
 			'edit_posts',
 			'jwp-a11y/jwp_a11y_result',
 			array('\JwpA11y\Result', 'index'));
 
-		add_submenu_page(
-			'jwp-a11y',
-			__('Show Images', 'jwp_a11y'),
-			__('Show Images', 'jwp_a11y'),
-			'edit_posts',
-			'jwp-a11y/jwp_a11y_image',
-			array('\JwpA11y\Image', 'view'));
-
-		add_submenu_page(
-			'jwp-a11y',
-			__('Show Live', 'jwp_a11y'),
-			__('Show Live', 'jwp_a11y'),
-			'edit_posts',
-			'jwp-a11y/jwp_a11y_live',
-			array('\JwpA11y\Live', 'view'));
 		});
 }
 else

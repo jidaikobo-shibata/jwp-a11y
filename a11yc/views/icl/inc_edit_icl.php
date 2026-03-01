@@ -5,14 +5,14 @@
 <tr>
 	<th><label for="a11yc_title_short"><?php echo A11YC_LANG_NAME ?></label></th>
 	<td>
-		<textarea id="a11yc_title_short" name="title_short" style="width: 100%;" rows="7"><?php echo Arr::get($item, 'title_short', '') ?></textarea><br />
+		<textarea id="a11yc_title_short" name="title_short" style="width: 100%;" rows="7"><?php echo Util::s(Arr::get($item, 'title_short', '')) ?></textarea><br />
 	</td>
 </tr>
 
 <tr>
 	<th><label for="a11yc_title"><?php echo A11YC_LANG_ICL_IMPLEMENT ?></label></th>
 	<td>
-		<textarea id="a11yc_title" name="title" style="width: 100%;" rows="7"><?php echo Arr::get($item, 'title', '') ?></textarea><br />
+		<textarea id="a11yc_title" name="title" style="width: 100%;" rows="7"><?php echo Util::s(Arr::get($item, 'title', '')) ?></textarea><br />
 	</td>
 </tr>
 
@@ -26,7 +26,7 @@
 				if ($v['is_sit'] === false) continue;
 				$selected = $id == Arr::get($item, 'situation', '') ? ' selected="selected"' : '' ;
 			?>
-				<option<?php echo $selected ?> data-criterion="<?php echo $v['criterion'] ?>" value="<?php echo $id ?>"><?php echo $v['title'].' - '.Util::key2code($v['criterion']) ?></option>
+					<option<?php echo $selected ?> data-criterion="<?php echo Util::s($v['criterion']) ?>" value="<?php echo intval($id) ?>"><?php echo Util::s($v['title']).' - '.Util::key2code($v['criterion']) ?></option>
 		<?php
 			endforeach;
 		?>
@@ -37,14 +37,14 @@
 <tr>
 	<th><label for="a11yc_identifier"><?php echo A11YC_LANG_ICL_ID ?></label></th>
 	<td>
-		<input type="text" id="a11yc_identifier" name="identifier" style="width: 100%;" value="<?php echo Arr::get($item, 'identifier', '') ?>" />
+			<input type="text" id="a11yc_identifier" name="identifier" style="width: 100%;" value="<?php echo Util::s(Arr::get($item, 'identifier', '')) ?>" />
 	</td>
 </tr>
 
 <tr>
 	<th><label for="a11yc_inspection"><?php echo A11YC_LANG_ICL_VALIDATE ?></label></th>
 	<td>
-		<textarea id="a11yc_inspection" name="inspection" style="width: 100%;" rows="7"><?php echo Arr::get($item, 'inspection', '') ?></textarea>
+			<textarea id="a11yc_inspection" name="inspection" style="width: 100%;" rows="7"><?php echo Util::s(Arr::get($item, 'inspection', '')) ?></textarea>
 	</td>
 </tr>
 

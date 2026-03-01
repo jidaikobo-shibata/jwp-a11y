@@ -20,16 +20,11 @@ class Download extends \A11yc\Controller\Download
 	 */
 	public static function index()
 	{
-    if (\A11yc\Input::get('a') == 'issue')
-    {
-      // trait: DownloadIssue
-      static::issue();
-    }
-    else
-    {
-      // trait: DownloadCsv
-      static::csv();
-    }
+		wp_die(
+			esc_html__('Download Issue is disabled in the WordPress plugin.', 'jwp_a11y'),
+			esc_html__('Feature Disabled', 'jwp_a11y'),
+			array('response' => 403)
+		);
 
 	}
 

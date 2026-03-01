@@ -171,7 +171,26 @@ class Util
 	public static function redirect($url)
 	{
 		$url = self::urldec($url);
-		if (strpos($url, Input::server('HTTP_HOST')) === false) self::error();
+		$parts = parse_url($url);
+		if ($parts === false) self::error();
+
+		if (isset($parts['scheme']) && ! in_array(strtolower($parts['scheme']), array('http', 'https')))
+		{
+			self::error();
+		}
+
+		$current_host = preg_replace('/:\d+$/', '', (string) Input::server('HTTP_HOST'));
+		$target_host = isset($parts['host']) ? preg_replace('/:\d+$/', '', (string) $parts['host']) : '';
+
+		if (isset($parts['host']))
+		{
+			if (strcasecmp($target_host, $current_host) !== 0) self::error();
+		}
+		elseif (isset($parts['scheme']))
+		{
+			self::error();
+		}
+
 		header('location: '.$url);
 		exit();
 	}

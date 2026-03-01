@@ -12,15 +12,15 @@ $class_str.= ' a11yc_level_'.strtolower($vvv['level']['name']);
 $class_str.= ' a11yc_p_'.$vvv['guideline']['principle']['code'].'_criterion';
 ?>
 <!-- criterions -->
-<div id="a11yc_c_<?php echo $criterion ?>" class="a11yc_section_criterion<?php echo $class_str ?>">
-	<h4 class="a11yc_header_criterion"><?php echo Util::key2code($vvv['code']).' '.$vvv['name'].' <span class="a11yc_header_criterion_level">('.$vvv['level']['name'].$non_interference.')</span>' ?></h4>
+<div id="a11yc_c_<?php echo Util::s($criterion) ?>" class="a11yc_section_criterion<?php echo $class_str ?>">
+	<h4 class="a11yc_header_criterion"><?php echo Util::s(Util::key2code($vvv['code']).' '.$vvv['name']) ?> <span class="a11yc_header_criterion_level">(<?php echo Util::s($vvv['level']['name']) ?><?php echo $non_interference ?></span>)</h4>
 	<ul class="a11yc_outlink">
 	<?php if (isset($vvv['url_as'])): ?>
-		<li class="a11yc_outlink_as"><a<?php echo A11YC_TARGET ?> href="<?php echo $vvv['url_as'] ?>" title="Accessibility Supported"><span class="a11yc_skip">Accessibility Supported</span></a></li>
+		<li class="a11yc_outlink_as"><a<?php echo A11YC_TARGET ?> href="<?php echo Util::s($vvv['url_as']) ?>" title="Accessibility Supported"><span class="a11yc_skip">Accessibility Supported</span></a></li>
 	<?php endif; ?>
-		<li class="a11yc_outlink_u"><a<?php echo A11YC_TARGET ?> href="<?php echo $vvv['url'] ?>" title="Understanding"><span class="a11yc_skip">Understanding</span></a></li>
+		<li class="a11yc_outlink_u"><a<?php echo A11YC_TARGET ?> href="<?php echo Util::s($vvv['url']) ?>" title="Understanding"><span class="a11yc_skip">Understanding</span></a></li>
 	</ul>
-	<p class="summary_criterion"><?php echo $vvv['summary'] ?></p>
+	<p class="summary_criterion"><?php echo Util::s($vvv['summary']) ?></p>
 
 	<!-- .a11yc_result -->
 	<div class="a11yc_result">
@@ -108,12 +108,12 @@ $class_str.= ' a11yc_p_'.$vvv['guideline']['principle']['code'].'_criterion';
 							$selected = $current_uid == $uid ? ' selected="selected"' : '';
 						endif;
 					?>
-					<option value="<?php echo $uid ?>"<?php echo $selected ?>><?php echo $name ?></option>
+					<option value="<?php echo intval($uid) ?>"<?php echo $selected ?>><?php echo Util::s($name) ?></option>
 					<?php endforeach; ?>
 					</select>
 					<?php
 					else:
-						echo Arr::get($users, $current_uid, $results_options[0]);
+						echo Util::s(Arr::get($users, $current_uid, $results_options[0]));
 					endif;
 					?>
 				</td>
@@ -131,7 +131,7 @@ $class_str.= ' a11yc_p_'.$vvv['guideline']['principle']['code'].'_criterion';
 		if (isset($issues[$criterion])):
 			echo '<ul>';
 			foreach ($issues[$criterion] as $issue):
-				echo '<li><a href="'.A11YC_ISSUE_URL.'read&amp;id='.intval($issue['id']).'" target="_blank">'.nl2br(Util::s($issue['id'].': '.$issue['error_message'])).' ['.$statuses[$issue['status']].']</a></li>';
+				echo '<li><a href="'.A11YC_ISSUE_URL.'read&amp;id='.intval($issue['id']).'" target="_blank">'.nl2br(Util::s($issue['id'].': '.$issue['error_message'])).' ['.Util::s($statuses[$issue['status']]).']</a></li>';
 			endforeach;
 			echo '</ul>';
 		endif;
@@ -148,7 +148,7 @@ $class_str.= ' a11yc_p_'.$vvv['guideline']['principle']['code'].'_criterion';
 
 	foreach (Arr::get($icltree, $criterion, array()) as $parent_id => $ids):
 		if (isset($icls[$parent_id])):
-			$html.= '<h2 class="a11yc_implement_heading">'.$icls[$parent_id]['title'].'</h2>';
+			$html.= '<h2 class="a11yc_implement_heading">'.Util::s($icls[$parent_id]['title']).'</h2>';
 		endif;
 
 		foreach ($ids as $id):
@@ -160,7 +160,7 @@ $class_str.= ' a11yc_p_'.$vvv['guideline']['principle']['code'].'_criterion';
 
 			if (in_array($focus, array('all', 'icl')) || Input::get('integrate') == 1):
 				$html.= '<fieldset><legend>';
-				$html.= strip_tags($val['title_short']);
+				$html.= Util::s(strip_tags($val['title_short']));
 				$html.= '</legend>';
 				$html.= '<a href="'.A11YC_ICL_URL.'read&amp;id='.intval($id).'" target="_blank">'.A11YC_LANG_CTRL_VIEW.'</a>';
 
@@ -170,7 +170,7 @@ $class_str.= ' a11yc_p_'.$vvv['guideline']['principle']['code'].'_criterion';
 					$html.= '<input type="radio" id="icl_'.$page_id.'_'.$id.'_'.$ik.'" class="a11yc_skip a11yc_check_conformance" name="iclchks['.$page_id.']['.$id.']"'.$selected.' value="'.$ik.'"><label for="icl_'.$page_id.'_'.$id.'_'.$ik.'" class="a11yc_checkitem"><span class="a11yc_icon_fa a11yc_icon_checkbox" role="presentation" aria-hidden="true"></span>'.$iv.'</label>';
 				endforeach;
 			else:
-				$html.= '<dl><dt>'.strip_tags($val['title_short']).'</dt>';
+				$html.= '<dl><dt>'.Util::s(strip_tags($val['title_short'])).'</dt>';
 				$html.= '<dd>'.$icl_options[$iclchk].'</dd></dl>';
 			endif;
 

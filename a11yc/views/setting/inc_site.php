@@ -7,7 +7,7 @@
 foreach ($sites as $id => $site):
 $selected = $id == $group_id ? ' selected="selected"' : '';
 ?>
-	<option<?php echo $selected ?> value="<?php echo $id ?>"><?php echo $site ?></option>
+		<option<?php echo $selected ?> value="<?php echo intval($id) ?>"><?php echo Util::s($site) ?></option>
 <?php endforeach; ?>
 </select>
 
@@ -21,7 +21,7 @@ $selected = $id == $group_id ? ' selected="selected"' : '';
 	<select name="change_url_target" id="change_url_target">
 		<option value="">-</option>
 	<?php foreach ($sites as $id => $site): ?>
-		<option value="<?php echo $id ?>"><?php echo $site ?></option>
+			<option value="<?php echo intval($id) ?>"><?php echo Util::s($site) ?></option>
 	<?php endforeach; ?>
 	</select>
 </td>

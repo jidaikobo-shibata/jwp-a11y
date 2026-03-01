@@ -2,11 +2,11 @@
 <form id="a11yc_search" action="<?php echo A11YC_URL ?>" method="GET">
 	<input type="hidden" name="c" value="page">
 	<input type="hidden" name="a" value="index">
-	<input type="hidden" name="list" value="<?php echo $list ?>">
+	<input type="hidden" name="list" value="<?php echo Util::s($list) ?>">
 
 	<p>
 		<label for="a11yc_str"><?php echo A11YC_LANG_CTRL_KEYWORD_TITLE ?></label>
-		<input type="text" name="s" id="a11yc_str" size="14" value="<?php echo $word ?>">
+		<input type="text" name="s" id="a11yc_str" size="14" value="<?php echo Util::s($word) ?>">
 
 		<label for="a11yc_order" class="a11yc_skip"><?php echo A11YC_LANG_CTRL_ORDER_TITLE ?></label>
 		<?php
@@ -28,7 +28,7 @@
 		foreach ($opts as $k => $v):
 			$checked = Input::get('order') == $k ? ' selected="selected"' : '';
 		?>
-			<option value="<?php echo $k ?>"<?php echo $checked ?>><?php echo $v ?></option>
+			<option value="<?php echo Util::s($k) ?>"<?php echo $checked ?>><?php echo Util::s($v) ?></option>
 		<?php endforeach; ?>
 		</select>
 		<input type="submit" class="a11yc_button_inline" value="<?php echo A11YC_LANG_CTRL_SEND ?>" />

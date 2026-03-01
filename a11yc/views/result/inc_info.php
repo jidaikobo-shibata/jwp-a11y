@@ -2,7 +2,7 @@
 
 <?php if ( ! $is_assign): ?>
 <!-- <h2><?php echo $title ?> <?php if (Arr::get($settings, 'declare_date') && Arr::get($settings, 'declare_date') != '0000-00-00'): echo '('.$settings['declare_date'].')'; endif;?></h2> -->
-<h2><?php echo $title ?></h2>
+<h2><?php echo Util::s($title) ?></h2>
 <?php endif; ?>
 
 <table class="a11yc_table a11yc_table_report">
@@ -12,7 +12,7 @@
 		<th scope="row"><?php echo A11YC_LANG_STANDARD_REPORT ?></th>
 		<td><?php
 			 $standards = Yaml::each('standards');
-			 echo $standards[Arr::get($settings, 'standard', 0)];
+			 echo Util::s($standards[Arr::get($settings, 'standard', 0)]);
 		?></td>
 	</tr>
 	<!-- /standard -->
@@ -28,7 +28,7 @@
 	<!-- current total level -->
 	<tr>
 		<th scope="row"><?php echo A11YC_LANG_CURRENT_LEVEL_WEBPAGES ?></th>
-		<td><?php echo $site_level.$site_alt_exception; ?></td>
+		<td><?php echo Util::s($site_level.$site_alt_exception); ?></td>
 	</tr>
 	<!-- /current total level -->
 	<?php endif; ?>
@@ -37,7 +37,7 @@
 	<!-- current level -->
 	<tr>
 		<th scope="row"><?php echo A11YC_LANG_CURRENT_LEVEL ?></th>
-		<td><?php echo $level.$alt_results ?>
+		<td><?php echo Util::s($level.$alt_results) ?>
 		</td>
 	</tr>
 	<!-- /current level -->
@@ -47,7 +47,7 @@
 	<!-- dependencies -->
 	<tr>
 		<th scope="row"><?php echo A11YC_LANG_DEPENDENCIES ?></th>
-		<td><?php echo $settings['dependencies']; ?></td>
+		<td><?php echo nl2br(Util::s($settings['dependencies'])); ?></td>
 	</tr>
 	<!-- /dependencies -->
 	<?php
@@ -59,7 +59,7 @@
 	<!-- dependencies -->
 	<tr>
 		<th scope="row"><?php echo A11YC_LANG_CANDIDATES_TITLE ?></th>
-		<td><?php echo $selected_methods[Arr::get($settings, 'selected_method', 0)]; ?></td>
+		<td><?php echo Util::s($selected_methods[Arr::get($settings, 'selected_method', 0)]); ?></td>
 	</tr>
 	<!-- /dependencies -->
 	<?php
@@ -71,7 +71,7 @@
 		<th scope="row"><?php echo A11YC_LANG_CANDIDATES_TITLE ?></th>
 		<td><?php
 			$selection_reasons = Values::selectionReasons();
-			echo Arr::get($selection_reasons, $page['selection_reason']);
+			echo Util::s(Arr::get($selection_reasons, $page['selection_reason']));
 		?></td>
 	</tr>
 	<!-- /selected method -->
@@ -82,7 +82,7 @@
 	<tr>
 		<th scope="row"><?php echo A11YC_LANG_CHECKED_PAGES_URLS ?></th>
 		<td><?php
-			echo '<a href="'.$pages_link.'">'.A11YC_LANG_CHECKED_PAGES.'</a>';
+			echo '<a href="'.Util::s($pages_link).'">'.A11YC_LANG_CHECKED_PAGES.'</a>';
 			echo ' ('.$done.' / '.$total.')';
 		?></td>
 	</tr>
@@ -102,12 +102,12 @@
 			?>
 				<li>
 					<?php if (Arr::get($settings, 'hide_url_results')): ?>
-						<?php echo Arr::get($v, 'serial_num', $v['seq']).': '.$v['title'] ?>
+						<?php echo intval(Arr::get($v, 'serial_num', $v['seq'])).': '.Util::s($v['title']) ?>
 					<?php else: ?>
-						<a href="<?php echo $url ?>"<?php echo A11YC_TARGET ?>><?php echo Arr::get($v, 'serial_num', $v['seq']).': '.$v['title'] ?></a>
+						<a href="<?php echo $url ?>"<?php echo A11YC_TARGET ?>><?php echo intval(Arr::get($v, 'serial_num', $v['seq'])).': '.Util::s($v['title']) ?></a>
 					<?php endif; ?>
 					<?php if ( ! $is_assign && ! $is_download): ?>
-						(<a href="<?php echo $chk_link ?>&amp;url=<?php echo Util::urlenc($url) ?>"><?php echo A11YC_LANG_TEST_RESULT ?></a>)
+						(<a href="<?php echo Util::s($chk_link) ?>&amp;url=<?php echo Util::urlenc($url) ?>"><?php echo A11YC_LANG_TEST_RESULT ?></a>)
 					<?php
 
 					if (Auth::auth()):
@@ -136,10 +136,10 @@
 	<tr>
 	<?php if ( ! $is_assign && $is_total): ?>
 		<th scope="row"><?php echo A11YC_LANG_TEST_PERIOD ?></th>
-		<td><?php echo Arr::get($settings, 'test_period', '') ?></td>
+		<td><?php echo Util::s(Arr::get($settings, 'test_period', '')) ?></td>
 	<?php elseif ( ! $is_assign): ?>
 		<th scope="row"><?php echo A11YC_LANG_TEST_DATE ?></th>
-		<td><?php echo $page['date'] ?></td>
+		<td><?php echo Util::s($page['date']) ?></td>
 	<?php endif; ?>
 	</tr>
 	<!-- /period of date -->
@@ -149,7 +149,7 @@
 	<!-- contact -->
 	<tr>
 		<th scope="row"><?php echo A11YC_LANG_CONTACT ?></th>
-		<td><?php echo $settings['contact']; ?></td>
+		<td><?php echo nl2br(Util::s($settings['contact'])); ?></td>
 	</tr>
 	<!-- /contact -->
 	<?php endif; ?>
@@ -159,6 +159,6 @@
 <?php if ($is_total && Arr::get($settings, 'report', false)): ?>
 <!-- report -->
 <h2><?php echo A11YC_LANG_OPINION ?></h2>
-<?php echo htmlspecialchars_decode($settings['report']); ?>
+<?php echo nl2br(Util::s($settings['report'])); ?>
 <!-- /report -->
 <?php endif; ?>

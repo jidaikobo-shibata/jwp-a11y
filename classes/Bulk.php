@@ -20,6 +20,16 @@ class Bulk
 	 */
 	public static function checklist()
 	{
+		if (\A11yc\Input::isPostExists())
+		{
+			$nonce = \A11yc\Input::post('jwp_a11y_nonce', false);
+			if ( ! $nonce || ! wp_verify_nonce($nonce, 'jwp_a11y_bulk_action'))
+			{
+				print 'nonce check failed.';
+				exit;
+			}
+		}
+
 		$html = '';
 		$html.= '<div class="wrap">';
 		$html.= '<div id="icon-themes" class="icon32"><br /></div>';
@@ -37,6 +47,7 @@ class Bulk
 			$users[$v->data->ID] = esc_html($v->data->user_nicename);
 		}
 		$html.= '<form action="'.\A11yc\Util::uri().'" method="POST">';
+		$html.= wp_nonce_field('jwp_a11y_bulk_action', 'jwp_a11y_nonce', true, false);
 
 		\A11yc\Controller\Bulk::check('bulk');
 		\A11yc\Controller\Bulk::form('bulk', $users, $userinfo->ID);

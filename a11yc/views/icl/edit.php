@@ -3,6 +3,7 @@
 <?php include('inc_submenu.php'); ?>
 
 <form action="<?php echo A11YC_ICL_URL ?>edit<?php echo $qstr ?>" method="POST">
+<?php echo isset($icl_action_nonce) ? $icl_action_nonce : ''; ?>
 
 <?php echo $form ?>
 

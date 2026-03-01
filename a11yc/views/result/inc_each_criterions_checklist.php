@@ -43,9 +43,9 @@ foreach ($yml['criterions'] as $criterion => $v):
 
 	// html
 	$html.= '<tr'.$alert_class.'>';
-	$html.= '	<th scope="row" class="a11yc_result a11yc_result_string">'.$criterion_code;
-	$html.= '&nbsp;'.$v['name'].$non_interference.'</td>';
-	$html.= '	<td class="a11yc_result a11yc_level">'.$v['level']['name'].'</td>';
+	$html.= '	<th scope="row" class="a11yc_result a11yc_result_string">'.Util::s($criterion_code);
+	$html.= '&nbsp;'.Util::s($v['name']).$non_interference.'</td>';
+	$html.= '	<td class="a11yc_result a11yc_level">'.Util::s($v['level']['name']).'</td>';
 	$html.= '	<td class="a11yc_result a11yc_result_exist">'.$exist_str.'</td>';
 	if ( ! $is_policy):
 		$html.= '	<td class="a11yc_result a11yc_pass_str">'.$pass_str.'</td>';
@@ -62,7 +62,7 @@ foreach ($yml['criterions'] as $criterion => $v):
 		$lis = '';
 		foreach (Arr::get($cs, $criterion, array()) as $tech):
 			if (is_numeric($tech)) continue;
-			$lis.= '<li>'.$tech.'</li>';
+			$lis.= '<li>'.Util::s($tech).'</li>';
 		endforeach;
 		$ul = empty($lis) ? '' : '<ul>'.$lis.'</ul>';
 		$html.= '	<td class="a11yc_result a11yc_result_exist">'.$ul.'</td>';

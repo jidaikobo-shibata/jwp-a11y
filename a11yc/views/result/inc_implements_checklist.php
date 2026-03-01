@@ -15,12 +15,12 @@ $iclopts = Values::iclOptions();
 $html = '';
 
 foreach ($icltree as $criterion => $parents):
-	$html.= '<div class="no_page_break"><h3>'.Util::key2code($criterions[$criterion]['code']).' '.$criterions[$criterion]['name'].'</h3>';
+	$html.= '<div class="no_page_break"><h3>'.Util::s(Util::key2code($criterions[$criterion]['code']).' '.$criterions[$criterion]['name']).'</h3>';
 
 	$html.= '<table class="a11yc_table">';
 	foreach ($parents as $pid => $ids):
 		$html.= '<thead>';
-		$html.= $pid != 'none' ? '<tr><th colspan="4">'.Arr::get($icls[$pid], 'title_short', Arr::get($icls[$pid], 'title', ''))."</th></tr>\n" : "\n";
+		$html.= $pid != 'none' ? '<tr><th colspan="4">'.Util::s(Arr::get($icls[$pid], 'title_short', Arr::get($icls[$pid], 'title', '')))."</th></tr>\n" : "\n";
 		$html.= '<tr>';
 		$html.= '<th>'.A11YC_LANG_ICL_IMPLEMENT.'</th>';
 		$html.= '<th style="">'.A11YC_LANG_EXIST.'</th>';
@@ -39,13 +39,13 @@ foreach ($icltree as $criterion => $parents):
 				endif;
 			endif;
 
-			$html.= '<tr><th  class="implement_title">'.$icls[$id]['title_short']."</th>\n";
+			$html.= '<tr><th  class="implement_title">'.Util::s($icls[$id]['title_short'])."</th>\n";
 			$html.= '<td class="a11yc_result_exist">'.$exist.'</td>';
 			$html.= '<td class="a11yc_result_exist">'.$confirm.'</td>';
 			$html.= '<td>';
 			$lis = '';
 			foreach (Arr::get($cs, $id, array()) as $tech):
-				$lis.= '<li>'.$tech.'</li>';
+				$lis.= '<li>'.Util::s($tech).'</li>';
 			endforeach;
 			$html.= empty($lis) ? '' : '<ul>'.$lis.'</ul>';
 			$html.= '</td>';

@@ -18,17 +18,17 @@
 
 <tr>
 	<th><?php echo A11YC_LANG_ISSUE_HTML ?></th>
-	<td><?php echo $issue['html'] ?></td>
+	<td><?php echo Util::s($issue['html']) ?></td>
 </tr>
 
 <tr>
 	<th><?php echo A11YC_LANG_ISSUE_ERRMSG ?></th>
-	<td><?php echo nl2br($issue['error_message']) ?></td>
+	<td><?php echo nl2br(Util::s($issue['error_message'])) ?></td>
 </tr>
 
 <tr>
 	<th><?php echo A11YC_LANG_CTRL_PERSONS ?></th>
-	<td><?php echo Arr::get($users, $issue['uid']) ?></td>
+	<td><?php echo Util::s(Arr::get($users, $issue['uid'])) ?></td>
 </tr>
 
 <tr>
@@ -51,7 +51,13 @@
 	<td>
 	<?php
 	foreach (explode("\n", $issue['techs']) as $tech_url):
-		echo '<a href="'.$tech_url.'">'.$tech_url.'</a>';
+		$tech_url = trim($tech_url);
+		if (empty($tech_url)) continue;
+		if (preg_match('/^https?:\\/\\//i', $tech_url)):
+			echo '<a href="'.Util::s($tech_url).'">'.Util::s($tech_url).'</a>';
+		else:
+			echo Util::s($tech_url);
+		endif;
 	endforeach;
 	?>
 	</td>
@@ -63,7 +69,7 @@
 	<th><?php echo A11YC_LANG_ISSUE_SCREENSHOT ?></th>
 	<td>
 	<?php
-	echo '<div><img src="'.A11YC_UPLOAD_URL.'/'.Model\Data::groupId().'/issues/'.$issue['image_path'].'" alt="" /></div>';
+	echo '<div><img src="'.Util::s(A11YC_UPLOAD_URL.'/'.Model\Data::groupId().'/issues/'.$issue['image_path']).'" alt="" /></div>';
 
 	?>
 	</td>
@@ -74,8 +80,8 @@
 <h2><?php echo A11YC_LANG_ISSUE_MESSAGE ?></h2>
 <?php
 foreach ($issue['bbs'] as $bbs_id => $bbs):
-	echo '<h3>'.$users[$bbs['uid']].' ('.Arr::get($bbs, 'created_at').')</h3>';
-	echo '<textarea name="a11yc_issuesbbs['.$bbs_id.']" id="a11yc_issuesbbs_'.$bbs_id.'" cols="35" rows="7">'.$bbs['message'].'</textarea>';
+	echo '<h3>'.Util::s($users[$bbs['uid']]).' ('.Util::s(Arr::get($bbs, 'created_at')).')</h3>';
+	echo '<textarea name="a11yc_issuesbbs['.intval($bbs_id).']" id="a11yc_issuesbbs_'.intval($bbs_id).'" cols="35" rows="7">'.Util::s($bbs['message']).'</textarea>';
 endforeach;
 ?>
 <h3><?php echo A11YC_LANG_ISSUE_MESSAGE_ADD ?></h3>

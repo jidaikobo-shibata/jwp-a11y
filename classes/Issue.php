@@ -13,6 +13,44 @@ namespace JwpA11y;
 
 class Issue extends \A11yc\Controller\Issue
 {
+	private static function verify_issue_nonce()
+	{
+		if ( ! \A11yc\Input::isPostExists()) return;
+		$nonce = \A11yc\Input::post('jwp_a11y_nonce', false);
+		if ( ! $nonce || ! wp_verify_nonce($nonce, 'jwp_a11y_issue_action'))
+		{
+			print 'nonce check failed.';
+			exit;
+		}
+	}
+
+	private static function can_manage_issue($issue)
+	{
+		if (empty($issue)) return false;
+		if (current_user_can('administrator')) return true;
+		return intval(\A11yc\Arr::get($issue, 'uid', 0)) === intval(get_current_user_id());
+	}
+
+	private static function current_issue($issue_id)
+	{
+		$issue_id = intval($issue_id);
+		return $issue_id ? \A11yc\Model\Issue::fetch($issue_id) : array();
+	}
+
+	private static function require_issue_access($issue_id)
+	{
+		$issue = self::current_issue($issue_id);
+		if (empty($issue))
+		{
+			\A11yc\Util::error('issue not found');
+		}
+		if ( ! self::can_manage_issue($issue))
+		{
+			\A11yc\Util::error('forbidden');
+		}
+		return $issue;
+	}
+
 	/**
 	 * routing
 	 *
@@ -31,19 +69,16 @@ class Issue extends \A11yc\Controller\Issue
 		}
 		$is_admin = current_user_can('administrator');
 		$is_edit = false;
+		\A11yc\View::assign('current_user_id', $userinfo->ID);
+		\A11yc\View::assign('is_admin', $is_admin);
+		\A11yc\View::assign(
+			'issue_action_nonce',
+			wp_nonce_field('jwp_a11y_issue_action', 'jwp_a11y_nonce', true, false),
+			false
+		);
 
 		// nonce
-		if ($_POST)
-		{
-			if (
-				! isset($_POST['jwp_a11y_nonce']) ||
-				! wp_verify_nonce($_POST['jwp_a11y_nonce'], 'jwp_a11y_issue_action')
-			)
-			{
-				print 'nonce check failed.';
-				exit;
-			}
-		}
+		self::verify_issue_nonce();
 
 		switch ($action = \A11yc\Input::get('a', 'yet'))
 		{
@@ -52,19 +87,33 @@ class Issue extends \A11yc\Controller\Issue
 				$is_edit = true;
 				break;
 			case 'edit':
+				self::require_issue_access(\A11yc\Input::get('id'));
 				static::edit($is_add = false, $users, $userinfo->ID);
 				$is_edit = true;
 				break;
 			case 'read':
+				if (\A11yc\Input::isPostExists())
+				{
+					self::require_issue_access(\A11yc\Input::get('id'));
+				}
 				\A11yc\Controller\IssueRead::issue($users, $userinfo->ID, $is_admin);
 				$is_edit = true;
 				break;
 			case 'delete':
+				if ( ! \A11yc\Input::isPostExists()) \A11yc\Util::error('wrong request');
+				self::require_issue_access(\A11yc\Input::get('id'));
 				static::actionDelete();
+				break;
 			case 'undelete':
+				if ( ! \A11yc\Input::isPostExists()) \A11yc\Util::error('wrong request');
+				self::require_issue_access(\A11yc\Input::get('id'));
 				static::actionUndelete();
+				break;
 			case 'purge':
+				if ( ! \A11yc\Input::isPostExists()) \A11yc\Util::error('wrong request');
+				self::require_issue_access(\A11yc\Input::get('id'));
 				static::actionPurge();
+				break;
 			case 'index':
 				static::failures();
 				break;

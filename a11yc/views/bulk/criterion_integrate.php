@@ -3,7 +3,8 @@ namespace A11yc;
 
 include(dirname(__DIR__).'/checklist/inc_submenu.php');
 
-echo '<form action="'.A11YC_BULK_URL.'criterion&amp;focus='.$focus.'&amp;criterion='.$criterion.'&amp;integrate=1" method="POST">';
+echo '<form action="'.Util::s(A11YC_BULK_URL.'criterion&amp;focus='.$focus.'&amp;criterion='.$criterion.'&amp;integrate=1').'" method="POST">';
+echo wp_nonce_field('jwp_a11y_bulk_action', 'jwp_a11y_nonce', true, false);
 $vvv = $yml['criterions'][$criterion];
 $iclchks = array();
 $results = array();

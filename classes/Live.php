@@ -21,7 +21,10 @@ class Live extends \A11yc\Controller\Live
 	 */
 	public static function view($url)
 	{
-		parent::view(\A11yc\Util::enuniqueUri(\A11yc\Input::param('url', '')));
-		echo \A11yc\View::fetch('body');
+		wp_die(
+			esc_html__('Show Live is disabled in the WordPress plugin.', 'jwp_a11y'),
+			esc_html__('Feature Disabled', 'jwp_a11y'),
+			array('response' => 403)
+		);
 	}
 }

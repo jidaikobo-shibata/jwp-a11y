@@ -5,7 +5,7 @@ $selected_str = ' selected="selected"';
 
 <form action="<?php echo A11YC_SITECHECK_URL ?>index" method="POST">
 <p>
-<label><?php echo A11YC_LANG_CTRL_KEYWORD_TITLE ?> <input type="text" name="keyword" size="20" value="<?php echo $keyword ?>"></label>
+<label><?php echo A11YC_LANG_CTRL_KEYWORD_TITLE ?> <input type="text" name="keyword" size="20" value="<?php echo Util::s($keyword) ?>"></label>
 
 <?php $checked = $use_re ? ' checked="checked"' : ''; ?>
 <label><input type="checkbox"<?php echo $checked ?> name="use_re" value="1"> <?php echo A11YC_LANG_USE_RE  ?></label>

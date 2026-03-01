@@ -5,7 +5,7 @@
 <tr>
 	<th><label for="a11yc_title"><?php echo A11YC_LANG_ICL_IMPLEMENT ?></label></th>
 	<td>
-		<textarea id="a11yc_title" name="title" style="width: 100%;" rows="7"><?php echo Arr::get($item, 'title', '') ?></textarea><br />
+		<textarea id="a11yc_title" name="title" style="width: 100%;" rows="7"><?php echo Util::s(Arr::get($item, 'title', '')) ?></textarea><br />
 	</td>
 </tr>
 

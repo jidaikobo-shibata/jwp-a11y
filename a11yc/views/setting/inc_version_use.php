@@ -8,7 +8,7 @@
 	<?php
 	foreach ($versions as $k => $v):
 		$selected = Model\Version::current() == $k ? ' selected="selected"' : '';
-		echo '<option value="'.$k.'"'.$selected.'>'.$v['name'].'</option>';
+		echo '<option value="'.Util::s($k).'"'.$selected.'>'.Util::s($v['name']).'</option>';
 	endforeach;
 	?>
 </select>

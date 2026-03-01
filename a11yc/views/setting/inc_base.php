@@ -15,14 +15,14 @@
 	<tr>
 		<th scope="row"><label for="a11yc_client_name"><?php echo A11YC_LANG_CLIENT_NAME ?></label></th>
 		<td>
-			<input type="text" name="client_name" id="a11yc_client_name" size="40" style="width: 100%;" value="<?php echo Arr::get($settings, 'client_name', '') ?>">
+			<input type="text" name="client_name" id="a11yc_client_name" size="40" style="width: 100%;" value="<?php echo Util::s(Arr::get($settings, 'client_name', '')) ?>">
 		</td>
 	</tr>
 
 	<tr>
 		<th scope="row"><label for="a11yc_declare_date"><?php echo A11YC_LANG_DECLARE_DATE ?></label></th>
 		<td>
-			<input type="text" name="declare_date" id="a11yc_declare_date" size="20" value="<?php echo Arr::get($settings, 'declare_date', '') ?>">
+			<input type="text" name="declare_date" id="a11yc_declare_date" size="20" value="<?php echo Util::s(Arr::get($settings, 'declare_date', '')) ?>">
 		</td>
 	</tr>
 
@@ -34,7 +34,7 @@
 					foreach (Yaml::each('standards') as $k => $v):
 					$selected = $k == Arr::get($settings, 'standard') ? ' selected="selected"' : '';
 				?>
-				<option<?php echo $selected ?> value="<?php echo $k ?>"><?php echo $v ?></option>
+				<option<?php echo $selected ?> value="<?php echo intval($k) ?>"><?php echo Util::s($v) ?></option>
 				<?php endforeach; ?>
 			</select>
 		</td>
@@ -48,7 +48,7 @@
 					foreach (array('-', 'A', 'AA', 'AAA') as $k => $v):
 					$selected = Arr::get($settings, 'target_level') == $k ? ' selected="selected"' : '';
 				?>
-				<option<?php echo $selected ?> value="<?php echo $k ?>"><?php echo $v ?></option>
+				<option<?php echo $selected ?> value="<?php echo intval($k) ?>"><?php echo Util::s($v) ?></option>
 				<?php endforeach; ?>
 			</select>
 		</td>
@@ -62,7 +62,7 @@
 					foreach (Values::selectedMethods() as $k => $v):
 					$selected = @$settings['selected_method'] == $k ? ' selected="selected"' : '';
 				?>
-				<option<?php echo $selected ?> value="<?php echo $k ?>"><?php echo $v ?></option>
+				<option<?php echo $selected ?> value="<?php echo intval($k) ?>"><?php echo Util::s($v) ?></option>
 				<?php endforeach; ?>
 			</select>
 		</td>
@@ -126,7 +126,7 @@ $levels = array(
 					if ($levels[$v['level']['name']] <= $settings['target_level']) continue;
 					echo ($n % 2 === 0) ? '<li class="odd">' : '<li class="even">';
 					$checked = in_array($code, Arr::get($settings, 'additional_criterions', array())) ? ' checked="checked"' : '';
-					echo '<label for="additional_criterions_'.$code.'"><input'.$checked.' type="checkbox" name="additional_criterions[]" id="additional_criterions_'.$code.'" value="'.$code.'" /> '.$v['code'].' '.$v['name'].' ('.$v['level']['name'].')</label></li>'."\n";
+					echo '<label for="additional_criterions_'.$code.'"><input'.$checked.' type="checkbox" name="additional_criterions[]" id="additional_criterions_'.$code.'" value="'.Util::s($code).'" /> '.Util::s($v['code']).' '.Util::s($v['name']).' ('.Util::s($v['level']['name']).')</label></li>'."\n";
 					$n++;
 				endforeach;
 			?>
@@ -146,7 +146,7 @@ $levels = array(
 					if ($levels[$v['level']['name']] > $settings['target_level']) continue;
 					echo ($n % 2 === 0) ? '<li class="odd">' : '<li class="even">';
 					$checked = in_array($code, Arr::get($settings, 'non_exist_and_passed_criterions', array())) ? ' checked="checked"' : '';
-					echo '<label for="non_exist_and_passed_criterions_'.$code.'"><input'.$checked.' type="checkbox" name="non_exist_and_passed_criterions[]" id="non_exist_and_passed_criterions_'.$code.'" value="'.$code.'" /> '.$v['code'].' '.$v['name'].' ('.$v['level']['name'].')</label></li>'."\n";
+					echo '<label for="non_exist_and_passed_criterions_'.$code.'"><input'.$checked.' type="checkbox" name="non_exist_and_passed_criterions[]" id="non_exist_and_passed_criterions_'.$code.'" value="'.Util::s($code).'" /> '.Util::s($v['code']).' '.Util::s($v['name']).' ('.Util::s($v['level']['name']).')</label></li>'."\n";
 					$n++;
 				endforeach;
 			?>
@@ -170,12 +170,12 @@ $levels = array(
 			<p><?php echo A11YC_LANG_SETTING_BASIC_AUTH_EXP ?></p>
 			<p>
 			<label for="a11yc_basic_user"><?php echo A11YC_LANG_SETTING_BASIC_AUTH_USER ?></label>
-			<input type="text" name="basic_user" id="a11yc_basic_user" size="10" value="<?php echo @$settings['basic_user'] ?>">
+				<input type="text" name="basic_user" id="a11yc_basic_user" size="10" value="<?php echo Util::s(@$settings['basic_user']) ?>">
 			</p>
 
 			<p>
 			<label for="a11yc_basic_pass"><?php echo A11YC_LANG_SETTING_BASIC_AUTH_PASS ?></label>
-			<input type="text" name="basic_pass" id="a11yc_basic_pass" size="10" value="<?php echo @$settings['basic_pass'] ?>">
+				<input type="text" name="basic_pass" id="a11yc_basic_pass" size="10" value="<?php echo Util::s(@$settings['basic_pass']) ?>">
 			</p>
 		</td>
 	</tr>

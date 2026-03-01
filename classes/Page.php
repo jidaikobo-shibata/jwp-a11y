@@ -27,7 +27,9 @@ class Page extends \A11yc\Controller\Page
 				! isset($_POST['jwp_a11y_nonce']) ||
 				(
 					! wp_verify_nonce($_POST['jwp_a11y_nonce'], 'jwp_a11y_page_add') &&
-					! wp_verify_nonce($_POST['jwp_a11y_nonce'], 'jwp_a11y_page_get')
+					! wp_verify_nonce($_POST['jwp_a11y_nonce'], 'jwp_a11y_page_get') &&
+					! wp_verify_nonce($_POST['jwp_a11y_nonce'], 'jwp_a11y_page_edit') &&
+					! wp_verify_nonce($_POST['jwp_a11y_nonce'], 'jwp_a11y_page_updatehtml')
 				)
 			)
 			{
@@ -46,6 +48,16 @@ class Page extends \A11yc\Controller\Page
 		\A11yc\View::assign(
 			'get_nonce',
 			wp_nonce_field('jwp_a11y_page_get', 'jwp_a11y_nonce', true, false),
+			false
+		);
+		\A11yc\View::assign(
+			'edit_nonce',
+			wp_nonce_field('jwp_a11y_page_edit', 'jwp_a11y_nonce', true, false),
+			false
+		);
+		\A11yc\View::assign(
+			'updatehtml_nonce',
+			wp_nonce_field('jwp_a11y_page_updatehtml', 'jwp_a11y_nonce', true, false),
 			false
 		);
 
@@ -86,6 +98,7 @@ class Page extends \A11yc\Controller\Page
 		// update html
 		elseif (\A11yc\Input::get('a') == 'updatehtml')
 		{
+			if ( ! \A11yc\Input::isPostExists()) \A11yc\Util::error('wrong request');
 			$url = \A11yc\Util::enuniqueUri(\A11yc\Input::param('url', ''));
 			\A11yc\Controller\PageUpdate::updateHtml($url);
 		}
