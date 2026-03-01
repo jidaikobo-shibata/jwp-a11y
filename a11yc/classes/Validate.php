@@ -239,6 +239,8 @@ class Validate
 		$issue_html = ''
 	)
 	{
+		if ( ! Db::hasDataTable()) return;
+
 		// values
 		$yml = Yaml::fetch();
 		$html = static::$hl_htmls[$url];

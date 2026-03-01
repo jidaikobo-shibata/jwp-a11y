@@ -189,7 +189,7 @@ class Doc
 
 		// reference urls
 		$standard = 0;
-		if (A11YC_DB_TYPE != 'none')
+		if (\A11yc\Db::hasDataTable())
 		{
 			$standard = Arr::get(Model\Setting::fetchAll(), 'standard', 0);
 		}

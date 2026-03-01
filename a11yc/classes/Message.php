@@ -102,7 +102,7 @@ class Message
 			$criterion = $yml['criterions'][$each_criterion];
 
 			$ret.= '<span class="a11yc_validation_reference_info"><strong>'.A11YC_LANG_LEVEL.strtoupper($lv).'</strong> <strong>'.Util::key2code($criterion['code']).'</strong> ';
-			$ret.= '<a href="'.A11YC_DOC_URL.$each_criterion.'" target="a11yc_doc">'.A11YC_LANG_CHECKLIST_SEE_DETAIL.'('.Util::key2code($criterion['code']).')</a> ';
+			$ret.= '<a href="'.A11YC_DOC_URL.$each_criterion.'" target="jwp_a11y">'.A11YC_LANG_CHECKLIST_SEE_DETAIL.'('.Util::key2code($criterion['code']).')</a> ';
 
 			if ( ! defined('A11YC_IS_GUEST_VALIDATION'))
 			{
@@ -121,7 +121,7 @@ class Message
 			{
 				$tech = $yml['techs'][$each_tech];
 				$ret.= '<span class="a11yc_validation_reference_info">';
-				$ret.= '<a href="'.$refs[0]['t'].$each_tech.'.html">'.$tech['title'].'</a>';
+				$ret.= '<a href="'.$refs[0]['t'].$each_tech.'.html" target="wcag_techs">'.$tech['title'].'</a>';
 				$ret.= '</span>';
 			}
 		}

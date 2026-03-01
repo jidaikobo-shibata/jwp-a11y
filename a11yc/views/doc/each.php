@@ -46,7 +46,7 @@ $html.= '<ul>';
 foreach (array('t', 'f') as $tf):
 	if ( ! isset($yml['techs_codes'][$criterion][$tf])) continue;
 	foreach ($yml['techs_codes'][$criterion][$tf] as $tcode):
-		$html.= '<li><a href="'.$refs['t'].$tcode.'.html">'.$yml['techs'][$tcode]['title'].'</a></li>';
+		$html.= '<li><a href="'.$refs['t'].$tcode.'.html" target="wcag_techs">'.$yml['techs'][$tcode]['title'].'</a></li>';
 	endforeach;
 endforeach;
 $html.= '</ul>';
