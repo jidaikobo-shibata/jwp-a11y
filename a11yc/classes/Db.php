@@ -27,6 +27,7 @@ class Db extends \Kontiki\Db
 		if (A11YC_DB_TYPE == 'none') return;
 		// init default tables
 		if (static::isTableExist(A11YC_TABLE_DATA, $name)) return;
+		if (defined('A11YC_AUTO_CREATE_TABLES') && A11YC_AUTO_CREATE_TABLES === false) return;
 		self::initDefault($name);
 	}
 

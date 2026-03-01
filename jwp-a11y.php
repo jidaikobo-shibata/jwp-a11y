@@ -32,6 +32,15 @@ if (defined('WP_INSTALLING') && WP_INSTALLING)
 	return;
 }
 
+// Keep uninstall side effects to a minimum. WordPress includes the main plugin
+// file before running the registered uninstall callback, so avoid bootstrapping
+// the core (and its DB logic) in that path.
+if (defined('WP_UNINSTALL_PLUGIN') && WP_UNINSTALL_PLUGIN)
+{
+	include 'classes/Uninstall.php';
+	return;
+}
+
 // load core
 define('A11YC_CONFIG_PATH', __DIR__.'/config/a11yc.php');
 require 'a11yc/main.php';

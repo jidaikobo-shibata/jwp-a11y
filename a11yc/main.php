@@ -66,22 +66,26 @@ elseif (KONTIKI_DB_TYPE != 'none')
 }
 
 // init
-Db::initTable();
-
-// update
-Update::check();
-
-// setup
-if ( ! defined('A11YC_IS_GUEST_VALIDATION') && KONTIKI_DB_TYPE != 'none')
+$skip_db_bootstrap = defined('A11YC_SKIP_DB_BOOTSTRAP') && A11YC_SKIP_DB_BOOTSTRAP;
+if ( ! $skip_db_bootstrap)
 {
-	if ( ! Input::post('target_level') && ! Arr::get(Model\Setting::fetchAll(), 'target_level'))
-	{
-		Session::add('messages', 'errors', A11YC_LANG_ERROR_NON_TARGET_LEVEL);
-	}
+	Db::initTable();
 
-	if (Model\Version::current() != 0)
+	// update
+	Update::check();
+
+	// setup
+	if ( ! defined('A11YC_IS_GUEST_VALIDATION') && KONTIKI_DB_TYPE != 'none')
 	{
-		Session::add('messages', 'errors', A11YC_LANG_SETTING_VERSION_ALERT);
+		if ( ! Input::post('target_level') && ! Arr::get(Model\Setting::fetchAll(), 'target_level'))
+		{
+			Session::add('messages', 'errors', A11YC_LANG_ERROR_NON_TARGET_LEVEL);
+		}
+
+		if (Model\Version::current() != 0)
+		{
+			Session::add('messages', 'errors', A11YC_LANG_SETTING_VERSION_ALERT);
+		}
 	}
 }
 
