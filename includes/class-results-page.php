@@ -409,7 +409,7 @@ final class ResultsPage {
 		return $version;
 	}
 
-	private static function loadLegacyValue( $key, $url, $version ) {
+	private static function loadLegacyValue( $key, $url, $version = null ) {
 		global $wpdb;
 
 		$table = $wpdb->prefix . 'jwp_a11yc_data';
