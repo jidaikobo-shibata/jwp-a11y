@@ -1,0 +1,137 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: jwp-a11y 5.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-03 00:00+0000\n"
+"PO-Revision-Date: 2026-03-03 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: jwp_a11y\n"
+
+msgid "アクセシビリティ上の問題を検出しました"
+msgstr "Accessibility issues were detected"
+
+msgid "アクセシビリティ上の問題があるかもしれません"
+msgstr "Potential accessibility issues may exist"
+
+msgid "アクセシビリティ上の問題は検出されませんでした"
+msgstr "No accessibility issues were detected"
+
+msgid "この指摘の説明"
+msgstr "About this issue"
+
+msgid "別のタブで開きます"
+msgstr "Opens in another tab"
+
+msgid "問題箇所を表示"
+msgstr "Show the relevant code"
+
+msgid "問題はないのでしばらく非表示にする"
+msgstr "Hide this for a while because it is not an issue"
+
+msgid "アクセシビリティ報告書"
+msgstr "Accessibility report"
+
+msgid "規格の規格番号及び改正年"
+msgstr "Standard and revision year"
+
+msgid "目標とする適合レベル"
+msgstr "Target conformance level"
+
+msgid "満たしている適合レベル"
+msgstr "Current conformance level"
+
+msgid "依存したウェブコンテンツ技術のリスト"
+msgstr "Web content technologies relied upon"
+
+msgid "試験を行ったウェブページのURL"
+msgstr "URLs of the tested web pages"
+
+msgid "URLの一覧"
+msgstr "URL list"
+
+msgid "試験実施期間"
+msgstr "Test period"
+
+msgid "アクセシビリティに関する連絡先"
+msgstr "Contact information for accessibility"
+
+msgid "追加の表示事項"
+msgstr "Additional notes"
+
+msgid "達成基準チェックリスト"
+msgstr "Checklist of success criteria"
+
+msgid "達成基準"
+msgstr "Criterion"
+
+msgid "適合レベル"
+msgstr "Level"
+
+msgid "対象"
+msgstr "Applicability"
+
+msgid "結果"
+msgstr "Result"
+
+msgid "備考"
+msgstr "Memo"
+
+msgid "方針・報告書・試験の版を切り替える"
+msgstr "Switch the version of the policy, report, and test"
+
+msgid "最新版"
+msgstr "Latest"
+
+msgid "送信"
+msgstr "Submit"
+
+msgid "ページ"
+msgstr "Page"
+
+msgid "ページで達成しているレベル"
+msgstr "Conformance level achieved on this page"
+
+msgid "試験結果"
+msgstr "Test result"
+
+msgid "URLの一覧へ戻る"
+msgstr "Back to the URL list"
+
+msgid "適用なし"
+msgstr "Not applicable"
+
+msgid "適用あり"
+msgstr "Applicable"
+
+msgid "適合"
+msgstr "Pass"
+
+msgid "不適合"
+msgstr "Fail"
+
+msgid "A 一部準拠"
+msgstr "Partially conforming at level A"
+
+msgid "A準拠 / AA 一部準拠"
+msgstr "Conforming at level A / partially conforming at level AA"
+
+msgid "AA 準拠"
+msgstr "Conforming at level AA"
+
+msgid "AAA 準拠"
+msgstr "Conforming at level AAA"
+
+msgid "この達成基準について"
+msgstr "About this criterion"
+
+msgid "適合レベル %s"
+msgstr "Level %s"
+
+msgid "ウェブアクセシビリティの確保のために"
+msgstr "For better web accessibility"

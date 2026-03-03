@@ -1,0 +1,9 @@
+{
+  "name": "jidaikobo/jwp-a11y",
+  "description": "WordPress plugin that uses jidaikobo/a11yc for post accessibility checks and legacy result display.",
+  "type": "wordpress-plugin",
+  "require": {
+    "php": ">=7.4",
+    "jidaikobo/a11yc": "^6.0.1"
+  }
+}

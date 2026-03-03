@@ -1,0 +1,13 @@
+.a11yc_table,
+.a11yc_table_report {
+	border-collapse: collapse;
+	border: 1px solid #aaa;
+}
+
+.a11yc_table th,
+.a11yc_table td,
+.a11yc_table_report th,
+.a11yc_table_report td {
+	border: 1px solid #aaa;
+	padding: 0.5em 0.75em;
+}

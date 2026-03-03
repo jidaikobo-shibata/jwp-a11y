@@ -5,50 +5,41 @@ Tags: accessibility, checker, WCAG, JIS X 8341-3
 Requires PHP: 7.4
 Requires at least: 6.0
 Tested up to: 6.8
-Stable tag: 5.0.0
+Stable tag: 5.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-[![WP compatibility](https://plugintests.com/plugins/jwp-a11y/wp-badge.svg)](https://plugintests.com/plugins/jwp-a11y/latest)
-[![PHP compatibility](https://plugintests.com/plugins/jwp-a11y/php-badge.svg)](https://plugintests.com/plugins/jwp-a11y/latest)
-
 Check the accessibility of WordPress post content while editing.
-WordPress の投稿内容を編集時にチェックし、アクセシビリティ上の問題を確認できます。
 
 == Description ==
 
-This plugin checks the accessibility of WordPress post content and helps editors find issues while writing and updating posts.
+jwp-a11y checks the accessibility of WordPress post content while you edit and save posts.
 
-It is designed to support day-to-day content editing by analyzing post content when editing or saving, so accessibility issues can be noticed earlier in the publishing workflow.
+It helps editors notice accessibility issues earlier in the writing workflow and keeps legacy public result pages available through the existing `[jwp_a11y_results]` shortcode.
 
-このプラグインは、WordPress の投稿内容を対象にアクセシビリティをチェックし、編集時に問題を見つけやすくするためのものです。
+This version focuses on three practical tasks:
 
-投稿の編集時や保存時に内容を解析し、公開前の段階でアクセシビリティ上の問題に気づけるよう支援します。
+* checking post content with `jidaikobo/a11yc` while editing,
+* showing previously saved public result pages through `[jwp_a11y_results]`,
+* providing reading material for understanding accessibility criteria through the admin tools page and `[jwp_a11y_doc]`.
 
 [translate by using GlotPress](https://translate.wordpress.org/projects/wp-plugins/jwp-a11y)
 
-thx:
-* [spyc](https://github.com/mustangostang/spyc)
-* [guzzle](https://github.com/guzzle/guzzle)
-* [PluginTests](https://plugintests.com/plugins/jwp-a11y)
-* [GitHub](https://github.com)
-* [OWASP ZAP](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project)
-
 == Installation ==
 
-1. Upload the plugin files to the `/wp-content/plugins/plugin-name` directory, or install the plugin through the WordPress plugins screen directly.
-
-1. Activate the plugin through the 'Plugins' screen in WordPress
-
-1. Use the Settings->Plugin Name screen to configure the plugin
-
-== Screenshots ==
-
-1. Checklist - en
-
-2. Checklist - ja
+1. Upload the plugin files to the `/wp-content/plugins/jwp-a11y` directory, or install the plugin through the WordPress plugins screen directly.
+2. Run `composer install` in the plugin directory if you deploy from source.
+3. Activate the plugin through the 'Plugins' screen in WordPress.
+4. Edit a post and save it to run the accessibility check.
 
 == Changelog ==
+
+= 5.1.0 =
+rebuilt the plugin as a minimal WordPress plugin on top of jidaikobo/a11yc
+support save-time notices in both the block editor and the classic editor
+allow temporary suppression of likely false-positive notice items for 30 days
+preserve legacy `[jwp_a11y_results]` result pages without the old bundled core
+provide admin/docs pages for reading accessibility criterion guidance
 
 = 5.0.0 =
 refocus the plugin on WordPress editor accessibility checks
@@ -531,9 +522,5 @@ Currently Japanese only.  We are waiting language contribution!
 
 == Upgrade Notice ==
 
-= 1.0 =
-Currently Japanese only.  We are waiting language contribution!
-
-== Frequently Asked Questions ==
-
-not yet.
+= 5.1.0 =
+This rebuild keeps editor checks, legacy result pages, and criterion guidance while simplifying the plugin structure.

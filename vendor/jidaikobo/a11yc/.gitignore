@@ -1,0 +1,11 @@
+.htaccess
+!/config/.htaccess
+!/libs/.htaccess
+config/config.php
+composer.lock
+composer.phar
+vendor/
+config/config.php
+db/
+/libs/spyc/.gitignore
+/libs/spyc/phpunit.xml
