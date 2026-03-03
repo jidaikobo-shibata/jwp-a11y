@@ -234,6 +234,10 @@ final class EditorNotices {
 			wp_send_json_success( array() );
 		}
 
+		if ( ! current_user_can( 'edit_post', $post_id ) ) {
+			wp_send_json_error( array(), 403 );
+		}
+
 		$payload = self::consumePendingNotice( $post_id );
 		if ( ! is_array( $payload ) ) {
 			$result  = self::storedAnalysis( $post_id );
@@ -260,6 +264,10 @@ final class EditorNotices {
 		$issue_key = isset( $_POST['issue_key'] ) ? sanitize_text_field( wp_unslash( $_POST['issue_key'] ) ) : '';
 		if ( ! $user_id || $post_id <= 0 || $issue_key === '' ) {
 			wp_send_json_error( array(), 400 );
+		}
+
+		if ( ! current_user_can( 'edit_post', $post_id ) ) {
+			wp_send_json_error( array(), 403 );
 		}
 
 		set_transient( self::suppressionTransientKey( $user_id, $post_id, $issue_key ), 1, MONTH_IN_SECONDS );

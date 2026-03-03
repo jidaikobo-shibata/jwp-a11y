@@ -28,6 +28,7 @@ msgstr "Not available"
 msgid "The requested criterion was not found."
 msgstr "指定された達成基準は見つかりませんでした。"
 
+
 msgid "Accessibility Report"
 msgstr "アクセシビリティ報告書"
 
