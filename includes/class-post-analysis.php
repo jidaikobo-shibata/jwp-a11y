@@ -10,18 +10,41 @@ final class PostAnalysis {
 
 	private static $analyzing_posts = array();
 
+	/**
+	 * Runs analysis from the classic save_post hook.
+	 *
+	 * @param int      $post_id Post ID.
+	 * @param \WP_Post $post    Post object.
+	 * @param bool     $update  Whether this is an update.
+	 * @return void
+	 */
 	public static function analyzePostOnSave( $post_id, $post, $update ) {
 		unset( $update );
 
 		self::analyzePost( $post_id, $post );
 	}
 
+	/**
+	 * Runs analysis from the wp_after_insert_post hook.
+	 *
+	 * @param int      $post_id Post ID.
+	 * @param \WP_Post $post    Post object.
+	 * @param bool     $update  Whether this is an update.
+	 * @return void
+	 */
 	public static function analyzePostAfterInsert( $post_id, $post, $update ) {
 		unset( $update );
 
 		self::analyzePost( $post_id, $post );
 	}
 
+	/**
+	 * Performs the actual accessibility analysis and stores the result.
+	 *
+	 * @param int      $post_id Post ID.
+	 * @param \WP_Post $post    Post object.
+	 * @return void
+	 */
 	private static function analyzePost( $post_id, $post ) {
 		if ( ! $post instanceof \WP_Post ) {
 			return;
@@ -81,6 +104,13 @@ final class PostAnalysis {
 		return apply_filters( 'the_content', $post->post_content ) . $meta_values;
 	}
 
+	/**
+	 * Builds the HTML document passed to the a11yc analyzer.
+	 *
+	 * @param string   $content Post content HTML.
+	 * @param \WP_Post $post    Post object.
+	 * @return string
+	 */
 	private static function buildAnalysisDocument( $content, \WP_Post $post ) {
 		$lang  = \JwpA11y\Compatibility::currentLanguage();
 		$title = get_the_title( $post );

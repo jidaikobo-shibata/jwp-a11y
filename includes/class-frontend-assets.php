@@ -8,6 +8,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 final class FrontendAssets {
 
+	/**
+	 * Enqueues the minimal frontend stylesheet used by result tables.
+	 *
+	 * @return void
+	 */
 	public static function enqueueStyles() {
 		if ( is_admin() ) {
 			return;

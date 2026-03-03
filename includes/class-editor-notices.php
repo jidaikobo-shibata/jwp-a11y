@@ -8,6 +8,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 final class EditorNotices {
 
+	/**
+	 * Renders classic editor notices after a save redirect.
+	 *
+	 * @return void
+	 */
 	public static function renderEditScreenNotice() {
 		if ( ! is_admin() || ! function_exists( 'get_current_screen' ) ) {
 			return;
@@ -96,6 +101,11 @@ final class EditorNotices {
 		return $html;
 	}
 
+	/**
+	 * Enqueues the block editor notice integration script.
+	 *
+	 * @return void
+	 */
 	public static function enqueueBlockEditorNotice() {
 		if ( ! is_admin() ) {
 			return;
@@ -163,6 +173,11 @@ final class EditorNotices {
 		wp_add_inline_script( 'wp-data', $script, 'after' );
 	}
 
+	/**
+	 * Prints the inline script used by suppress buttons in classic notices.
+	 *
+	 * @return void
+	 */
 	public static function printSuppressNoticeScript() {
 		if ( ! is_admin() ) {
 			return;
@@ -202,6 +217,11 @@ final class EditorNotices {
 		echo '</script>';
 	}
 
+	/**
+	 * Consumes the pending notice payload via AJAX.
+	 *
+	 * @return void
+	 */
 	public static function ajaxConsumeNotice() {
 		check_ajax_referer( 'jwp_a11y_notice' );
 
@@ -223,6 +243,11 @@ final class EditorNotices {
 		wp_send_json_success( $payload );
 	}
 
+	/**
+	 * Suppresses a notice-class issue for the current user.
+	 *
+	 * @return void
+	 */
 	public static function ajaxSuppressNotice() {
 		check_ajax_referer( 'jwp_a11y_suppress_notice' );
 
@@ -241,6 +266,13 @@ final class EditorNotices {
 		wp_send_json_success( array() );
 	}
 
+	/**
+	 * Builds a normalized notice payload from an analysis result.
+	 *
+	 * @param int                  $post_id Post ID.
+	 * @param array<string, mixed> $result  Analyzer result.
+	 * @return array<string, mixed>
+	 */
 	private static function buildNoticePayload( $post_id, $result ) {
 		$summary = isset( $result['summary'] ) && is_array( $result['summary'] ) ? $result['summary'] : array();
 		$issues  = self::splitIssues( $result );
@@ -261,13 +293,13 @@ final class EditorNotices {
 			'errorCount'     => $error_count,
 			'noticeCount'    => $notice_count,
 			'errorHtml'      => self::buildNoticeIssueHtml(
-				__( 'アクセシビリティ上の問題を検出しました', 'jwp_a11y' ),
+				__( 'Accessibility issues were detected', 'jwp_a11y' ),
 				$issues['errors'],
 				false,
 				$post_id
 			),
 			'noticeHtml'     => self::buildNoticeIssueHtml(
-				__( 'アクセシビリティ上の問題があるかもしれません', 'jwp_a11y' ),
+				__( 'There may be accessibility issues', 'jwp_a11y' ),
 				$issues['notices'],
 				true,
 				$post_id
@@ -276,7 +308,7 @@ final class EditorNotices {
 				? self::buildSuccessNoticeHtml()
 				: '',
 			'successMessage' => ( $error_count === 0 && $notice_count === 0 )
-				? __( 'アクセシビリティ上の問題は検出されませんでした', 'jwp_a11y' )
+				? __( 'No accessibility issues were detected', 'jwp_a11y' )
 				: '',
 		);
 	}
@@ -343,6 +375,15 @@ final class EditorNotices {
 		return '';
 	}
 
+	/**
+	 * Builds the HTML for one notice section.
+	 *
+	 * @param string            $heading        Section heading.
+	 * @param array<int, array> $issues         Issues to render.
+	 * @param bool              $allow_suppress Whether suppress controls are shown.
+	 * @param int               $post_id        Post ID.
+	 * @return string
+	 */
 	private static function buildNoticeIssueHtml( $heading, $issues, $allow_suppress = false, $post_id = 0 ) {
 		if ( empty( $issues ) ) {
 			return '';
@@ -376,16 +417,16 @@ final class EditorNotices {
 	private static function buildNoticeDocLinkHtml( $url ) {
 		$html  = '';
 		$html .= '<a href="' . esc_url( (string) $url ) . '" target="jwp-a11y-text" rel="noopener">';
-		$html .= esc_html( __( 'この指摘の説明', 'jwp_a11y' ) );
+		$html .= esc_html( __( 'About this issue', 'jwp_a11y' ) );
 		$html .= ' <span class="dashicons dashicons-external" aria-hidden="true" style="text-decoration:none;"></span>';
-		$html .= '<span class="screen-reader-text">' . esc_html( __( '別のタブで開きます', 'jwp_a11y' ) ) . '</span>';
+		$html .= '<span class="screen-reader-text">' . esc_html( __( 'Opens in another tab', 'jwp_a11y' ) ) . '</span>';
 		$html .= '</a>';
 
 		return $html;
 	}
 
 	private static function buildSuccessNoticeHtml() {
-		return '<p><strong>' . esc_html( __( 'アクセシビリティ上の問題は検出されませんでした', 'jwp_a11y' ) ) . '</strong></p>';
+		return '<p><strong>' . esc_html( __( 'No accessibility issues were detected', 'jwp_a11y' ) ) . '</strong></p>';
 	}
 
 	private static function buildSnippetDetailsHtml( $snippet, $extra_html = '' ) {
@@ -396,7 +437,7 @@ final class EditorNotices {
 
 		$html  = '';
 		$html .= '<details style="margin-top:0.35em;">';
-		$html .= '<summary>' . esc_html( __( '問題箇所を表示', 'jwp_a11y' ) ) . '</summary>';
+		$html .= '<summary>' . esc_html( __( 'Show the affected markup', 'jwp_a11y' ) ) . '</summary>';
 		if ( $snippet !== '' ) {
 			$html .= '<div><code>' . esc_html( $snippet ) . '</code></div>';
 		}
@@ -421,13 +462,20 @@ final class EditorNotices {
 		$html  = '';
 		$html .= '<p style="margin:0.5em 0 0;">';
 		$html .= '<button type="button" class="button-link jwp-a11y-suppress-notice" data-post-id="' . intval( $post_id ) . '" data-issue-key="' . esc_attr( $issue_key ) . '">';
-		$html .= esc_html( __( '問題はないのでしばらく非表示にする', 'jwp_a11y' ) );
+		$html .= esc_html( __( 'Hide this temporarily because it is not an issue', 'jwp_a11y' ) );
 		$html .= '</button>';
 		$html .= '</p>';
 
 		return $html;
 	}
 
+	/**
+	 * Stores the pending notice payload for the next editor load.
+	 *
+	 * @param int                  $post_id Post ID.
+	 * @param array<string, mixed> $result  Analyzer result.
+	 * @return void
+	 */
 	public static function storePendingNotice( $post_id, $result ) {
 		$user_id = get_current_user_id();
 		if ( ! $user_id ) {

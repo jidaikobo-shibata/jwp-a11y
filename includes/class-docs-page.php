@@ -8,6 +8,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 final class DocsPage {
 
+	/**
+	 * Renders the documentation shortcode output.
+	 *
+	 * @param array<string, mixed> $attrs Shortcode attributes.
+	 * @return string
+	 */
 	public static function renderDocShortcode( $attrs = array() ) {
 		unset( $attrs );
 		$yml = \Jidaikobo\A11yc\Yaml::fetch();
@@ -21,6 +27,13 @@ final class DocsPage {
 		return self::renderDocIndex( $yml );
 	}
 
+	/**
+	 * Renders a single success criterion page.
+	 *
+	 * @param string               $criterion Criterion key such as 1-1-1.
+	 * @param array<string, mixed> $yml       Parsed YAML data.
+	 * @return string
+	 */
 	private static function renderSingleDoc( $criterion, $yml ) {
 		$data = $yml['criterions'][ $criterion ] ?? null;
 		if ( ! is_array( $data ) ) {
@@ -36,7 +49,7 @@ final class DocsPage {
 		}
 
 		if ( ! empty( $data['doc'] ) ) {
-			$html .= '<h3>' . esc_html__( 'この達成基準について', 'jwp_a11y' ) . '</h3>';
+			$html .= '<h3>' . esc_html__( 'About this success criterion', 'jwp_a11y' ) . '</h3>';
 			$html .= wp_kses_post( wpautop( self::linkifyCriterionReferences( (string) $data['doc'], $yml ) ) );
 		}
 
@@ -44,6 +57,13 @@ final class DocsPage {
 		return $html;
 	}
 
+	/**
+	 * Converts bracketed criterion references to internal links.
+	 *
+	 * @param string               $text Source text.
+	 * @param array<string, mixed> $yml  Parsed YAML data.
+	 * @return string
+	 */
 	private static function linkifyCriterionReferences( $text, $yml ) {
 		$text = (string) $text;
 		if ( $text === '' ) {
@@ -66,6 +86,12 @@ final class DocsPage {
 		);
 	}
 
+	/**
+	 * Renders the documentation index grouped by conformance level.
+	 *
+	 * @param array<string, mixed> $yml Parsed YAML data.
+	 * @return string
+	 */
 	private static function renderDocIndex( $yml ) {
 		$grouped = array();
 		foreach ( $yml['criterions'] as $criterion => $data ) {
@@ -85,7 +111,7 @@ final class DocsPage {
 
 		foreach ( $grouped as $level => $criterions ) {
 			/* translators: %s: WCAG conformance level label such as A, AA, or AAA. */
-			$html .= '<h2>' . esc_html( sprintf( __( '適合レベル %s', 'jwp_a11y' ), $level ) ) . '</h2>';
+			$html .= '<h2>' . esc_html( sprintf( __( 'Conformance level %s', 'jwp_a11y' ), $level ) ) . '</h2>';
 			$html .= '<ul>';
 
 			foreach ( $criterions as $criterion => $data ) {
@@ -135,24 +161,39 @@ final class DocsPage {
 		return is_scalar( $level ) ? (string) $level : '';
 	}
 
+	/**
+	 * Registers the Tools submenu page for documentation.
+	 *
+	 * @return void
+	 */
 	public static function registerAdminPage() {
 		add_management_page(
-			__( 'ウェブアクセシビリティの確保のために', 'jwp_a11y' ),
-			__( 'ウェブアクセシビリティの確保のために', 'jwp_a11y' ),
+			__( 'For Better Web Accessibility', 'jwp_a11y' ),
+			__( 'For Better Web Accessibility', 'jwp_a11y' ),
 			'edit_posts',
 			'jwp-a11y-docs',
 			array( __CLASS__, 'renderAdminPage' )
 		);
 	}
 
+	/**
+	 * Renders the admin documentation page.
+	 *
+	 * @return void
+	 */
 	public static function renderAdminPage() {
 		echo '<div class="wrap">';
-		echo '<h1>' . esc_html__( 'ウェブアクセシビリティの確保のために', 'jwp_a11y' ) . '</h1>';
+		echo '<h1>' . esc_html__( 'For Better Web Accessibility', 'jwp_a11y' ) . '</h1>';
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- The method returns plugin-generated HTML with escaped dynamic values.
 		echo self::renderDocShortcode();
 		echo '</div>';
 	}
 
+	/**
+	 * Returns the admin URL for the docs page.
+	 *
+	 * @return string
+	 */
 	public static function docsPageUrl() {
 		return admin_url( 'tools.php?page=jwp-a11y-docs' );
 	}

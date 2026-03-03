@@ -8,6 +8,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 final class Compatibility {
 
+	/**
+	 * Defines compatibility constants expected by legacy checks.
+	 *
+	 * @return void
+	 */
 	public static function defineConstants() {
 		$lang = self::currentLanguage();
 
@@ -31,6 +36,11 @@ final class Compatibility {
 		}
 	}
 
+	/**
+	 * Returns the current plugin language as a simple ja/en code.
+	 *
+	 * @return string
+	 */
 	public static function currentLanguage() {
 		$locale = function_exists( 'determine_locale' ) ? determine_locale() : get_locale();
 		return strpos( (string) $locale, 'ja' ) === 0 ? 'ja' : 'en';

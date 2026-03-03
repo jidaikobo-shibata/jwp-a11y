@@ -10,6 +10,11 @@ final class Plugin {
 
 	private const META_KEY = '_jwp_a11y_analysis';
 
+	/**
+	 * Boots the plugin and registers all WordPress hooks.
+	 *
+	 * @return void
+	 */
 	public static function init() {
 		if ( ! self::loadAutoloader() ) {
 			add_action( 'admin_notices', array( __CLASS__, 'renderMissingAutoloaderNotice' ) );
@@ -32,6 +37,11 @@ final class Plugin {
 		add_action( 'admin_menu', array( '\\JwpA11y\\DocsPage', 'registerAdminPage' ) );
 	}
 
+	/**
+	 * Loads Composer autoloading and validates the a11yc dependency.
+	 *
+	 * @return bool
+	 */
 	private static function loadAutoloader() {
 		$plugin_dir  = dirname( __DIR__ );
 		$autoloaders = array( $plugin_dir . '/vendor/autoload.php' );
@@ -51,6 +61,11 @@ final class Plugin {
 		return false;
 	}
 
+	/**
+	 * Renders the admin notice shown when the Composer autoloader is missing.
+	 *
+	 * @return void
+	 */
 	public static function renderMissingAutoloaderNotice() {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
@@ -61,6 +76,11 @@ final class Plugin {
 		echo '</p></div>';
 	}
 
+	/**
+	 * Returns the post meta key used to store the latest analysis result.
+	 *
+	 * @return string
+	 */
 	public static function metaKey() {
 		return self::META_KEY;
 	}

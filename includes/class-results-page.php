@@ -10,10 +10,22 @@ final class ResultsPage {
 
 	private const LEGACY_GROUP_ID = 1;
 
+	/**
+	 * Renders the legacy public results shortcode.
+	 *
+	 * @param array<string, mixed> $attrs Shortcode attributes.
+	 * @return string
+	 */
 	public static function renderResultsShortcode( $attrs = array() ) {
 		return self::renderSimpleResultsShortcode( $attrs );
 	}
 
+	/**
+	 * Routes result rendering based on legacy query arguments.
+	 *
+	 * @param array<string, mixed> $attrs Shortcode attributes.
+	 * @return string
+	 */
 	private static function renderSimpleResultsShortcode( $attrs = array() ) {
 		unset( $attrs );
 
@@ -45,6 +57,14 @@ final class ResultsPage {
 		return self::renderLegacyPolicyPage( $base_url, $version, $settings );
 	}
 
+	/**
+	 * Renders the legacy policy page.
+	 *
+	 * @param string               $base_url Base report URL.
+	 * @param int|null             $version  Selected result version.
+	 * @param array<string, mixed> $settings Legacy settings.
+	 * @return string
+	 */
 	private static function renderLegacyPolicyPage( $base_url, $version, $settings ) {
 		$versions    = self::loadLegacyVersions();
 		$report_link = add_query_arg( 'a11yc_report', 1, $base_url );
@@ -59,9 +79,9 @@ final class ResultsPage {
 		}
 
 		if ( ! empty( $settings['show_results'] ) ) {
-			$html .= '<h2>' . esc_html__( 'アクセシビリティ報告書', 'jwp_a11y' ) . '</h2>';
+			$html .= '<h2>' . esc_html__( 'Accessibility Report', 'jwp_a11y' ) . '</h2>';
 			$html .= '<p class="a11yc_link"><a href="' . esc_url( $report_link ) . '">' .
-				esc_html__( 'アクセシビリティ報告書', 'jwp_a11y' ) .
+				esc_html__( 'Accessibility Report', 'jwp_a11y' ) .
 				'</a></p>';
 		}
 
@@ -86,6 +106,14 @@ final class ResultsPage {
 		return '';
 	}
 
+	/**
+	 * Renders the legacy report page.
+	 *
+	 * @param string               $base_url Base report URL.
+	 * @param int|null             $version  Selected result version.
+	 * @param array<string, mixed> $settings Legacy settings.
+	 * @return string
+	 */
 	private static function renderLegacyReportPage( $base_url, $version, $settings ) {
 		$pages = self::loadLegacyPages( $version );
 		if ( empty( $pages ) ) {
@@ -129,26 +157,26 @@ final class ResultsPage {
 				'a11yc_report' => 1,
 			)
 		);
-		$html .= '<h2>' . esc_html( (string) ( $settings['title'] ?? __( 'アクセシビリティ報告書', 'jwp_a11y' ) ) ) . '</h2>';
+		$html .= '<h2>' . esc_html( (string) ( $settings['title'] ?? __( 'Accessibility Report', 'jwp_a11y' ) ) ) . '</h2>';
 		$html .= '<table class="a11yc_table a11yc_table_report"><tbody>';
 		if ( $standard_name !== '' ) {
-			$html .= '<tr><th scope="row">' . esc_html__( '規格の規格番号及び改正年', 'jwp_a11y' ) . '</th><td>' . esc_html( $standard_name ) . '</td></tr>';
+			$html .= '<tr><th scope="row">' . esc_html__( 'Standard identifier and revision year', 'jwp_a11y' ) . '</th><td>' . esc_html( $standard_name ) . '</td></tr>';
 		}
-		$html .= '<tr><th scope="row">' . esc_html__( '目標とする適合レベル', 'jwp_a11y' ) . '</th><td>' . esc_html( self::formatLegacyLevel( $target_level ) ) . '</td></tr>';
-		$html .= '<tr><th scope="row">' . esc_html__( '満たしている適合レベル', 'jwp_a11y' ) . '</th><td>' . esc_html( $current_level ) . '</td></tr>';
+		$html .= '<tr><th scope="row">' . esc_html__( 'Target conformance level', 'jwp_a11y' ) . '</th><td>' . esc_html( self::formatLegacyLevel( $target_level ) ) . '</td></tr>';
+		$html .= '<tr><th scope="row">' . esc_html__( 'Achieved conformance level', 'jwp_a11y' ) . '</th><td>' . esc_html( $current_level ) . '</td></tr>';
 		if ( ! empty( $settings['dependencies'] ) ) {
-			$html .= '<tr><th scope="row">' . esc_html__( '依存したウェブコンテンツ技術のリスト', 'jwp_a11y' ) . '</th><td>' . nl2br( esc_html( (string) $settings['dependencies'] ) ) . '</td></tr>';
+			$html .= '<tr><th scope="row">' . esc_html__( 'List of relied-upon web content technologies', 'jwp_a11y' ) . '</th><td>' . nl2br( esc_html( (string) $settings['dependencies'] ) ) . '</td></tr>';
 		}
-		$html .= '<tr><th scope="row">' . esc_html__( '試験を行ったウェブページのURL', 'jwp_a11y' ) . '</th><td><a href="' . esc_url( $pages_link ) . '">' . esc_html__( 'URLの一覧', 'jwp_a11y' ) . '</a> (' . intval( count( $done_pages ) ) . ' / ' . intval( count( $total_pages ) ) . ')</td></tr>';
+		$html .= '<tr><th scope="row">' . esc_html__( 'URLs of tested web pages', 'jwp_a11y' ) . '</th><td><a href="' . esc_url( $pages_link ) . '">' . esc_html__( 'URL list', 'jwp_a11y' ) . '</a> (' . intval( count( $done_pages ) ) . ' / ' . intval( count( $total_pages ) ) . ')</td></tr>';
 		if ( empty( $settings['hide_date_results'] ) && ! empty( $settings['test_period'] ) ) {
-			$html .= '<tr><th scope="row">' . esc_html__( '試験実施期間', 'jwp_a11y' ) . '</th><td>' . esc_html( (string) $settings['test_period'] ) . '</td></tr>';
+			$html .= '<tr><th scope="row">' . esc_html__( 'Test period', 'jwp_a11y' ) . '</th><td>' . esc_html( (string) $settings['test_period'] ) . '</td></tr>';
 		}
 		if ( ! empty( $settings['contact'] ) ) {
-			$html .= '<tr><th scope="row">' . esc_html__( 'アクセシビリティに関する連絡先', 'jwp_a11y' ) . '</th><td>' . nl2br( esc_html( (string) $settings['contact'] ) ) . '</td></tr>';
+			$html .= '<tr><th scope="row">' . esc_html__( 'Accessibility contact information', 'jwp_a11y' ) . '</th><td>' . nl2br( esc_html( (string) $settings['contact'] ) ) . '</td></tr>';
 		}
 		$html .= '</tbody></table>';
 		if ( ! empty( $settings['report'] ) ) {
-			$html .= '<h2>' . esc_html__( '追加の表示事項', 'jwp_a11y' ) . '</h2>';
+			$html .= '<h2>' . esc_html__( 'Additional information', 'jwp_a11y' ) . '</h2>';
 			$html .= wp_kses_post( wpautop( (string) $settings['report'] ) );
 		}
 
@@ -167,13 +195,13 @@ final class ResultsPage {
 			}
 		}
 
-		$html .= '<h2>' . esc_html__( '達成基準チェックリスト', 'jwp_a11y' ) . '</h2>';
+		$html .= '<h2>' . esc_html__( 'Checklist of Success Criteria', 'jwp_a11y' ) . '</h2>';
 		$html .= '<table class="a11yc_table"><thead><tr>';
-		$html .= '<th scope="col">' . esc_html__( '達成基準', 'jwp_a11y' ) . '</th>';
-		$html .= '<th scope="col" class="a11yc_result">' . esc_html__( '適合レベル', 'jwp_a11y' ) . '</th>';
-		$html .= '<th scope="col" class="a11yc_result a11yc_result_exist">' . esc_html__( '対象', 'jwp_a11y' ) . '</th>';
-		$html .= '<th scope="col" class="a11yc_result a11yc_result_exist">' . esc_html__( '結果', 'jwp_a11y' ) . '</th>';
-		$html .= '<th scope="col" class="a11yc_result">' . esc_html__( '備考', 'jwp_a11y' ) . '</th>';
+		$html .= '<th scope="col">' . esc_html__( 'Success criterion', 'jwp_a11y' ) . '</th>';
+		$html .= '<th scope="col" class="a11yc_result">' . esc_html__( 'Conformance level', 'jwp_a11y' ) . '</th>';
+		$html .= '<th scope="col" class="a11yc_result a11yc_result_exist">' . esc_html__( 'Applicable', 'jwp_a11y' ) . '</th>';
+		$html .= '<th scope="col" class="a11yc_result a11yc_result_exist">' . esc_html__( 'Result', 'jwp_a11y' ) . '</th>';
+		$html .= '<th scope="col" class="a11yc_result">' . esc_html__( 'Notes', 'jwp_a11y' ) . '</th>';
 		$html .= '</tr></thead><tbody>';
 		$html .= $rows;
 		$html .= '</tbody></table>';
@@ -189,9 +217,9 @@ final class ResultsPage {
 
 		$html  = '';
 		$html .= '<form action="' . esc_url( $base_url ) . '" method="get">';
-		$html .= '<div><label for="a11yc_version">' . esc_html__( '方針・報告書・試験の版を切り替える', 'jwp_a11y' ) . '</label> ';
+		$html .= '<div><label for="a11yc_version">' . esc_html__( 'Switch the policy, report, and test version', 'jwp_a11y' ) . '</label> ';
 		$html .= '<select name="a11yc_version" id="a11yc_version">';
-		$html .= '<option value="">' . esc_html__( '最新版', 'jwp_a11y' ) . '</option>';
+		$html .= '<option value="">' . esc_html__( 'Latest', 'jwp_a11y' ) . '</option>';
 		foreach ( $versions as $version_name => $version_row ) {
 			$selected = (string) $version === (string) $version_name ? ' selected="selected"' : '';
 			$html    .= '<option value="' . esc_attr( (string) $version_name ) . '"' . $selected . '>' .
@@ -202,9 +230,9 @@ final class ResultsPage {
 		foreach ( $extra_args as $key => $value ) {
 			$html .= '<input type="hidden" name="' . esc_attr( (string) $key ) . '" value="' . esc_attr( (string) $value ) . '">';
 		}
-		$html .= '<button type="submit">' . esc_html__( '送信', 'jwp_a11y' ) . '</button>';
+		$html .= '<button type="submit">' . esc_html__( 'Submit', 'jwp_a11y' ) . '</button>';
 		if ( (string) $version !== '' && intval( $version ) !== 0 ) {
-			$html .= ' <a href="' . esc_url( add_query_arg( $extra_args, $base_url ) ) . '">' . esc_html__( '最新版', 'jwp_a11y' ) . '</a>';
+			$html .= ' <a href="' . esc_url( add_query_arg( $extra_args, $base_url ) ) . '">' . esc_html__( 'Latest', 'jwp_a11y' ) . '</a>';
 		}
 		$html .= '</div></form>';
 
@@ -223,11 +251,11 @@ final class ResultsPage {
 
 		$html  = '';
 		$html .= '<div class="jwp-a11y-results">';
-		$html .= '<h2>' . esc_html__( 'URLの一覧', 'jwp_a11y' ) . '</h2>';
+		$html .= '<h2>' . esc_html__( 'URL List', 'jwp_a11y' ) . '</h2>';
 		$html .= '<table class="a11yc_table"><thead><tr>';
-		$html .= '<th scope="col">' . esc_html__( 'ページ', 'jwp_a11y' ) . '</th>';
-		$html .= '<th scope="col">' . esc_html__( 'ページで達成しているレベル', 'jwp_a11y' ) . '</th>';
-		$html .= '<th scope="col">' . esc_html__( '試験結果', 'jwp_a11y' ) . '</th>';
+		$html .= '<th scope="col">' . esc_html__( 'Page', 'jwp_a11y' ) . '</th>';
+		$html .= '<th scope="col">' . esc_html__( 'Achieved conformance level for this page', 'jwp_a11y' ) . '</th>';
+		$html .= '<th scope="col">' . esc_html__( 'Test result', 'jwp_a11y' ) . '</th>';
 		$html .= '</tr></thead><tbody>';
 
 		foreach ( $pages as $page ) {
@@ -244,7 +272,7 @@ final class ResultsPage {
 			$html .= '<tr>';
 			$html .= '<th scope="row">' . esc_html( $title ) . '</th>';
 			$html .= '<td>' . esc_html( self::formatLegacyLevel( self::legacyPageLevel( $page, $version ) ) ) . '</td>';
-			$html .= '<td><a href="' . esc_url( $link ) . '">' . esc_html__( '試験結果', 'jwp_a11y' ) . '</a></td>';
+			$html .= '<td><a href="' . esc_url( $link ) . '">' . esc_html__( 'Test result', 'jwp_a11y' ) . '</a></td>';
 			$html .= '</tr>';
 		}
 
@@ -267,21 +295,21 @@ final class ResultsPage {
 
 		$html  = '';
 		$html .= '<div class="jwp-a11y-results">';
-		$html .= '<p><a href="' . esc_url( $back_link ) . '">' . esc_html__( 'URLの一覧へ戻る', 'jwp_a11y' ) . '</a></p>';
+		$html .= '<p><a href="' . esc_url( $back_link ) . '">' . esc_html__( 'Back to URL list', 'jwp_a11y' ) . '</a></p>';
 		$html .= '<h2>' . esc_html( (string) ( $page['title'] ?? $url ) ) . '</h2>';
 		$html .= '<table class="a11yc_table a11yc_table_report"><tbody>';
-		$html .= '<tr><th scope="row">' . esc_html__( '目標とする適合レベル', 'jwp_a11y' ) . '</th><td>' . esc_html( self::formatLegacyLevel( $target_level ) ) . '</td></tr>';
-		$html .= '<tr><th scope="row">' . esc_html__( 'ページで達成しているレベル', 'jwp_a11y' ) . '</th><td>' . esc_html( self::legacyConformanceLabel( $data['result'] ) ) . '</td></tr>';
-		$html .= '<tr><th scope="row">' . esc_html__( '試験実施日', 'jwp_a11y' ) . '</th><td>' . esc_html( (string) ( $page['date'] ?? '' ) ) . '</td></tr>';
+		$html .= '<tr><th scope="row">' . esc_html__( 'Target conformance level', 'jwp_a11y' ) . '</th><td>' . esc_html( self::formatLegacyLevel( $target_level ) ) . '</td></tr>';
+		$html .= '<tr><th scope="row">' . esc_html__( 'Achieved conformance level for this page', 'jwp_a11y' ) . '</th><td>' . esc_html( self::legacyConformanceLabel( $data['result'] ) ) . '</td></tr>';
+		$html .= '<tr><th scope="row">' . esc_html__( 'Test date', 'jwp_a11y' ) . '</th><td>' . esc_html( (string) ( $page['date'] ?? '' ) ) . '</td></tr>';
 		$html .= '</tbody></table>';
 
-		$html .= '<h2>' . esc_html__( '達成基準チェックリスト', 'jwp_a11y' ) . '</h2>';
+		$html .= '<h2>' . esc_html__( 'Checklist of Success Criteria', 'jwp_a11y' ) . '</h2>';
 		$html .= '<table class="a11yc_table"><thead><tr>';
-		$html .= '<th scope="col">' . esc_html__( '達成基準', 'jwp_a11y' ) . '</th>';
-		$html .= '<th scope="col" class="a11yc_result">' . esc_html__( '適合レベル', 'jwp_a11y' ) . '</th>';
-		$html .= '<th scope="col" class="a11yc_result a11yc_result_exist">' . esc_html__( '対象', 'jwp_a11y' ) . '</th>';
-		$html .= '<th scope="col" class="a11yc_result a11yc_result_exist">' . esc_html__( '結果', 'jwp_a11y' ) . '</th>';
-		$html .= '<th scope="col" class="a11yc_result">' . esc_html__( '備考', 'jwp_a11y' ) . '</th>';
+		$html .= '<th scope="col">' . esc_html__( 'Success criterion', 'jwp_a11y' ) . '</th>';
+		$html .= '<th scope="col" class="a11yc_result">' . esc_html__( 'Conformance level', 'jwp_a11y' ) . '</th>';
+		$html .= '<th scope="col" class="a11yc_result a11yc_result_exist">' . esc_html__( 'Applicable', 'jwp_a11y' ) . '</th>';
+		$html .= '<th scope="col" class="a11yc_result a11yc_result_exist">' . esc_html__( 'Result', 'jwp_a11y' ) . '</th>';
+		$html .= '<th scope="col" class="a11yc_result">' . esc_html__( 'Notes', 'jwp_a11y' ) . '</th>';
 		$html .= '</tr></thead><tbody>';
 		foreach ( $data['result'] as $criterion => $raw_result ) {
 			$criterion_data = $yml['criterions'][ $criterion ] ?? array();
@@ -297,6 +325,13 @@ final class ResultsPage {
 		return $html;
 	}
 
+	/**
+	 * Loads one page/result pair from the legacy data table.
+	 *
+	 * @param string   $url     Page URL.
+	 * @param int|null $version Optional result version.
+	 * @return array<string, mixed>
+	 */
 	private static function loadLegacyResultData( $url, $version = null ) {
 		global $wpdb;
 
@@ -409,6 +444,14 @@ final class ResultsPage {
 		return $version;
 	}
 
+	/**
+	 * Loads a single legacy value row from the data table.
+	 *
+	 * @param string   $key     Data key.
+	 * @param string   $url     Data URL.
+	 * @param int|null $version Optional result version.
+	 * @return mixed
+	 */
 	private static function loadLegacyValue( $key, $url, $version = null ) {
 		global $wpdb;
 
@@ -495,6 +538,13 @@ final class ResultsPage {
 		return self::countLegacyResults( $results );
 	}
 
+	/**
+	 * Aggregates the overall conformance result for all saved pages.
+	 *
+	 * @param array<int, array<string, mixed>> $pages   Legacy page rows.
+	 * @param int|null                         $version Optional result version.
+	 * @return array<string, mixed>
+	 */
 	private static function evaluateLegacyTotal( $pages, $version ) {
 		$yml     = \Jidaikobo\A11yc\Yaml::fetch();
 		$results = array();
@@ -564,7 +614,7 @@ final class ResultsPage {
 
 		if ( ! empty( $criterion_data['doc'] ) ) {
 			$html .= '<details class="jwp-a11y-guidance">';
-			$html .= '<summary>' . esc_html__( 'この指摘の説明', 'jwp_a11y' ) . '</summary>';
+			$html .= '<summary>' . esc_html__( 'About this issue', 'jwp_a11y' ) . '</summary>';
 			$html .= wp_kses_post( wpautop( (string) $criterion_data['doc'] ) );
 			$html .= '</details>';
 		}
@@ -576,8 +626,8 @@ final class ResultsPage {
 
 	private static function renderLegacyStyleResultRow( $criterion, $criterion_data, $result ) {
 		$state  = intval( $result['result'] ?? 0 );
-		$exists = $state === 1 ? __( '適用なし', 'jwp_a11y' ) : __( '適用あり', 'jwp_a11y' );
-		$pass   = $state > 0 ? __( '適合', 'jwp_a11y' ) : ( $state < 0 ? '-' : __( '不適合', 'jwp_a11y' ) );
+		$exists = $state === 1 ? __( 'Not applicable', 'jwp_a11y' ) : __( 'Applicable', 'jwp_a11y' );
+		$pass   = $state > 0 ? __( 'Pass', 'jwp_a11y' ) : ( $state < 0 ? '-' : __( 'Fail', 'jwp_a11y' ) );
 		$memo   = isset( $result['memo'] ) ? (string) $result['memo'] : '';
 		$level  = self::criterionLevelLabel( $criterion_data );
 		$label  = $criterion . ' ' . ( $criterion_data['name'] ?? $criterion );
@@ -712,18 +762,18 @@ final class ResultsPage {
 		}
 
 		if ( isset( $failed_levels['A'] ) ) {
-			return __( 'A 一部準拠', 'jwp_a11y' );
+			return __( 'A, partially conforming', 'jwp_a11y' );
 		}
 
 		if ( isset( $failed_levels['AA'] ) ) {
-			return __( 'A準拠 / AA 一部準拠', 'jwp_a11y' );
+			return __( 'A conforming / AA partially conforming', 'jwp_a11y' );
 		}
 
 		if ( isset( $failed_levels['AAA'] ) ) {
-			return __( 'AA 準拠', 'jwp_a11y' );
+			return __( 'AA conforming', 'jwp_a11y' );
 		}
 
-		return __( 'AAA 準拠', 'jwp_a11y' );
+		return __( 'AAA conforming', 'jwp_a11y' );
 	}
 
 	private static function shouldDisplayCriterion( $criterion_data, $target_level ) {

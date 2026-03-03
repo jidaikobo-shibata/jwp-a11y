@@ -1,18 +1,18 @@
 <?php
 /**
-Plugin Name: jwp-a11y
-Plugin URI: https://wordpress.org/plugins/jwp-a11y/
-Description: WordPress plugin that uses jidaikobo/a11yc for post accessibility checks and legacy result display.
-Author: Jidaikobo Inc.
-Version: 5.1.0
-Requires at least: 6.0
-Requires PHP: 7.4
-Author URI: https://www.jidaikobo.com/
-License: GPL2
-Text Domain: jwp_a11y
-Domain Path: /languages
+ * Plugin Name: jwp-a11y
+ * Plugin URI: https://wordpress.org/plugins/jwp-a11y/
+ * Description: WordPress plugin that uses jidaikobo/a11yc for post accessibility checks and legacy result display.
+ * Author: Jidaikobo Inc.
+ * Version: 5.1.0
+ * Requires at least: 6.0
+ * Requires PHP: 7.4
+ * Author URI: https://www.jidaikobo.com/
+ * License: GPL2
+ * Text Domain: jwp_a11y
+ * Domain Path: /languages
  *
-@package JwpA11y
+ * @package JwpA11y
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

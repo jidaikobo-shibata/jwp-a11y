@@ -27,3 +27,129 @@ msgstr "Not available"
 
 msgid "The requested criterion was not found."
 msgstr "指定された達成基準は見つかりませんでした。"
+
+msgid "Accessibility Report"
+msgstr "アクセシビリティ報告書"
+
+msgid "Standard identifier and revision year"
+msgstr "規格の規格番号及び改正年"
+
+msgid "Target conformance level"
+msgstr "目標とする適合レベル"
+
+msgid "Achieved conformance level"
+msgstr "満たしている適合レベル"
+
+msgid "List of relied-upon web content technologies"
+msgstr "依存したウェブコンテンツ技術のリスト"
+
+msgid "URLs of tested web pages"
+msgstr "試験を行ったウェブページのURL"
+
+msgid "URL list"
+msgstr "URLの一覧"
+
+msgid "Test period"
+msgstr "試験実施期間"
+
+msgid "Accessibility contact information"
+msgstr "アクセシビリティに関する連絡先"
+
+msgid "Additional information"
+msgstr "追加の表示事項"
+
+msgid "Checklist of Success Criteria"
+msgstr "達成基準チェックリスト"
+
+msgid "Success criterion"
+msgstr "達成基準"
+
+msgid "Conformance level"
+msgstr "適合レベル"
+
+msgid "Applicable"
+msgstr "適用あり"
+
+msgid "Result"
+msgstr "結果"
+
+msgid "Notes"
+msgstr "備考"
+
+msgid "Switch the policy, report, and test version"
+msgstr "方針・報告書・試験の版を切り替える"
+
+msgid "Latest"
+msgstr "最新版"
+
+msgid "Submit"
+msgstr "送信"
+
+msgid "URL List"
+msgstr "URLの一覧"
+
+msgid "Page"
+msgstr "ページ"
+
+msgid "Achieved conformance level for this page"
+msgstr "ページで達成しているレベル"
+
+msgid "Test result"
+msgstr "試験結果"
+
+msgid "Back to URL list"
+msgstr "URLの一覧へ戻る"
+
+msgid "Test date"
+msgstr "試験実施日"
+
+msgid "About this issue"
+msgstr "この指摘の説明"
+
+msgid "Not applicable"
+msgstr "適用なし"
+
+msgid "Pass"
+msgstr "適合"
+
+msgid "Fail"
+msgstr "不適合"
+
+msgid "A, partially conforming"
+msgstr "A 一部準拠"
+
+msgid "A conforming / AA partially conforming"
+msgstr "A準拠 / AA 一部準拠"
+
+msgid "AA conforming"
+msgstr "AA 準拠"
+
+msgid "AAA conforming"
+msgstr "AAA 準拠"
+
+msgid "Accessibility issues were detected"
+msgstr "アクセシビリティ上の問題を検出しました"
+
+msgid "There may be accessibility issues"
+msgstr "アクセシビリティ上の問題があるかもしれません"
+
+msgid "No accessibility issues were detected"
+msgstr "アクセシビリティ上の問題は検出されませんでした"
+
+msgid "Opens in another tab"
+msgstr "別のタブで開きます"
+
+msgid "Show the affected markup"
+msgstr "問題箇所を表示"
+
+msgid "Hide this temporarily because it is not an issue"
+msgstr "問題はないのでしばらく非表示にする"
+
+msgid "About this success criterion"
+msgstr "この達成基準について"
+
+msgid "Conformance level %s"
+msgstr "適合レベル %s"
+
+msgid "For Better Web Accessibility"
+msgstr "ウェブアクセシビリティの確保のために"
