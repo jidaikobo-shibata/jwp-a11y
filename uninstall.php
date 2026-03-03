@@ -1,22 +1,22 @@
 <?php
 
-if (! defined('WP_UNINSTALL_PLUGIN')) {
+if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
 global $wpdb;
 
-$post_meta_key = '_jwp_a11y_analysis';
-$user_meta_like = $wpdb->esc_like('_jwp_a11y_notice_') . '%';
-$transient_like = $wpdb->esc_like('_transient_jwp_a11y_sup_') . '%';
-$transient_timeout_like = $wpdb->esc_like('_transient_timeout_jwp_a11y_sup_') . '%';
+$post_meta_key          = '_jwp_a11y_analysis';
+$user_meta_like         = $wpdb->esc_like( '_jwp_a11y_notice_' ) . '%';
+$transient_like         = $wpdb->esc_like( '_transient_jwp_a11y_sup_' ) . '%';
+$transient_timeout_like = $wpdb->esc_like( '_transient_timeout_jwp_a11y_sup_' ) . '%';
 
 $wpdb->delete(
 	$wpdb->postmeta,
 	array(
 		'meta_key' => $post_meta_key,
 	),
-	array('%s')
+	array( '%s' )
 );
 
 $wpdb->query(
