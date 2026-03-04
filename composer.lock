@@ -307,16 +307,16 @@
         },
         {
             "name": "jidaikobo/a11yc",
-            "version": "7.0.0",
+            "version": "7.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jidaikobo-shibata/a11yc.git",
-                "reference": "5398c79a0355d64248a658a84a0567e22eb03c9c"
+                "reference": "3a66feb05d55f1aee4eb4f464b1690055ddb041e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jidaikobo-shibata/a11yc/zipball/5398c79a0355d64248a658a84a0567e22eb03c9c",
-                "reference": "5398c79a0355d64248a658a84a0567e22eb03c9c",
+                "url": "https://api.github.com/repos/jidaikobo-shibata/a11yc/zipball/3a66feb05d55f1aee4eb4f464b1690055ddb041e",
+                "reference": "3a66feb05d55f1aee4eb4f464b1690055ddb041e",
                 "shasum": ""
             },
             "require": {
@@ -344,9 +344,9 @@
             "description": "Static accessibility checker core for A11YC",
             "support": {
                 "issues": "https://github.com/jidaikobo-shibata/a11yc/issues",
-                "source": "https://github.com/jidaikobo-shibata/a11yc/tree/7.0.0"
+                "source": "https://github.com/jidaikobo-shibata/a11yc/tree/7.1.0"
             },
-            "time": "2026-03-04T02:01:31+00:00"
+            "time": "2026-03-04T03:55:51+00:00"
         },
         {
             "name": "psr/http-message",

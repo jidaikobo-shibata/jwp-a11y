@@ -47,9 +47,9 @@
             'dev_requirement' => false,
         ),
         'jidaikobo/a11yc' => array(
-            'pretty_version' => '7.0.0',
-            'version' => '7.0.0.0',
-            'reference' => '5398c79a0355d64248a658a84a0567e22eb03c9c',
+            'pretty_version' => '7.1.0',
+            'version' => '7.1.0.0',
+            'reference' => '3a66feb05d55f1aee4eb4f464b1690055ddb041e',
             'type' => 'library',
             'install_path' => __DIR__ . '/../jidaikobo/a11yc',
             'aliases' => array(),

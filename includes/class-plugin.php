@@ -27,6 +27,7 @@ final class Plugin {
 		add_action( 'wp_after_insert_post', array( '\\JwpA11y\\PostAnalysis', 'analyzePostAfterInsert' ), 20, 3 );
 		add_action( 'admin_notices', array( '\\JwpA11y\\EditorNotices', 'renderEditScreenNotice' ) );
 		add_action( 'admin_print_footer_scripts', array( '\\JwpA11y\\EditorNotices', 'printSuppressNoticeScript' ) );
+		add_action( 'admin_enqueue_scripts', array( '\\JwpA11y\\FrontendAssets', 'enqueueAdminStyles' ) );
 		add_action( 'enqueue_block_editor_assets', array( '\\JwpA11y\\EditorNotices', 'enqueueBlockEditorNotice' ) );
 		add_action( 'wp_enqueue_scripts', array( '\\JwpA11y\\FrontendAssets', 'enqueueStyles' ) );
 		add_action( 'wp_ajax_jwp_a11y_notice', array( '\\JwpA11y\\EditorNotices', 'ajaxConsumeNotice' ) );

@@ -9,6 +9,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class FrontendAssets {
 
 	/**
+	 * Enqueues the minimal table stylesheet on the docs admin screen.
+	 *
+	 * @param string $hook_suffix Current admin page hook suffix.
+	 * @return void
+	 */
+	public static function enqueueAdminStyles( $hook_suffix ) {
+		if ( 'tools_page_jwp-a11y-docs' !== $hook_suffix ) {
+			return;
+		}
+
+		self::enqueueSharedStyles();
+	}
+
+	/**
 	 * Enqueues the minimal frontend stylesheet used by result tables.
 	 *
 	 * @return void
@@ -18,6 +32,15 @@ final class FrontendAssets {
 			return;
 		}
 
+		self::enqueueSharedStyles();
+	}
+
+	/**
+	 * Enqueues the shared stylesheet when it exists.
+	 *
+	 * @return void
+	 */
+	private static function enqueueSharedStyles() {
 		$css_file = dirname( __DIR__ ) . '/assets/css/frontend.css';
 		if ( ! file_exists( $css_file ) ) {
 			return;

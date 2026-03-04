@@ -43,6 +43,7 @@ final class DocsPage {
 		$html  = '';
 		$html .= '<div class="jwp-a11y-doc">';
 		$html .= '<h2>' . esc_html( $criterion . ' ' . ( $data['name'] ?? $criterion ) ) . '</h2>';
+		$html .= self::renderCriterionContextTable( $criterion, $data );
 
 		if ( ! empty( $data['summary'] ) ) {
 			$html .= wp_kses_post( wpautop( self::linkifyCriterionReferences( (string) $data['summary'], $yml ) ) );
@@ -54,6 +55,89 @@ final class DocsPage {
 		}
 
 		$html .= '</div>';
+		return $html;
+	}
+
+	/**
+	 * Renders a context table for the current principle, guideline, and criterion.
+	 *
+	 * @param string               $criterion Criterion code.
+	 * @param array<string, mixed> $data      Criterion data.
+	 * @return string
+	 */
+	private static function renderCriterionContextTable( $criterion, $data ) {
+		$guideline = $data['guideline'] ?? null;
+		if ( ! is_array( $guideline ) ) {
+			return '';
+		}
+
+		$principle = $guideline['principle'] ?? null;
+		if ( ! is_array( $principle ) ) {
+			return '';
+		}
+
+		$criterion_name  = (string) ( $data['name'] ?? $criterion );
+		$criterion_label = $criterion_name;
+		$level_label     = self::criterionLevelLabel( $data );
+		if ( $level_label !== '' ) {
+			$criterion_label .= sprintf(
+				' (%s %s)',
+				$criterion,
+				$level_label
+			);
+		}
+
+		$principle_label = (string) ( $principle['name'] ?? '' );
+		$guideline_label = (string) ( $guideline['name'] ?? '' );
+
+		if ( ! empty( $principle['url'] ) ) {
+			$principle_label = sprintf(
+				'<a href="%1$s">%2$s</a>',
+				esc_url( (string) $principle['url'] ),
+				esc_html( $principle_label )
+			);
+		} else {
+			$principle_label = esc_html( $principle_label );
+		}
+
+		if ( ! empty( $guideline['url'] ) ) {
+			$guideline_label = sprintf(
+				'<a href="%1$s">%2$s</a>',
+				esc_url( (string) $guideline['url'] ),
+				esc_html( $guideline_label )
+			);
+		} else {
+			$guideline_label = esc_html( $guideline_label );
+		}
+
+		if ( ! empty( $data['url'] ) ) {
+			$criterion_label = sprintf(
+				'<a href="%1$s">%2$s</a>',
+				esc_url( (string) $data['url'] ),
+				esc_html( $criterion_label )
+			);
+		} else {
+			$criterion_label = esc_html( $criterion_label );
+		}
+
+		$html  = '<table class="a11yc_table_info a11yc_table">';
+		$html .= '<tr>';
+		$html .= '<th scope="row">' . esc_html__( 'Principle', 'jwp_a11y' ) . '</th>';
+		$html .= '<td>' . $principle_label . '</td>';
+		$html .= '<td>' . esc_html( (string) ( $principle['summary'] ?? '' ) ) . '</td>';
+		$html .= '</tr>';
+		$html .= '<tr>';
+		$html .= '<th scope="row">' . esc_html__( 'Guideline', 'jwp_a11y' ) . '</th>';
+		$html .= '<td>' . $guideline_label . '</td>';
+		$html .= '<td>' . esc_html( (string) ( $guideline['summary'] ?? '' ) ) . '</td>';
+		$html .= '</tr>';
+		$html .= '<tr>';
+		$html .= '<th scope="row">' . esc_html__( 'Success Criterion', 'jwp_a11y' ) . '</th>';
+		$html .= '<td>' . $criterion_label . '</td>';
+		$html .= '<td>' . esc_html( (string) ( $data['summary'] ?? '' ) ) . '</td>';
+		$html .= '</tr>';
+		$html .= '</table>';
+
 		return $html;
 	}
 
