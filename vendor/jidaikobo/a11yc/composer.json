@@ -5,14 +5,14 @@
   "license": "MIT",
   "require": {
     "php": ">=7.4",
-    "guzzlehttp/guzzle": "^6.5",
-    "symfony/yaml": "^5.4"
+    "guzzlehttp/guzzle": "^6.5"
   },
   "require-dev": {
     "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
     "phpstan/phpstan": "^1.12",
     "phpunit/phpunit": "^9.6",
     "slevomat/coding-standard": "^8.18",
+    "symfony/yaml": "^5.4",
     "squizlabs/php_codesniffer": "^3.10"
   },
   "autoload": {
@@ -21,6 +21,7 @@
     }
   },
   "scripts": {
+    "compile-resources": "@php bin/compile-resources.php",
     "phpstan": "phpstan analyse -c phpstan.neon.dist",
     "phpcs": "phpcs --standard=phpcs.xml.dist",
     "phpunit": "phpunit -c phpunit.xml.dist"

@@ -45,6 +45,29 @@ final class RuntimeConfig
         return defined('A11YC_DOC_RESOURCE_PATH') ? A11YC_DOC_RESOURCE_PATH : '';
     }
 
+    public static function allowYamlFallback(): bool
+    {
+        if (defined('A11YC_ALLOW_YAML_FALLBACK')) {
+            return (bool) A11YC_ALLOW_YAML_FALLBACK;
+        }
+
+        $config_path = self::rootPath() . '/config.development.php';
+        if (! file_exists($config_path)) {
+            return false;
+        }
+
+        $config = require $config_path;
+        if (! is_array($config)) {
+            return false;
+        }
+
+        if (! array_key_exists('allow_yaml_fallback', $config)) {
+            return false;
+        }
+
+        return (bool) $config['allow_yaml_fallback'];
+    }
+
     public static function docUrl()
     {
         return defined('A11YC_DOC_URL') ? A11YC_DOC_URL : '';

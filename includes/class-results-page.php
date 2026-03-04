@@ -244,7 +244,12 @@ final class ResultsPage {
 			array_filter(
 				self::loadLegacyPages( $version ),
 				function ( $page ) use ( $version ) {
-					return empty( $page['trash'] ) && ! empty( static::loadLegacyPageResult( $page, $version ) );
+					if ( ! empty( $page['trash'] ) ) {
+						return false;
+					}
+
+					$data = static::loadLegacyPageResult( $page, $version );
+					return ! empty( $data['result'] ) && is_array( $data['result'] );
 				}
 			)
 		);
@@ -261,17 +266,22 @@ final class ResultsPage {
 		foreach ( $pages as $page ) {
 			$url   = (string) ( $page['url'] ?? '' );
 			$title = (string) ( $page['title'] ?? $url );
+			$data  = self::loadLegacyPageResult( $page, $version );
 			$link  = add_query_arg(
 				array(
 					'a11yc_each' => 1,
-					'url'        => rawurlencode( $url ),
+					'url'        => $url,
 				),
 				$base_url
 			);
 
 			$html .= '<tr>';
-			$html .= '<th scope="row">' . esc_html( $title ) . '</th>';
-			$html .= '<td>' . esc_html( self::formatLegacyLevel( self::legacyPageLevel( $page, $version ) ) ) . '</td>';
+			$html .= '<th scope="row">' . esc_html( $title );
+			if ( $url !== '' ) {
+				$html .= '<br><small>' . esc_html( $url ) . '</small>';
+			}
+			$html .= '</th>';
+			$html .= '<td>' . esc_html( self::legacyConformanceLabel( $data['result'] ?? array() ) ) . '</td>';
 			$html .= '<td><a href="' . esc_url( $link ) . '">' . esc_html__( 'Test result', 'jwp_a11y' ) . '</a></td>';
 			$html .= '</tr>';
 		}
@@ -368,6 +378,9 @@ final class ResultsPage {
 			if ( ! is_array( $result_row ) ) {
 				$result_row = array();
 			}
+			if ( empty( $result_row ) ) {
+				continue;
+			}
 
 			return array(
 				'page'    => json_decode( (string) $page['value'], true ),
@@ -390,6 +403,9 @@ final class ResultsPage {
 				continue;
 			}
 
+			if ( empty( $page['url'] ) && ! empty( $row['url'] ) ) {
+				$page['url'] = (string) $row['url'];
+			}
 			$page['version'] = intval( $row['version'] ?? 0 );
 			$pages[]         = $page;
 		}
@@ -773,7 +789,7 @@ final class ResultsPage {
 			return __( 'AA conforming', 'jwp_a11y' );
 		}
 
-		return __( 'AAA conforming', 'jwp_a11y' );
+		return __( 'AA conforming', 'jwp_a11y' );
 	}
 
 	private static function shouldDisplayCriterion( $criterion_data, $target_level ) {

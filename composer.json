@@ -4,7 +4,7 @@
   "type": "wordpress-plugin",
   "require": {
     "php": ">=7.4",
-    "jidaikobo/a11yc": "^6.0.1"
+    "jidaikobo/a11yc": "^7.0"
   },
   "require-dev": {
     "dealerdirect/phpcodesniffer-composer-installer": "^1.1",

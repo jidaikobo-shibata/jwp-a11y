@@ -5,7 +5,7 @@ Tags: accessibility, checker, WCAG, JIS X 8341-3
 Requires PHP: 7.4
 Requires at least: 6.0
 Tested up to: 6.8
-Stable tag: 5.1.0
+Stable tag: 5.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,6 +33,15 @@ This version focuses on three practical tasks:
 4. Edit a post and save it to run the accessibility check.
 
 == Changelog ==
+
+= 5.2.0 =
+update bundled jidaikobo/a11yc to 7.0.0
+switch bundled a11yc resources to compiled PHP arrays at runtime
+remove no-longer-needed symfony/yaml runtime dependency from bundled vendor
+
+= 5.1.1 =
+improve security checks for editor notice Ajax endpoints
+prepare the refreshed plugin package for the WordPress.org release
 
 = 5.1.0 =
 rebuilt the plugin as a minimal WordPress plugin on top of jidaikobo/a11yc
@@ -522,5 +531,5 @@ Currently Japanese only.  We are waiting language contribution!
 
 == Upgrade Notice ==
 
-= 5.1.0 =
-This rebuild keeps editor checks, legacy result pages, and criterion guidance while simplifying the plugin structure.
+= 5.1.1 =
+This release tightens editor notice permissions and updates the package for WordPress.org deployment.
