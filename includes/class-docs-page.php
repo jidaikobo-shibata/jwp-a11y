@@ -37,7 +37,7 @@ final class DocsPage {
 	private static function renderSingleDoc( $criterion, $yml ) {
 		$data = $yml['criterions'][ $criterion ] ?? null;
 		if ( ! is_array( $data ) ) {
-			return '<p>' . esc_html__( 'The requested criterion was not found.', 'jwp_a11y' ) . '</p>';
+			return '<p>' . esc_html__( 'The requested criterion was not found.', 'jwp-a11y' ) . '</p>';
 		}
 
 		$html  = '';
@@ -50,7 +50,7 @@ final class DocsPage {
 		}
 
 		if ( ! empty( $data['doc'] ) ) {
-			$html .= '<h3>' . esc_html__( 'About this success criterion', 'jwp_a11y' ) . '</h3>';
+			$html .= '<h3>' . esc_html__( 'About this success criterion', 'jwp-a11y' ) . '</h3>';
 			$html .= wp_kses_post( wpautop( self::linkifyCriterionReferences( (string) $data['doc'], $yml ) ) );
 		}
 
@@ -122,17 +122,17 @@ final class DocsPage {
 
 		$html  = '<table class="a11yc_table_info a11yc_table">';
 		$html .= '<tr>';
-		$html .= '<th scope="row">' . esc_html__( 'Principle', 'jwp_a11y' ) . '</th>';
+		$html .= '<th scope="row">' . esc_html__( 'Principle', 'jwp-a11y' ) . '</th>';
 		$html .= '<td>' . $principle_label . '</td>';
 		$html .= '<td>' . esc_html( (string) ( $principle['summary'] ?? '' ) ) . '</td>';
 		$html .= '</tr>';
 		$html .= '<tr>';
-		$html .= '<th scope="row">' . esc_html__( 'Guideline', 'jwp_a11y' ) . '</th>';
+		$html .= '<th scope="row">' . esc_html__( 'Guideline', 'jwp-a11y' ) . '</th>';
 		$html .= '<td>' . $guideline_label . '</td>';
 		$html .= '<td>' . esc_html( (string) ( $guideline['summary'] ?? '' ) ) . '</td>';
 		$html .= '</tr>';
 		$html .= '<tr>';
-		$html .= '<th scope="row">' . esc_html__( 'Success Criterion', 'jwp_a11y' ) . '</th>';
+		$html .= '<th scope="row">' . esc_html__( 'Success Criterion', 'jwp-a11y' ) . '</th>';
 		$html .= '<td>' . $criterion_label . '</td>';
 		$html .= '<td>' . esc_html( (string) ( $data['summary'] ?? '' ) ) . '</td>';
 		$html .= '</tr>';
@@ -195,7 +195,7 @@ final class DocsPage {
 
 		foreach ( $grouped as $level => $criterions ) {
 			/* translators: %s: WCAG conformance level label such as A, AA, or AAA. */
-			$html .= '<h2>' . esc_html( sprintf( __( 'Conformance level %s', 'jwp_a11y' ), $level ) ) . '</h2>';
+			$html .= '<h2>' . esc_html( sprintf( __( 'Conformance level %s', 'jwp-a11y' ), $level ) ) . '</h2>';
 			$html .= '<ul>';
 
 			foreach ( $criterions as $criterion => $data ) {
@@ -252,8 +252,8 @@ final class DocsPage {
 	 */
 	public static function registerAdminPage() {
 		add_management_page(
-			__( 'For Better Web Accessibility', 'jwp_a11y' ),
-			__( 'For Better Web Accessibility', 'jwp_a11y' ),
+			__( 'For Better Web Accessibility', 'jwp-a11y' ),
+			__( 'For Better Web Accessibility', 'jwp-a11y' ),
 			'edit_posts',
 			'jwp-a11y-docs',
 			array( __CLASS__, 'renderAdminPage' )
@@ -267,7 +267,7 @@ final class DocsPage {
 	 */
 	public static function renderAdminPage() {
 		echo '<div class="wrap">';
-		echo '<h1>' . esc_html__( 'For Better Web Accessibility', 'jwp_a11y' ) . '</h1>';
+		echo '<h1>' . esc_html__( 'For Better Web Accessibility', 'jwp-a11y' ) . '</h1>';
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- The method returns plugin-generated HTML with escaped dynamic values.
 		echo self::renderDocShortcode();
 		echo '</div>';

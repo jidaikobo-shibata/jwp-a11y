@@ -101,6 +101,7 @@ final class PostAnalysis {
 			$meta_values .= isset( $meta_value[0] ) ? wp_specialchars_decode( (string) $meta_value[0] ) : '';
 		}
 
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- This plugin intentionally applies the core WordPress hook.
 		return apply_filters( 'the_content', $post->post_content ) . $meta_values;
 	}
 
@@ -114,7 +115,7 @@ final class PostAnalysis {
 	private static function buildAnalysisDocument( $content, \WP_Post $post ) {
 		$lang  = \JwpA11y\Compatibility::currentLanguage();
 		$title = get_the_title( $post );
-		$title = is_string( $title ) && $title !== '' ? $title : __( 'Untitled', 'jwp_a11y' );
+		$title = is_string( $title ) && $title !== '' ? $title : __( 'Untitled', 'jwp-a11y' );
 
 		return '<!doctype html><html lang="' . esc_attr( $lang ) . '"><head><meta charset="utf-8"><title>' .
 			esc_html( $title ) .

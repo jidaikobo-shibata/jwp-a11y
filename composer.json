@@ -19,8 +19,8 @@
     }
   },
   "scripts": {
-    "phpstan": "phpstan analyse --configuration=phpstan.neon.dist --debug",
-    "phpcs": "phpcs --standard=phpcs.xml.dist",
-    "phpcbf": "phpcbf --standard=phpcs.xml.dist"
+    "phpstan": "phpstan analyse --configuration=phpstan.dist.neon --debug",
+    "phpcs": "phpcs --standard=phpcs.ruleset.xml",
+    "phpcbf": "phpcbf --standard=phpcs.ruleset.xml"
   }
 }

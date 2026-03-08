@@ -4,8 +4,8 @@ Donate link: https://www.jidaikobo.com/donate.html
 Tags: accessibility, checker, WCAG, JIS X 8341-3
 Requires PHP: 7.4
 Requires at least: 6.0
-Tested up to: 6.8
-Stable tag: 5.2.1
+Tested up to: 6.9
+Stable tag: 5.2.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,6 +33,9 @@ This version focuses on three practical tasks:
 4. Edit a post and save it to run the accessibility check.
 
 == Changelog ==
+
+= 5.2.2 =
+regenerate production Composer autoload files with --no-dev to prevent phpstan bootstrap loading on production sites
 
 = 5.2.1 =
 update bundled jidaikobo/a11yc to 7.1.0
@@ -535,5 +538,5 @@ Currently Japanese only.  We are waiting language contribution!
 
 == Upgrade Notice ==
 
-= 5.2.1 =
-This release updates the bundled a11yc package to 7.1.0 and refreshes bundled WCAG 2.2 metadata.
+= 5.2.2 =
+This release regenerates production Composer autoload files with --no-dev to avoid loading phpstan on production sites.

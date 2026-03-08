@@ -4,12 +4,12 @@
  * Plugin URI: https://wordpress.org/plugins/jwp-a11y/
  * Description: WordPress plugin that uses jidaikobo/a11yc for post accessibility checks and legacy result display.
  * Author: Jidaikobo Inc.
- * Version: 5.2.1
+ * Version: 5.2.2
  * Requires at least: 6.0
  * Requires PHP: 7.4
  * Author URI: https://www.jidaikobo.com/
  * License: GPL2
- * Text Domain: jwp_a11y
+ * Text Domain: jwp-a11y
  * Domain Path: /languages
  *
  * @package JwpA11y
@@ -18,12 +18,6 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-load_plugin_textdomain(
-	'jwp_a11y',
-	false,
-	dirname( plugin_basename( __FILE__ ) ) . '/languages'
-);
 
 require_once __DIR__ . '/includes/class-results-page.php';
 require_once __DIR__ . '/includes/class-docs-page.php';

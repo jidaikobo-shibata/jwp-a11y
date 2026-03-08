@@ -16,6 +16,8 @@ final class Plugin {
 	 * @return void
 	 */
 	public static function init() {
+		self::ensureTextdomainLoaded();
+
 		if ( ! self::loadAutoloader() ) {
 			add_action( 'admin_notices', array( __CLASS__, 'renderMissingAutoloaderNotice' ) );
 			return;
@@ -36,6 +38,57 @@ final class Plugin {
 		add_shortcode( 'jwp_a11y_doc', array( '\\JwpA11y\\DocsPage', 'renderDocShortcode' ) );
 		add_shortcode( 'jwp_a11y_docs', array( '\\JwpA11y\\DocsPage', 'renderDocShortcode' ) );
 		add_action( 'admin_menu', array( '\\JwpA11y\\DocsPage', 'registerAdminPage' ) );
+	}
+
+	/**
+	 * Loads bundled translation files without using load_plugin_textdomain().
+	 *
+	 * @return void
+	 */
+	private static function ensureTextdomainLoaded() {
+		if ( ! function_exists( 'load_textdomain' ) ) {
+			return;
+		}
+
+		$domain   = 'jwp-a11y';
+		$lang_dir = dirname( __DIR__ ) . '/languages/';
+		$locales  = array();
+
+		if ( function_exists( 'determine_locale' ) ) {
+			$detected = (string) determine_locale();
+			if ( $detected !== '' ) {
+				$locales[] = $detected;
+			}
+		}
+
+		$site_locale = (string) get_locale();
+		if ( $site_locale !== '' ) {
+			$locales[] = $site_locale;
+		}
+
+		$locales = array_values( array_unique( $locales ) );
+		foreach ( $locales as $locale ) {
+			$candidates = array( $locale );
+			if ( false !== strpos( $locale, '_' ) ) {
+				$parts = explode( '_', $locale );
+				if ( ! empty( $parts[0] ) ) {
+					$candidates[] = $parts[0];
+				}
+			}
+
+			foreach ( array_values( array_unique( $candidates ) ) as $candidate_locale ) {
+				$mo_file = $lang_dir . $domain . '-' . $candidate_locale . '.mo';
+				if ( ! file_exists( $mo_file ) ) {
+					continue;
+				}
+
+				if ( function_exists( 'unload_textdomain' ) ) {
+					unload_textdomain( $domain );
+				}
+				load_textdomain( $domain, $mo_file );
+				return;
+			}
+		}
 	}
 
 	/**
@@ -73,7 +126,7 @@ final class Plugin {
 		}
 
 		echo '<div class="notice notice-error"><p>';
-		echo esc_html__( 'jwp-a11y could not load jidaikobo/a11yc. Run composer install in the plugin directory or keep jwp-a11y enabled as a temporary fallback.', 'jwp_a11y' );
+		echo esc_html__( 'jwp-a11y could not load jidaikobo/a11yc. Run composer install in the plugin directory or keep jwp-a11y enabled as a temporary fallback.', 'jwp-a11y' );
 		echo '</p></div>';
 	}
 

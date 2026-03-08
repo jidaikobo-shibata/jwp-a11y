@@ -79,9 +79,9 @@ final class ResultsPage {
 		}
 
 		if ( ! empty( $settings['show_results'] ) ) {
-			$html .= '<h2>' . esc_html__( 'Accessibility Report', 'jwp_a11y' ) . '</h2>';
+			$html .= '<h2>' . esc_html__( 'Accessibility Report', 'jwp-a11y' ) . '</h2>';
 			$html .= '<p class="a11yc_link"><a href="' . esc_url( $report_link ) . '">' .
-				esc_html__( 'Accessibility Report', 'jwp_a11y' ) .
+				esc_html__( 'Accessibility Report', 'jwp-a11y' ) .
 				'</a></p>';
 		}
 
@@ -117,7 +117,7 @@ final class ResultsPage {
 	private static function renderLegacyReportPage( $base_url, $version, $settings ) {
 		$pages = self::loadLegacyPages( $version );
 		if ( empty( $pages ) ) {
-			return '<p>' . esc_html__( 'No saved accessibility results were found for this page.', 'jwp_a11y' ) . '</p>';
+			return '<p>' . esc_html__( 'No saved accessibility results were found for this page.', 'jwp-a11y' ) . '</p>';
 		}
 
 		$yml           = \Jidaikobo\A11yc\Yaml::fetch();
@@ -157,26 +157,26 @@ final class ResultsPage {
 				'a11yc_report' => 1,
 			)
 		);
-		$html .= '<h2>' . esc_html( (string) ( $settings['title'] ?? __( 'Accessibility Report', 'jwp_a11y' ) ) ) . '</h2>';
+		$html .= '<h2>' . esc_html( (string) ( $settings['title'] ?? __( 'Accessibility Report', 'jwp-a11y' ) ) ) . '</h2>';
 		$html .= '<table class="a11yc_table a11yc_table_report"><tbody>';
 		if ( $standard_name !== '' ) {
-			$html .= '<tr><th scope="row">' . esc_html__( 'Standard identifier and revision year', 'jwp_a11y' ) . '</th><td>' . esc_html( $standard_name ) . '</td></tr>';
+			$html .= '<tr><th scope="row">' . esc_html__( 'Standard identifier and revision year', 'jwp-a11y' ) . '</th><td>' . esc_html( $standard_name ) . '</td></tr>';
 		}
-		$html .= '<tr><th scope="row">' . esc_html__( 'Target conformance level', 'jwp_a11y' ) . '</th><td>' . esc_html( self::formatLegacyLevel( $target_level ) ) . '</td></tr>';
-		$html .= '<tr><th scope="row">' . esc_html__( 'Achieved conformance level', 'jwp_a11y' ) . '</th><td>' . esc_html( $current_level ) . '</td></tr>';
+		$html .= '<tr><th scope="row">' . esc_html__( 'Target conformance level', 'jwp-a11y' ) . '</th><td>' . esc_html( self::formatLegacyLevel( $target_level ) ) . '</td></tr>';
+		$html .= '<tr><th scope="row">' . esc_html__( 'Achieved conformance level', 'jwp-a11y' ) . '</th><td>' . esc_html( $current_level ) . '</td></tr>';
 		if ( ! empty( $settings['dependencies'] ) ) {
-			$html .= '<tr><th scope="row">' . esc_html__( 'List of relied-upon web content technologies', 'jwp_a11y' ) . '</th><td>' . nl2br( esc_html( (string) $settings['dependencies'] ) ) . '</td></tr>';
+			$html .= '<tr><th scope="row">' . esc_html__( 'List of relied-upon web content technologies', 'jwp-a11y' ) . '</th><td>' . nl2br( esc_html( (string) $settings['dependencies'] ) ) . '</td></tr>';
 		}
-		$html .= '<tr><th scope="row">' . esc_html__( 'URLs of tested web pages', 'jwp_a11y' ) . '</th><td><a href="' . esc_url( $pages_link ) . '">' . esc_html__( 'URL list', 'jwp_a11y' ) . '</a> (' . intval( count( $done_pages ) ) . ' / ' . intval( count( $total_pages ) ) . ')</td></tr>';
+		$html .= '<tr><th scope="row">' . esc_html__( 'URLs of tested web pages', 'jwp-a11y' ) . '</th><td><a href="' . esc_url( $pages_link ) . '">' . esc_html__( 'URL list', 'jwp-a11y' ) . '</a> (' . intval( count( $done_pages ) ) . ' / ' . intval( count( $total_pages ) ) . ')</td></tr>';
 		if ( empty( $settings['hide_date_results'] ) && ! empty( $settings['test_period'] ) ) {
-			$html .= '<tr><th scope="row">' . esc_html__( 'Test period', 'jwp_a11y' ) . '</th><td>' . esc_html( (string) $settings['test_period'] ) . '</td></tr>';
+			$html .= '<tr><th scope="row">' . esc_html__( 'Test period', 'jwp-a11y' ) . '</th><td>' . esc_html( (string) $settings['test_period'] ) . '</td></tr>';
 		}
 		if ( ! empty( $settings['contact'] ) ) {
-			$html .= '<tr><th scope="row">' . esc_html__( 'Accessibility contact information', 'jwp_a11y' ) . '</th><td>' . nl2br( esc_html( (string) $settings['contact'] ) ) . '</td></tr>';
+			$html .= '<tr><th scope="row">' . esc_html__( 'Accessibility contact information', 'jwp-a11y' ) . '</th><td>' . nl2br( esc_html( (string) $settings['contact'] ) ) . '</td></tr>';
 		}
 		$html .= '</tbody></table>';
 		if ( ! empty( $settings['report'] ) ) {
-			$html .= '<h2>' . esc_html__( 'Additional information', 'jwp_a11y' ) . '</h2>';
+			$html .= '<h2>' . esc_html__( 'Additional information', 'jwp-a11y' ) . '</h2>';
 			$html .= wp_kses_post( wpautop( (string) $settings['report'] ) );
 		}
 
@@ -195,13 +195,13 @@ final class ResultsPage {
 			}
 		}
 
-		$html .= '<h2>' . esc_html__( 'Checklist of Success Criteria', 'jwp_a11y' ) . '</h2>';
+		$html .= '<h2>' . esc_html__( 'Checklist of Success Criteria', 'jwp-a11y' ) . '</h2>';
 		$html .= '<table class="a11yc_table"><thead><tr>';
-		$html .= '<th scope="col">' . esc_html__( 'Success criterion', 'jwp_a11y' ) . '</th>';
-		$html .= '<th scope="col" class="a11yc_result">' . esc_html__( 'Conformance level', 'jwp_a11y' ) . '</th>';
-		$html .= '<th scope="col" class="a11yc_result a11yc_result_exist">' . esc_html__( 'Applicable', 'jwp_a11y' ) . '</th>';
-		$html .= '<th scope="col" class="a11yc_result a11yc_result_exist">' . esc_html__( 'Result', 'jwp_a11y' ) . '</th>';
-		$html .= '<th scope="col" class="a11yc_result">' . esc_html__( 'Notes', 'jwp_a11y' ) . '</th>';
+		$html .= '<th scope="col">' . esc_html__( 'Success criterion', 'jwp-a11y' ) . '</th>';
+		$html .= '<th scope="col" class="a11yc_result">' . esc_html__( 'Conformance level', 'jwp-a11y' ) . '</th>';
+		$html .= '<th scope="col" class="a11yc_result a11yc_result_exist">' . esc_html__( 'Applicable', 'jwp-a11y' ) . '</th>';
+		$html .= '<th scope="col" class="a11yc_result a11yc_result_exist">' . esc_html__( 'Result', 'jwp-a11y' ) . '</th>';
+		$html .= '<th scope="col" class="a11yc_result">' . esc_html__( 'Notes', 'jwp-a11y' ) . '</th>';
 		$html .= '</tr></thead><tbody>';
 		$html .= $rows;
 		$html .= '</tbody></table>';
@@ -217,9 +217,9 @@ final class ResultsPage {
 
 		$html  = '';
 		$html .= '<form action="' . esc_url( $base_url ) . '" method="get">';
-		$html .= '<div><label for="a11yc_version">' . esc_html__( 'Switch the policy, report, and test version', 'jwp_a11y' ) . '</label> ';
+		$html .= '<div><label for="a11yc_version">' . esc_html__( 'Switch the policy, report, and test version', 'jwp-a11y' ) . '</label> ';
 		$html .= '<select name="a11yc_version" id="a11yc_version">';
-		$html .= '<option value="">' . esc_html__( 'Latest', 'jwp_a11y' ) . '</option>';
+		$html .= '<option value="">' . esc_html__( 'Latest', 'jwp-a11y' ) . '</option>';
 		foreach ( $versions as $version_name => $version_row ) {
 			$selected = (string) $version === (string) $version_name ? ' selected="selected"' : '';
 			$html    .= '<option value="' . esc_attr( (string) $version_name ) . '"' . $selected . '>' .
@@ -230,9 +230,9 @@ final class ResultsPage {
 		foreach ( $extra_args as $key => $value ) {
 			$html .= '<input type="hidden" name="' . esc_attr( (string) $key ) . '" value="' . esc_attr( (string) $value ) . '">';
 		}
-		$html .= '<button type="submit">' . esc_html__( 'Submit', 'jwp_a11y' ) . '</button>';
+		$html .= '<button type="submit">' . esc_html__( 'Submit', 'jwp-a11y' ) . '</button>';
 		if ( (string) $version !== '' && intval( $version ) !== 0 ) {
-			$html .= ' <a href="' . esc_url( add_query_arg( $extra_args, $base_url ) ) . '">' . esc_html__( 'Latest', 'jwp_a11y' ) . '</a>';
+			$html .= ' <a href="' . esc_url( add_query_arg( $extra_args, $base_url ) ) . '">' . esc_html__( 'Latest', 'jwp-a11y' ) . '</a>';
 		}
 		$html .= '</div></form>';
 
@@ -256,11 +256,11 @@ final class ResultsPage {
 
 		$html  = '';
 		$html .= '<div class="jwp-a11y-results">';
-		$html .= '<h2>' . esc_html__( 'URL List', 'jwp_a11y' ) . '</h2>';
+		$html .= '<h2>' . esc_html__( 'URL List', 'jwp-a11y' ) . '</h2>';
 		$html .= '<table class="a11yc_table"><thead><tr>';
-		$html .= '<th scope="col">' . esc_html__( 'Page', 'jwp_a11y' ) . '</th>';
-		$html .= '<th scope="col">' . esc_html__( 'Achieved conformance level for this page', 'jwp_a11y' ) . '</th>';
-		$html .= '<th scope="col">' . esc_html__( 'Test result', 'jwp_a11y' ) . '</th>';
+		$html .= '<th scope="col">' . esc_html__( 'Page', 'jwp-a11y' ) . '</th>';
+		$html .= '<th scope="col">' . esc_html__( 'Achieved conformance level for this page', 'jwp-a11y' ) . '</th>';
+		$html .= '<th scope="col">' . esc_html__( 'Test result', 'jwp-a11y' ) . '</th>';
 		$html .= '</tr></thead><tbody>';
 
 		foreach ( $pages as $page ) {
@@ -282,7 +282,7 @@ final class ResultsPage {
 			}
 			$html .= '</th>';
 			$html .= '<td>' . esc_html( self::legacyConformanceLabel( $data['result'] ?? array() ) ) . '</td>';
-			$html .= '<td><a href="' . esc_url( $link ) . '">' . esc_html__( 'Test result', 'jwp_a11y' ) . '</a></td>';
+			$html .= '<td><a href="' . esc_url( $link ) . '">' . esc_html__( 'Test result', 'jwp-a11y' ) . '</a></td>';
 			$html .= '</tr>';
 		}
 
@@ -295,7 +295,7 @@ final class ResultsPage {
 	private static function renderLegacyEachPage( $base_url, $url, $version, $settings ) {
 		$data = self::loadLegacyResultData( $url, $version );
 		if ( empty( $data['page'] ) || empty( $data['result'] ) ) {
-			return '<p>' . esc_html__( 'No saved accessibility results were found for this page.', 'jwp_a11y' ) . '</p>';
+			return '<p>' . esc_html__( 'No saved accessibility results were found for this page.', 'jwp-a11y' ) . '</p>';
 		}
 
 		$yml          = \Jidaikobo\A11yc\Yaml::fetch();
@@ -305,21 +305,21 @@ final class ResultsPage {
 
 		$html  = '';
 		$html .= '<div class="jwp-a11y-results">';
-		$html .= '<p><a href="' . esc_url( $back_link ) . '">' . esc_html__( 'Back to URL list', 'jwp_a11y' ) . '</a></p>';
+		$html .= '<p><a href="' . esc_url( $back_link ) . '">' . esc_html__( 'Back to URL list', 'jwp-a11y' ) . '</a></p>';
 		$html .= '<h2>' . esc_html( (string) ( $page['title'] ?? $url ) ) . '</h2>';
 		$html .= '<table class="a11yc_table a11yc_table_report"><tbody>';
-		$html .= '<tr><th scope="row">' . esc_html__( 'Target conformance level', 'jwp_a11y' ) . '</th><td>' . esc_html( self::formatLegacyLevel( $target_level ) ) . '</td></tr>';
-		$html .= '<tr><th scope="row">' . esc_html__( 'Achieved conformance level for this page', 'jwp_a11y' ) . '</th><td>' . esc_html( self::legacyConformanceLabel( $data['result'] ) ) . '</td></tr>';
-		$html .= '<tr><th scope="row">' . esc_html__( 'Test date', 'jwp_a11y' ) . '</th><td>' . esc_html( (string) ( $page['date'] ?? '' ) ) . '</td></tr>';
+		$html .= '<tr><th scope="row">' . esc_html__( 'Target conformance level', 'jwp-a11y' ) . '</th><td>' . esc_html( self::formatLegacyLevel( $target_level ) ) . '</td></tr>';
+		$html .= '<tr><th scope="row">' . esc_html__( 'Achieved conformance level for this page', 'jwp-a11y' ) . '</th><td>' . esc_html( self::legacyConformanceLabel( $data['result'] ) ) . '</td></tr>';
+		$html .= '<tr><th scope="row">' . esc_html__( 'Test date', 'jwp-a11y' ) . '</th><td>' . esc_html( (string) ( $page['date'] ?? '' ) ) . '</td></tr>';
 		$html .= '</tbody></table>';
 
-		$html .= '<h2>' . esc_html__( 'Checklist of Success Criteria', 'jwp_a11y' ) . '</h2>';
+		$html .= '<h2>' . esc_html__( 'Checklist of Success Criteria', 'jwp-a11y' ) . '</h2>';
 		$html .= '<table class="a11yc_table"><thead><tr>';
-		$html .= '<th scope="col">' . esc_html__( 'Success criterion', 'jwp_a11y' ) . '</th>';
-		$html .= '<th scope="col" class="a11yc_result">' . esc_html__( 'Conformance level', 'jwp_a11y' ) . '</th>';
-		$html .= '<th scope="col" class="a11yc_result a11yc_result_exist">' . esc_html__( 'Applicable', 'jwp_a11y' ) . '</th>';
-		$html .= '<th scope="col" class="a11yc_result a11yc_result_exist">' . esc_html__( 'Result', 'jwp_a11y' ) . '</th>';
-		$html .= '<th scope="col" class="a11yc_result">' . esc_html__( 'Notes', 'jwp_a11y' ) . '</th>';
+		$html .= '<th scope="col">' . esc_html__( 'Success criterion', 'jwp-a11y' ) . '</th>';
+		$html .= '<th scope="col" class="a11yc_result">' . esc_html__( 'Conformance level', 'jwp-a11y' ) . '</th>';
+		$html .= '<th scope="col" class="a11yc_result a11yc_result_exist">' . esc_html__( 'Applicable', 'jwp-a11y' ) . '</th>';
+		$html .= '<th scope="col" class="a11yc_result a11yc_result_exist">' . esc_html__( 'Result', 'jwp-a11y' ) . '</th>';
+		$html .= '<th scope="col" class="a11yc_result">' . esc_html__( 'Notes', 'jwp-a11y' ) . '</th>';
 		$html .= '</tr></thead><tbody>';
 		foreach ( $data['result'] as $criterion => $raw_result ) {
 			$criterion_data = $yml['criterions'][ $criterion ] ?? array();
@@ -345,29 +345,41 @@ final class ResultsPage {
 	private static function loadLegacyResultData( $url, $version = null ) {
 		global $wpdb;
 
-		$table = $wpdb->prefix . 'jwp_a11yc_data';
+		$table = self::legacyTableName();
 		foreach ( self::legacyUrlCandidates( $url ) as $candidate ) {
+			$candidate = esc_url_raw( (string) $candidate );
+			if ( '' === $candidate ) {
+				continue;
+			}
+
+			// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
 			if ( null !== $version ) {
 				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is built from the trusted WordPress table prefix.
-				$page_query = $wpdb->prepare(
-					"SELECT value, version FROM {$table} WHERE `key` = %s AND url = %s AND group_id = %d AND version = %d ORDER BY id DESC LIMIT 1",
-					'page',
-					$candidate,
-					self::LEGACY_GROUP_ID,
-					intval( $version )
+				// phpcs:ignore PluginCheck.Security.DirectDB.UnescapedDBParameter -- $table is sanitized by legacyTableName() and contains only [A-Za-z0-9_].
+				$page = $wpdb->get_row(
+					$wpdb->prepare(
+						"SELECT value, version FROM {$table} WHERE `key` = %s AND url = %s AND group_id = %d AND version = %d ORDER BY id DESC LIMIT 1",
+						'page',
+						$candidate,
+						self::LEGACY_GROUP_ID,
+						intval( $version )
+					),
+					ARRAY_A
 				);
 			} else {
 				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is built from the trusted WordPress table prefix.
-				$page_query = $wpdb->prepare(
-					"SELECT value, version FROM {$table} WHERE `key` = %s AND url = %s AND group_id = %d ORDER BY id DESC LIMIT 1",
-					'page',
-					$candidate,
-					self::LEGACY_GROUP_ID
+				// phpcs:ignore PluginCheck.Security.DirectDB.UnescapedDBParameter -- $table is sanitized by legacyTableName() and contains only [A-Za-z0-9_].
+				$page = $wpdb->get_row(
+					$wpdb->prepare(
+						"SELECT value, version FROM {$table} WHERE `key` = %s AND url = %s AND group_id = %d ORDER BY id DESC LIMIT 1",
+						'page',
+						$candidate,
+						self::LEGACY_GROUP_ID
+					),
+					ARRAY_A
 				);
 			}
-
-			// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- The query string is prepared in the conditional branches above.
-			$page = $wpdb->get_row( $page_query, ARRAY_A );
+			// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
 			if ( empty( $page['value'] ) ) {
 				continue;
 			}
@@ -471,29 +483,43 @@ final class ResultsPage {
 	private static function loadLegacyValue( $key, $url, $version = null ) {
 		global $wpdb;
 
-		$table = $wpdb->prefix . 'jwp_a11yc_data';
+		$table = self::legacyTableName();
+		$key   = sanitize_key( (string) $key );
+		$url   = trim( (string) $url );
+		if ( $url !== 'common' ) {
+			$sanitized_url = esc_url_raw( $url );
+			$url           = ( $sanitized_url !== '' ) ? $sanitized_url : sanitize_text_field( $url );
+		}
+		if ( '' === $key || '' === $url ) {
+			return array();
+		}
 
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
 		if ( null !== $version ) {
 			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is built from the trusted WordPress table prefix.
-			$query = $wpdb->prepare(
-				"SELECT value FROM {$table} WHERE `key` = %s AND url = %s AND group_id = %d AND version = %d LIMIT 1",
-				$key,
-				$url,
-				self::LEGACY_GROUP_ID,
-				intval( $version )
+			// phpcs:ignore PluginCheck.Security.DirectDB.UnescapedDBParameter -- $table is sanitized by legacyTableName() and contains only [A-Za-z0-9_].
+			$value = $wpdb->get_var(
+				$wpdb->prepare(
+					"SELECT value FROM {$table} WHERE `key` = %s AND url = %s AND group_id = %d AND version = %d LIMIT 1",
+					$key,
+					$url,
+					self::LEGACY_GROUP_ID,
+					intval( $version )
+				)
 			);
 		} else {
 			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is built from the trusted WordPress table prefix.
-			$query = $wpdb->prepare(
-				"SELECT value FROM {$table} WHERE `key` = %s AND url = %s AND group_id = %d ORDER BY id DESC LIMIT 1",
-				$key,
-				$url,
-				self::LEGACY_GROUP_ID
+			// phpcs:ignore PluginCheck.Security.DirectDB.UnescapedDBParameter -- $table is sanitized by legacyTableName() and contains only [A-Za-z0-9_].
+			$value = $wpdb->get_var(
+				$wpdb->prepare(
+					"SELECT value FROM {$table} WHERE `key` = %s AND url = %s AND group_id = %d ORDER BY id DESC LIMIT 1",
+					$key,
+					$url,
+					self::LEGACY_GROUP_ID
+				)
 			);
 		}
-
-		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- The query string is prepared in the conditional branches above.
-		$value = $wpdb->get_var( $query );
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
 		if ( ! is_string( $value ) || $value === '' ) {
 			return array();
 		}
@@ -505,28 +531,51 @@ final class ResultsPage {
 	private static function loadLegacyValuesByKey( $key, $version ) {
 		global $wpdb;
 
-		$table = $wpdb->prefix . 'jwp_a11yc_data';
+		$table = self::legacyTableName();
+		$key   = sanitize_key( (string) $key );
+		if ( '' === $key ) {
+			return array();
+		}
 
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
 		if ( null !== $version ) {
 			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is built from the trusted WordPress table prefix.
-			$query = $wpdb->prepare(
-				"SELECT value, url, version FROM {$table} WHERE `key` = %s AND group_id = %d AND version = %d ORDER BY id DESC",
-				$key,
-				self::LEGACY_GROUP_ID,
-				intval( $version )
+			// phpcs:ignore PluginCheck.Security.DirectDB.UnescapedDBParameter -- $table is sanitized by legacyTableName() and contains only [A-Za-z0-9_].
+			$rows = $wpdb->get_results(
+				$wpdb->prepare(
+					"SELECT value, url, version FROM {$table} WHERE `key` = %s AND group_id = %d AND version = %d ORDER BY id DESC",
+					$key,
+					self::LEGACY_GROUP_ID,
+					intval( $version )
+				),
+				ARRAY_A
 			);
 		} else {
 			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is built from the trusted WordPress table prefix.
-			$query = $wpdb->prepare(
-				"SELECT value, url, version FROM {$table} WHERE `key` = %s AND group_id = %d ORDER BY id DESC",
-				$key,
-				self::LEGACY_GROUP_ID
+			// phpcs:ignore PluginCheck.Security.DirectDB.UnescapedDBParameter -- $table is sanitized by legacyTableName() and contains only [A-Za-z0-9_].
+			$rows = $wpdb->get_results(
+				$wpdb->prepare(
+					"SELECT value, url, version FROM {$table} WHERE `key` = %s AND group_id = %d ORDER BY id DESC",
+					$key,
+					self::LEGACY_GROUP_ID
+				),
+				ARRAY_A
 			);
 		}
-
-		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- The query string is prepared in the conditional branches above.
-		$rows = $wpdb->get_results( $query, ARRAY_A );
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
 		return is_array( $rows ) ? $rows : array();
+	}
+
+	/**
+	 * Returns the legacy results table name using a sanitized prefix.
+	 *
+	 * @return string
+	 */
+	private static function legacyTableName() {
+		global $wpdb;
+
+		$prefix = preg_replace( '/[^A-Za-z0-9_]/', '', (string) $wpdb->prefix );
+		return $prefix . 'jwp_a11yc_data';
 	}
 
 	private static function countLegacyResults( $results ) {
@@ -630,7 +679,7 @@ final class ResultsPage {
 
 		if ( ! empty( $criterion_data['doc'] ) ) {
 			$html .= '<details class="jwp-a11y-guidance">';
-			$html .= '<summary>' . esc_html__( 'About this issue', 'jwp_a11y' ) . '</summary>';
+			$html .= '<summary>' . esc_html__( 'About this issue', 'jwp-a11y' ) . '</summary>';
 			$html .= wp_kses_post( wpautop( (string) $criterion_data['doc'] ) );
 			$html .= '</details>';
 		}
@@ -642,8 +691,8 @@ final class ResultsPage {
 
 	private static function renderLegacyStyleResultRow( $criterion, $criterion_data, $result ) {
 		$state  = intval( $result['result'] ?? 0 );
-		$exists = $state === 1 ? __( 'Not applicable', 'jwp_a11y' ) : __( 'Applicable', 'jwp_a11y' );
-		$pass   = $state > 0 ? __( 'Pass', 'jwp_a11y' ) : ( $state < 0 ? '-' : __( 'Fail', 'jwp_a11y' ) );
+		$exists = $state === 1 ? __( 'Not applicable', 'jwp-a11y' ) : __( 'Applicable', 'jwp-a11y' );
+		$pass   = $state > 0 ? __( 'Pass', 'jwp-a11y' ) : ( $state < 0 ? '-' : __( 'Fail', 'jwp-a11y' ) );
 		$memo   = isset( $result['memo'] ) ? (string) $result['memo'] : '';
 		$level  = self::criterionLevelLabel( $criterion_data );
 		$label  = $criterion . ' ' . ( $criterion_data['name'] ?? $criterion );
@@ -664,7 +713,7 @@ final class ResultsPage {
 	private static function formatLegacyLevel( $level ) {
 		$level = intval( $level );
 		if ( $level <= 0 ) {
-			return __( 'Not available', 'jwp_a11y' );
+			return __( 'Not available', 'jwp-a11y' );
 		}
 
 		$map = array(
@@ -758,7 +807,7 @@ final class ResultsPage {
 
 	private static function legacyConformanceLabel( $results ) {
 		if ( ! is_array( $results ) || empty( $results ) ) {
-			return __( 'Not available', 'jwp_a11y' );
+			return __( 'Not available', 'jwp-a11y' );
 		}
 
 		$yml           = \Jidaikobo\A11yc\Yaml::fetch();
@@ -778,18 +827,18 @@ final class ResultsPage {
 		}
 
 		if ( isset( $failed_levels['A'] ) ) {
-			return __( 'A, partially conforming', 'jwp_a11y' );
+			return __( 'A, partially conforming', 'jwp-a11y' );
 		}
 
 		if ( isset( $failed_levels['AA'] ) ) {
-			return __( 'A conforming / AA partially conforming', 'jwp_a11y' );
+			return __( 'A conforming / AA partially conforming', 'jwp-a11y' );
 		}
 
 		if ( isset( $failed_levels['AAA'] ) ) {
-			return __( 'AA conforming', 'jwp_a11y' );
+			return __( 'AA conforming', 'jwp-a11y' );
 		}
 
-		return __( 'AA conforming', 'jwp_a11y' );
+		return __( 'AA conforming', 'jwp-a11y' );
 	}
 
 	private static function shouldDisplayCriterion( $criterion_data, $target_level ) {

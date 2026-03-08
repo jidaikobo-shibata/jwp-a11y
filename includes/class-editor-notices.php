@@ -208,8 +208,20 @@ final class EditorNotices {
 		echo '.then(function(payload){';
 		echo 'if(!payload||!payload.success){ button.disabled=false; return; }';
 		echo 'var item = button.closest("li");';
-		echo 'if(item){ item.remove(); return; }';
+		echo 'var notice = button.closest(".notice.notice-warning");';
+		echo 'if(item){';
+		echo 'item.remove();';
+		echo 'if(notice){';
+		echo 'var remain=notice.querySelectorAll("li").length;';
+		echo 'if(remain===0){ notice.remove(); }';
+		echo '}';
+		echo 'return;';
+		echo '}';
 		echo 'button.remove();';
+		echo 'if(notice){';
+		echo 'var remainAfter=notice.querySelectorAll("li").length;';
+		echo 'if(remainAfter===0){ notice.remove(); }';
+		echo '}';
 		echo '})';
 		echo '.catch(function(){ button.disabled=false; });';
 		echo '});';
@@ -241,7 +253,7 @@ final class EditorNotices {
 		$payload = self::consumePendingNotice( $post_id );
 		if ( ! is_array( $payload ) ) {
 			$result  = self::storedAnalysis( $post_id );
-			$payload = is_array( $result ) ? self::buildNoticePayload( $post_id, $result ) : array();
+			$payload = is_array( $result ) ? self::buildNoticePayloadInSiteLocale( $post_id, $result ) : array();
 		}
 
 		wp_send_json_success( $payload );
@@ -301,13 +313,13 @@ final class EditorNotices {
 			'errorCount'     => $error_count,
 			'noticeCount'    => $notice_count,
 			'errorHtml'      => self::buildNoticeIssueHtml(
-				__( 'Accessibility issues were detected', 'jwp_a11y' ),
+				__( 'Accessibility issues were detected', 'jwp-a11y' ),
 				$issues['errors'],
 				false,
 				$post_id
 			),
 			'noticeHtml'     => self::buildNoticeIssueHtml(
-				__( 'There may be accessibility issues', 'jwp_a11y' ),
+				__( 'There may be accessibility issues', 'jwp-a11y' ),
 				$issues['notices'],
 				true,
 				$post_id
@@ -316,9 +328,73 @@ final class EditorNotices {
 				? self::buildSuccessNoticeHtml()
 				: '',
 			'successMessage' => ( $error_count === 0 && $notice_count === 0 )
-				? __( 'No accessibility issues were detected', 'jwp_a11y' )
+				? __( 'No accessibility issues were detected', 'jwp-a11y' )
 				: '',
 		);
+	}
+
+	/**
+	 * Builds notice payload in the site locale and ensures plugin translations are loaded.
+	 *
+	 * @param int                  $post_id Post ID.
+	 * @param array<string, mixed> $result  Analyzer result.
+	 * @return array<string, mixed>
+	 */
+	private static function buildNoticePayloadInSiteLocale( $post_id, $result ) {
+		$site_locale = (string) get_locale();
+		$switched    = false;
+
+		if ( function_exists( 'switch_to_locale' ) && function_exists( 'restore_previous_locale' ) && $site_locale !== '' ) {
+			$current_locale = function_exists( 'determine_locale' ) ? (string) determine_locale() : $site_locale;
+			if ( $current_locale !== $site_locale ) {
+				$switched = switch_to_locale( $site_locale );
+			}
+		}
+
+		self::ensureTextdomainForLocale( $site_locale );
+		$payload = self::buildNoticePayload( $post_id, $result );
+
+		if ( $switched && function_exists( 'restore_previous_locale' ) ) {
+			restore_previous_locale();
+		}
+
+		return $payload;
+	}
+
+	/**
+	 * Loads the plugin translation file for the requested locale from bundled languages.
+	 *
+	 * @param string $locale Locale to load.
+	 * @return void
+	 */
+	private static function ensureTextdomainForLocale( $locale ) {
+		if ( $locale === '' || ! function_exists( 'load_textdomain' ) ) {
+			return;
+		}
+
+		$domain   = 'jwp-a11y';
+		$lang_dir = dirname( __DIR__ ) . '/languages/';
+		$files    = array( $lang_dir . $domain . '-' . $locale . '.mo' );
+
+		if ( false !== strpos( $locale, '_' ) ) {
+			$parts = explode( '_', $locale );
+			if ( ! empty( $parts[0] ) ) {
+				$files[] = $lang_dir . $domain . '-' . $parts[0] . '.mo';
+			}
+		}
+
+		foreach ( $files as $mo_file ) {
+			if ( ! file_exists( $mo_file ) ) {
+				continue;
+			}
+
+			if ( function_exists( 'unload_textdomain' ) ) {
+				unload_textdomain( $domain );
+			}
+
+			load_textdomain( $domain, $mo_file );
+			return;
+		}
 	}
 
 	private static function splitIssues( $result ) {
@@ -425,16 +501,16 @@ final class EditorNotices {
 	private static function buildNoticeDocLinkHtml( $url ) {
 		$html  = '';
 		$html .= '<a href="' . esc_url( (string) $url ) . '" target="jwp-a11y-text" rel="noopener">';
-		$html .= esc_html( __( 'About this issue', 'jwp_a11y' ) );
+		$html .= esc_html( __( 'About this issue', 'jwp-a11y' ) );
 		$html .= ' <span class="dashicons dashicons-external" aria-hidden="true" style="text-decoration:none;"></span>';
-		$html .= '<span class="screen-reader-text">' . esc_html( __( 'Opens in another tab', 'jwp_a11y' ) ) . '</span>';
+		$html .= '<span class="screen-reader-text">' . esc_html( __( 'Opens in another tab', 'jwp-a11y' ) ) . '</span>';
 		$html .= '</a>';
 
 		return $html;
 	}
 
 	private static function buildSuccessNoticeHtml() {
-		return '<p><strong>' . esc_html( __( 'No accessibility issues were detected', 'jwp_a11y' ) ) . '</strong></p>';
+		return '<p><strong>' . esc_html( __( 'No accessibility issues were detected', 'jwp-a11y' ) ) . '</strong></p>';
 	}
 
 	private static function buildSnippetDetailsHtml( $snippet, $extra_html = '' ) {
@@ -445,7 +521,7 @@ final class EditorNotices {
 
 		$html  = '';
 		$html .= '<details style="margin-top:0.35em;">';
-		$html .= '<summary>' . esc_html( __( 'Show the affected markup', 'jwp_a11y' ) ) . '</summary>';
+		$html .= '<summary>' . esc_html( __( 'Show the affected markup', 'jwp-a11y' ) ) . '</summary>';
 		if ( $snippet !== '' ) {
 			$html .= '<div><code>' . esc_html( $snippet ) . '</code></div>';
 		}
@@ -470,7 +546,7 @@ final class EditorNotices {
 		$html  = '';
 		$html .= '<p style="margin:0.5em 0 0;">';
 		$html .= '<button type="button" class="button-link jwp-a11y-suppress-notice" data-post-id="' . intval( $post_id ) . '" data-issue-key="' . esc_attr( $issue_key ) . '">';
-		$html .= esc_html( __( 'Hide this temporarily because it is not an issue', 'jwp_a11y' ) );
+		$html .= esc_html( __( 'Hide this temporarily because it is not an issue', 'jwp-a11y' ) );
 		$html .= '</button>';
 		$html .= '</p>';
 
@@ -490,7 +566,13 @@ final class EditorNotices {
 			return;
 		}
 
-		update_user_meta( $user_id, self::pendingNoticeMetaKey( $post_id ), self::buildNoticePayload( $post_id, $result ) );
+		update_user_meta(
+			$user_id,
+			self::pendingNoticeMetaKey( $post_id ),
+			array(
+				'result' => $result,
+			)
+		);
 	}
 
 	private static function consumePendingNotice( $post_id ) {
@@ -503,7 +585,23 @@ final class EditorNotices {
 		$payload = get_user_meta( $user_id, $key, true );
 		delete_user_meta( $user_id, $key );
 
-		return is_array( $payload ) ? $payload : null;
+		if ( ! is_array( $payload ) ) {
+			return null;
+		}
+
+		if ( isset( $payload['result'] ) && is_array( $payload['result'] ) ) {
+			return self::buildNoticePayloadInSiteLocale( $post_id, $payload['result'] );
+		}
+
+		if ( isset( $payload['summary'] ) || isset( $payload['issues'] ) ) {
+			return self::buildNoticePayloadInSiteLocale( $post_id, $payload );
+		}
+
+		if ( isset( $payload['errorHtml'] ) || isset( $payload['noticeHtml'] ) || isset( $payload['successMessage'] ) ) {
+			return $payload;
+		}
+
+		return null;
 	}
 
 	private static function pendingNoticeMetaKey( $post_id ) {
