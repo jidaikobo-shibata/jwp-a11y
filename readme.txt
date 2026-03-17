@@ -5,7 +5,7 @@ Tags: accessibility, checker, WCAG, JIS X 8341-3
 Requires PHP: 7.4
 Requires at least: 6.0
 Tested up to: 6.9
-Stable tag: 5.2.2
+Stable tag: 5.2.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,6 +33,14 @@ This version focuses on three practical tasks:
 4. Edit a post and save it to run the accessibility check.
 
 == Changelog ==
+
+= 5.2.4 =
+exclude unevaluated legacy URLs from the public URL list and aggregate report
+
+= 5.2.3 =
+fix translation loading for admin notices and legacy public results pages without relying on load_plugin_textdomain
+fix legacy result loading compatibility for common settings rows in shortcode output
+close warning notice box automatically when all suppressible notice items are hidden
 
 = 5.2.2 =
 regenerate production Composer autoload files with --no-dev to prevent phpstan bootstrap loading on production sites
@@ -538,5 +546,5 @@ Currently Japanese only.  We are waiting language contribution!
 
 == Upgrade Notice ==
 
-= 5.2.2 =
-This release regenerates production Composer autoload files with --no-dev to avoid loading phpstan on production sites.
+= 5.2.4 =
+This release excludes unevaluated legacy URLs from public result listings and aggregate report output.

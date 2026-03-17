@@ -126,7 +126,12 @@ final class ResultsPage {
 			array_filter(
 				$pages,
 				function ( $page ) use ( $version ) {
-					return empty( $page['trash'] ) && ! empty( static::loadLegacyPageResult( $page, $version ) );
+					if ( ! empty( $page['trash'] ) ) {
+						return false;
+					}
+
+					$data = static::loadLegacyPageResult( $page, $version );
+					return self::hasLegacyEvaluatedResults( $data['result'] ?? array() );
 				}
 			)
 		);
@@ -249,7 +254,7 @@ final class ResultsPage {
 					}
 
 					$data = static::loadLegacyPageResult( $page, $version );
-					return ! empty( $data['result'] ) && is_array( $data['result'] );
+					return self::hasLegacyEvaluatedResults( $data['result'] ?? array() );
 				}
 			)
 		);
@@ -294,7 +299,7 @@ final class ResultsPage {
 
 	private static function renderLegacyEachPage( $base_url, $url, $version, $settings ) {
 		$data = self::loadLegacyResultData( $url, $version );
-		if ( empty( $data['page'] ) || empty( $data['result'] ) ) {
+		if ( empty( $data['page'] ) || ! self::hasLegacyEvaluatedResults( $data['result'] ?? array() ) ) {
 			return '<p>' . esc_html__( 'No saved accessibility results were found for this page.', 'jwp-a11y' ) . '</p>';
 		}
 
@@ -599,6 +604,29 @@ final class ResultsPage {
 		return $counts;
 	}
 
+	/**
+	 * Checks whether a legacy result row contains actual evaluated items.
+	 *
+	 * Placeholder rows without per-criterion `result` values should not be
+	 * treated as saved test results.
+	 *
+	 * @param mixed $results Legacy result payload.
+	 * @return bool
+	 */
+	private static function hasLegacyEvaluatedResults( $results ) {
+		if ( ! is_array( $results ) || empty( $results ) ) {
+			return false;
+		}
+
+		foreach ( $results as $result ) {
+			if ( is_array( $result ) && array_key_exists( 'result', $result ) ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private static function evaluateLegacyUrl( $results ) {
 		return self::countLegacyResults( $results );
 	}
@@ -620,7 +648,7 @@ final class ResultsPage {
 			}
 
 			$data = self::loadLegacyPageResult( $page, $version );
-			if ( empty( $data['result'] ) || ! is_array( $data['result'] ) ) {
+			if ( ! self::hasLegacyEvaluatedResults( $data['result'] ?? array() ) ) {
 				continue;
 			}
 
