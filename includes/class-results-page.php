@@ -122,7 +122,7 @@ final class ResultsPage {
 
 		$yml           = \Jidaikobo\A11yc\Yaml::fetch();
 		$results       = self::evaluateLegacyTotal( $pages, $version );
-		$done_pages    = array_values(
+		$evaluated_pages = array_values(
 			array_filter(
 				$pages,
 				function ( $page ) use ( $version ) {
@@ -132,14 +132,6 @@ final class ResultsPage {
 
 					$data = static::loadLegacyPageResult( $page, $version );
 					return self::hasLegacyEvaluatedResults( $data['result'] ?? array() );
-				}
-			)
-		);
-		$total_pages   = array_values(
-			array_filter(
-				$pages,
-				function ( $page ) {
-					return empty( $page['trash'] );
 				}
 			)
 		);
@@ -172,7 +164,7 @@ final class ResultsPage {
 		if ( ! empty( $settings['dependencies'] ) ) {
 			$html .= '<tr><th scope="row">' . esc_html__( 'List of relied-upon web content technologies', 'jwp-a11y' ) . '</th><td>' . nl2br( esc_html( (string) $settings['dependencies'] ) ) . '</td></tr>';
 		}
-		$html .= '<tr><th scope="row">' . esc_html__( 'URLs of tested web pages', 'jwp-a11y' ) . '</th><td><a href="' . esc_url( $pages_link ) . '">' . esc_html__( 'URL list', 'jwp-a11y' ) . '</a> (' . intval( count( $done_pages ) ) . ' / ' . intval( count( $total_pages ) ) . ')</td></tr>';
+		$html .= '<tr><th scope="row">' . esc_html__( 'URLs of tested web pages', 'jwp-a11y' ) . '</th><td><a href="' . esc_url( $pages_link ) . '">' . esc_html__( 'URL list', 'jwp-a11y' ) . '</a> (' . intval( count( $evaluated_pages ) ) . ' / ' . intval( count( $evaluated_pages ) ) . ')</td></tr>';
 		if ( empty( $settings['hide_date_results'] ) && ! empty( $settings['test_period'] ) ) {
 			$html .= '<tr><th scope="row">' . esc_html__( 'Test period', 'jwp-a11y' ) . '</th><td>' . esc_html( (string) $settings['test_period'] ) . '</td></tr>';
 		}
