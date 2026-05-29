@@ -5,7 +5,7 @@ Tags: accessibility, checker, WCAG, JIS X 8341-3
 Requires PHP: 7.4
 Requires at least: 6.0
 Tested up to: 7.0
-Stable tag: 5.2.4
+Stable tag: 5.2.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,6 +33,10 @@ This version focuses on three practical tasks:
 4. Edit a post and save it to run the accessibility check.
 
 == Changelog ==
+
+= 5.2.5 =
+update bundled symfony/polyfill-intl-idn to address a security advisory
+update Tested up to metadata for the current WordPress release
 
 = 5.2.4 =
 exclude unevaluated legacy URLs from the public URL list and aggregate report
@@ -545,6 +549,9 @@ SSL and basic auth.
 Currently Japanese only.  We are waiting language contribution!
 
 == Upgrade Notice ==
+
+= 5.2.5 =
+This release updates a bundled Composer dependency for security and refreshes WordPress compatibility metadata.
 
 = 5.2.4 =
 This release excludes unevaluated legacy URLs from public result listings and aggregate report output.
