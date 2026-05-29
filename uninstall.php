@@ -16,9 +16,9 @@ $wpdb->delete(
 	$wpdb->postmeta,
 	array(
 		'meta_key' => $jwp_a11y_post_meta_key,
-		),
-		array( '%s' )
-	);
+	),
+	array( '%s' )
+);
 
 	$wpdb->query(
 		$wpdb->prepare(

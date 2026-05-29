@@ -120,8 +120,8 @@ final class ResultsPage {
 			return '<p>' . esc_html__( 'No saved accessibility results were found for this page.', 'jwp-a11y' ) . '</p>';
 		}
 
-		$yml           = \Jidaikobo\A11yc\Yaml::fetch();
-		$results       = self::evaluateLegacyTotal( $pages, $version );
+		$yml             = \Jidaikobo\A11yc\Yaml::fetch();
+		$results         = self::evaluateLegacyTotal( $pages, $version );
 		$evaluated_pages = array_values(
 			array_filter(
 				$pages,
@@ -135,12 +135,12 @@ final class ResultsPage {
 				}
 			)
 		);
-		$target_level  = intval( $settings['target_level'] ?? 0 );
-		$current_level = self::legacyConformanceLabel( $results );
-		$pages_link    = add_query_arg( 'a11yc_page', 1, $base_url );
-		$standards     = \Jidaikobo\A11yc\Yaml::each( 'standards' );
-		$standard_key  = $settings['standard'] ?? 0;
-		$standard_name = is_array( $standards ) && array_key_exists( $standard_key, $standards )
+		$target_level    = intval( $settings['target_level'] ?? 0 );
+		$current_level   = self::legacyConformanceLabel( $results );
+		$pages_link      = add_query_arg( 'a11yc_page', 1, $base_url );
+		$standards       = \Jidaikobo\A11yc\Yaml::each( 'standards' );
+		$standard_key    = $settings['standard'] ?? 0;
+		$standard_name   = is_array( $standards ) && array_key_exists( $standard_key, $standards )
 			? (string) $standards[ $standard_key ]
 			: '';
 
