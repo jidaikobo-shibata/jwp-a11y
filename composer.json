@@ -3,7 +3,7 @@
   "description": "WordPress plugin that uses jidaikobo/a11yc for post accessibility checks and legacy result display.",
   "type": "wordpress-plugin",
   "require": {
-    "php": ">=7.4",
+    "php": ">=8.3",
     "jidaikobo/a11yc": "^7.0"
   },
   "require-dev": {

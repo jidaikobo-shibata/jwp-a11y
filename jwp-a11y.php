@@ -4,9 +4,9 @@
  * Plugin URI: https://wordpress.org/plugins/jwp-a11y/
  * Description: WordPress plugin that uses jidaikobo/a11yc for post accessibility checks and legacy result display.
  * Author: Jidaikobo Inc.
- * Version: 5.2.5
+ * Version: 5.3.0
  * Requires at least: 6.0
- * Requires PHP: 7.4
+ * Requires PHP: 8.3
  * Author URI: https://www.jidaikobo.com/
  * License: GPL2
  * Text Domain: jwp-a11y

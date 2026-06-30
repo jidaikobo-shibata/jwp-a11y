@@ -2,10 +2,10 @@
 Contributors: jidaikobo
 Donate link: https://www.jidaikobo.com/donate.html
 Tags: accessibility, checker, WCAG, JIS X 8341-3
-Requires PHP: 7.4
+Requires PHP: 8.3
 Requires at least: 6.0
 Tested up to: 7.0
-Stable tag: 5.2.5
+Stable tag: 5.3.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,6 +33,10 @@ This version focuses on three practical tasks:
 4. Edit a post and save it to run the accessibility check.
 
 == Changelog ==
+
+= 5.3.0 =
+update bundled jidaikobo/a11yc to 7.2.1 and Guzzle to 7.13.1 to address security advisories
+raise the PHP requirement to 8.3 to match the bundled a11yc core
 
 = 5.2.5 =
 update bundled symfony/polyfill-intl-idn to address a security advisory
@@ -549,6 +553,9 @@ SSL and basic auth.
 Currently Japanese only.  We are waiting language contribution!
 
 == Upgrade Notice ==
+
+= 5.3.0 =
+This release updates bundled security dependencies and requires PHP 8.3 or later.
 
 = 5.2.5 =
 This release updates a bundled Composer dependency for security and refreshes WordPress compatibility metadata.
