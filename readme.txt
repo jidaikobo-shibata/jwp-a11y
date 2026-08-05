@@ -5,7 +5,7 @@ Tags: accessibility, checker, WCAG, JIS X 8341-3
 Requires PHP: 8.3
 Requires at least: 6.0
 Tested up to: 7.0
-Stable tag: 5.3.2
+Stable tag: 5.3.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,6 +33,9 @@ This version focuses on three practical tasks:
 4. Edit a post and save it to run the accessibility check.
 
 == Changelog ==
+
+= 5.3.3 =
+rebuild the WordPress.org package without duplicated trunk files or development-only analysis configuration
 
 = 5.3.2 =
 update bundled jidaikobo/a11yc to 7.2.3 and Guzzle to 7.15.2 to address security advisories
