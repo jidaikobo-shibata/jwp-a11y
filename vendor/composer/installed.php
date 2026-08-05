@@ -3,7 +3,7 @@
         'name' => 'jidaikobo/jwp-a11y',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'ec515ab63673d1186a1298c7025785ef9466cf0c',
+        'reference' => 'fa7194ff5de8379c40c744a9381f195f1c48ea26',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'guzzlehttp/guzzle' => array(
-            'pretty_version' => '7.15.1',
-            'version' => '7.15.1.0',
-            'reference' => '61443dfb33c62f308ee8add20f45b4d6e4bf8d2f',
+            'pretty_version' => '7.15.2',
+            'version' => '7.15.2.0',
+            'reference' => '744101956d78b7c1384d0cbf379db13e859167bf',
             'type' => 'library',
             'install_path' => __DIR__ . '/../guzzlehttp/guzzle',
             'aliases' => array(),
@@ -38,9 +38,9 @@
             'dev_requirement' => false,
         ),
         'jidaikobo/a11yc' => array(
-            'pretty_version' => '7.2.2',
-            'version' => '7.2.2.0',
-            'reference' => '1762fa3d0294c87a242b695bbf6533ab619ad3d2',
+            'pretty_version' => '7.2.3',
+            'version' => '7.2.3.0',
+            'reference' => 'ecb6f7ad36f3c40db03e6244af425314e276c321',
             'type' => 'library',
             'install_path' => __DIR__ . '/../jidaikobo/a11yc',
             'aliases' => array(),
@@ -49,7 +49,7 @@
         'jidaikobo/jwp-a11y' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'ec515ab63673d1186a1298c7025785ef9466cf0c',
+            'reference' => 'fa7194ff5de8379c40c744a9381f195f1c48ea26',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
