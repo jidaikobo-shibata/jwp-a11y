@@ -1,5 +1,25 @@
 # Work Log
 
+## 2026-08-22 jwp-a11y 5.3.4 公開前準備
+
+### 何をしたか
+- 同梱する`jidaikobo/a11yc`を7.2.3から7.2.5へ更新した。
+- Guzzleを7.15.3、Promisesを2.5.2へ更新し、Composer auditで脆弱性報告がないことを確認した。
+- プラグイン版数を5.3.4、`Tested up to`をWordPress 7.1へ更新した。
+- PHPStan、PHPCS、Playwright E2E 6件を実行し、すべて成功した。
+
+### なぜそうしたか
+- a11yc 7.2.5に、URL解析時の外向きリクエスト保護と、standalone 5.0.6で確認済みの修正が含まれるため。
+- WordPress.org公開前に、投稿保存時の解析と旧形式ショートコード表示を自動試験するため。
+
+### 未完了の事項
+- SVNの未commitタグ5.3.4をWAICへ反映し、人間による実サーバ確認を行う。
+- 実サーバ確認後、明示的な承認を得てWordPress.org SVNへcommitする。
+
+### 次にやるとよいこと
+- SVN trunkとローカルタグを作成し、配布物に開発用ファイルが含まれないことを確認する。
+- WAICで投稿保存、管理画面notice、旧形式ショートコード、PHPログを確認する。
+
 ## 2026-03-06 WordPress.org Plugin Team への脆弱性説明整理
 
 ### 何をしたか

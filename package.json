@@ -1,0 +1,12 @@
+{
+  "name": "jwp-a11y-e2e",
+  "private": true,
+  "scripts": {
+    "e2e": "playwright test --project=chromium",
+    "e2e:ui": "playwright test --ui --project=chromium",
+    "e2e:install": "playwright install chromium"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0"
+  }
+}

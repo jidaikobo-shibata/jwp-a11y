@@ -1,1 +1,6 @@
 var/phpstan/
+node_modules/
+playwright/.auth/
+playwright-report/
+test-results/
+e2e/.state/
