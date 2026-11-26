@@ -10,6 +10,77 @@ final class ResultsPage {
 
 	private const LEGACY_GROUP_ID = 1;
 
+	// Legacy reports use WCAG 2.0 / JIS X 8341-3:2016, not newer criteria.
+	private const LEGACY_CRITERIA = array(
+		1 => array(
+			'1-1-1',
+			'1-2-1',
+			'1-2-2',
+			'1-2-3',
+			'1-3-1',
+			'1-3-2',
+			'1-3-3',
+			'1-4-1',
+			'1-4-2',
+			'2-1-1',
+			'2-1-2',
+			'2-2-1',
+			'2-2-2',
+			'2-3-1',
+			'2-4-1',
+			'2-4-2',
+			'2-4-3',
+			'2-4-4',
+			'3-1-1',
+			'3-2-1',
+			'3-2-2',
+			'3-3-1',
+			'3-3-2',
+			'4-1-1',
+			'4-1-2',
+		),
+		2 => array(
+			'1-2-4',
+			'1-2-5',
+			'1-4-3',
+			'1-4-4',
+			'1-4-5',
+			'2-4-5',
+			'2-4-6',
+			'2-4-7',
+			'3-1-2',
+			'3-2-3',
+			'3-2-4',
+			'3-3-3',
+			'3-3-4',
+		),
+		3 => array(
+			'1-2-6',
+			'1-2-7',
+			'1-2-8',
+			'1-2-9',
+			'1-4-6',
+			'1-4-7',
+			'1-4-8',
+			'1-4-9',
+			'2-1-3',
+			'2-2-3',
+			'2-2-4',
+			'2-2-5',
+			'2-3-2',
+			'2-4-8',
+			'2-4-9',
+			'2-4-10',
+			'3-1-3',
+			'3-1-4',
+			'3-1-5',
+			'3-1-6',
+			'3-2-5',
+			'3-3-5',
+			'3-3-6',
+		),
+	);
+
 	/**
 	 * Renders the legacy public results shortcode.
 	 *
@@ -34,7 +105,10 @@ final class ResultsPage {
 			return '';
 		}
 
-		$version  = self::selectedLegacyVersion();
+		$version = self::selectedLegacyVersion();
+		if ( $version === null ) {
+			$version = self::latestLegacyVersion();
+		}
 		$settings = self::loadLegacySettings( $version );
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- These query arguments control front-end report navigation.
@@ -46,7 +120,7 @@ final class ResultsPage {
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- This query argument controls front-end report navigation.
 		if ( isset( $_GET['a11yc_page'] ) ) {
-			return self::renderLegacyPageList( $base_url, $version );
+			return self::renderLegacyPageList( $base_url, $version, $settings );
 		}
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- This query argument controls front-end report navigation.
@@ -67,7 +141,7 @@ final class ResultsPage {
 	 */
 	private static function renderLegacyPolicyPage( $base_url, $version, $settings ) {
 		$versions    = self::loadLegacyVersions();
-		$report_link = add_query_arg( 'a11yc_report', 1, $base_url );
+		$report_link = self::legacyNavigationUrl( $base_url, $version, array( 'a11yc_report' => 1 ) );
 
 		$html  = '';
 		$html .= '<div class="jwp-a11y-results">';
@@ -136,11 +210,21 @@ final class ResultsPage {
 			)
 		);
 		$target_level    = intval( $settings['target_level'] ?? 0 );
-		$current_level   = self::legacyConformanceLabel( $results );
-		$pages_link      = add_query_arg( 'a11yc_page', 1, $base_url );
-		$standards       = \Jidaikobo\A11yc\Yaml::each( 'standards' );
-		$standard_key    = $settings['standard'] ?? 0;
-		$standard_name   = is_array( $standards ) && array_key_exists( $standard_key, $standards )
+		$current_level   = self::legacyConformanceLabel( $results, $target_level );
+		foreach ( $pages as $page ) {
+			if ( ! empty( $page['trash'] ) ) {
+				continue;
+			}
+			$data = self::loadLegacyPageResult( $page, $version );
+			if ( ! self::legacyResultsComplete( $data['result'] ?? array(), $target_level ) ) {
+				$current_level = __( 'Test results incomplete', 'jwp-a11y' );
+				break;
+			}
+		}
+		$pages_link    = self::legacyNavigationUrl( $base_url, $version, array( 'a11yc_page' => 1 ) );
+		$standards     = \Jidaikobo\A11yc\Yaml::each( 'standards' );
+		$standard_key  = $settings['standard'] ?? 0;
+		$standard_name = is_array( $standards ) && array_key_exists( $standard_key, $standards )
 			? (string) $standards[ $standard_key ]
 			: '';
 
@@ -223,8 +307,13 @@ final class ResultsPage {
 				esc_html( (string) ( $version_row['name'] ?? $version_name ) ) .
 				'</option>';
 		}
-		$html .= '</select> ';
-		foreach ( $extra_args as $key => $value ) {
+		$html     .= '</select> ';
+		$base_args = array();
+		wp_parse_str( (string) wp_parse_url( $base_url, PHP_URL_QUERY ), $base_args );
+		foreach ( array_merge( $base_args, $extra_args ) as $key => $value ) {
+			if ( ! is_scalar( $value ) || $key === 'a11yc_version' ) {
+				continue;
+			}
 			$html .= '<input type="hidden" name="' . esc_attr( (string) $key ) . '" value="' . esc_attr( (string) $value ) . '">';
 		}
 		$html .= '<button type="submit">' . esc_html__( 'Submit', 'jwp-a11y' ) . '</button>';
@@ -236,7 +325,15 @@ final class ResultsPage {
 		return $html;
 	}
 
-	private static function renderLegacyPageList( $base_url, $version ) {
+	private static function legacyNavigationUrl( $base_url, $version, $args ) {
+		if ( $version !== null && $version > 0 ) {
+			$args['a11yc_version'] = $version;
+		}
+
+		return add_query_arg( $args, $base_url );
+	}
+
+	private static function renderLegacyPageList( $base_url, $version, $settings ) {
 		$pages = array_values(
 			array_filter(
 				self::loadLegacyPages( $version ),
@@ -264,12 +361,13 @@ final class ResultsPage {
 			$url   = (string) ( $page['url'] ?? '' );
 			$title = (string) ( $page['title'] ?? $url );
 			$data  = self::loadLegacyPageResult( $page, $version );
-			$link  = add_query_arg(
+			$link  = self::legacyNavigationUrl(
+				$base_url,
+				$version,
 				array(
 					'a11yc_each' => 1,
 					'url'        => $url,
-				),
-				$base_url
+				)
 			);
 
 			$html .= '<tr>';
@@ -278,7 +376,7 @@ final class ResultsPage {
 				$html .= '<br><small>' . esc_html( $url ) . '</small>';
 			}
 			$html .= '</th>';
-			$html .= '<td>' . esc_html( self::legacyConformanceLabel( $data['result'] ?? array() ) ) . '</td>';
+			$html .= '<td>' . esc_html( self::legacyConformanceLabel( $data['result'] ?? array(), intval( $settings['target_level'] ?? 0 ) ) ) . '</td>';
 			$html .= '<td><a href="' . esc_url( $link ) . '">' . esc_html__( 'Test result', 'jwp-a11y' ) . '</a></td>';
 			$html .= '</tr>';
 		}
@@ -298,7 +396,7 @@ final class ResultsPage {
 		$yml          = \Jidaikobo\A11yc\Yaml::fetch();
 		$page         = $data['page'];
 		$target_level = intval( $settings['target_level'] ?? 0 );
-		$back_link    = add_query_arg( 'a11yc_page', 1, $base_url );
+		$back_link    = self::legacyNavigationUrl( $base_url, $version, array( 'a11yc_page' => 1 ) );
 
 		$html  = '';
 		$html .= '<div class="jwp-a11y-results">';
@@ -306,7 +404,7 @@ final class ResultsPage {
 		$html .= '<h2>' . esc_html( (string) ( $page['title'] ?? $url ) ) . '</h2>';
 		$html .= '<table class="a11yc_table a11yc_table_report"><tbody>';
 		$html .= '<tr><th scope="row">' . esc_html__( 'Target conformance level', 'jwp-a11y' ) . '</th><td>' . esc_html( self::formatLegacyLevel( $target_level ) ) . '</td></tr>';
-		$html .= '<tr><th scope="row">' . esc_html__( 'Achieved conformance level for this page', 'jwp-a11y' ) . '</th><td>' . esc_html( self::legacyConformanceLabel( $data['result'] ) ) . '</td></tr>';
+		$html .= '<tr><th scope="row">' . esc_html__( 'Achieved conformance level for this page', 'jwp-a11y' ) . '</th><td>' . esc_html( self::legacyConformanceLabel( $data['result'], $target_level ) ) . '</td></tr>';
 		$html .= '<tr><th scope="row">' . esc_html__( 'Test date', 'jwp-a11y' ) . '</th><td>' . esc_html( (string) ( $page['date'] ?? '' ) ) . '</td></tr>';
 		$html .= '</tbody></table>';
 
@@ -452,6 +550,15 @@ final class ResultsPage {
 
 	private static function loadLegacyVersions() {
 		return (array) self::loadLegacyValue( 'version', 'common' );
+	}
+
+	private static function latestLegacyVersion() {
+		foreach ( self::loadLegacyValuesByKey( 'setting', null ) as $row ) {
+			if ( ( $row['url'] ?? '' ) === 'common' ) {
+				return intval( $row['version'] ?? 0 );
+			}
+		}
+		return null;
 	}
 
 	private static function selectedLegacyVersion() {
@@ -825,40 +932,72 @@ final class ResultsPage {
 		return $level;
 	}
 
-	private static function legacyConformanceLabel( $results ) {
+	private static function legacyTargetLevel( $target_level ) {
+		return isset( self::LEGACY_CRITERIA[ $target_level ] ) ? $target_level : 2;
+	}
+
+	private static function legacyResultStates( $results ) {
+		$states = array();
+		foreach ( $results as $criterion => $result ) {
+			if ( ! is_array( $result ) || ! array_key_exists( 'result', $result ) ) {
+				continue;
+			}
+			$state = $result['result'];
+			if ( ! in_array( $state, array( 0, 1, 2, '0', '1', '2' ), true ) ) {
+				continue;
+			}
+			$key            = str_replace( '.', '-', (string) $criterion );
+			$states[ $key ] = isset( $states[ $key ] ) ? min( $states[ $key ], intval( $state ) ) : intval( $state );
+		}
+
+		return $states;
+	}
+
+	private static function legacyResultsComplete( $results, $target_level ) {
+		if ( ! is_array( $results ) ) {
+			return false;
+		}
+		$states = self::legacyResultStates( $results );
+		$target = self::legacyTargetLevel( $target_level );
+		for ( $level = 1; $level <= $target; ++$level ) {
+			foreach ( self::LEGACY_CRITERIA[ $level ] as $criterion ) {
+				if ( ! array_key_exists( $criterion, $states ) ) {
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
+	private static function legacyConformanceLabel( $results, $target_level = 2 ) {
 		if ( ! is_array( $results ) || empty( $results ) ) {
 			return __( 'Not available', 'jwp-a11y' );
 		}
+		if ( ! self::legacyResultsComplete( $results, $target_level ) ) {
+			return __( 'Test results incomplete', 'jwp-a11y' );
+		}
 
-		$yml           = \Jidaikobo\A11yc\Yaml::fetch();
-		$failed_levels = array();
-
-		foreach ( $results as $criterion => $result ) {
-			if ( intval( $result['result'] ?? 0 ) !== 0 ) {
-				continue;
+		$states = self::legacyResultStates( $results );
+		$target = self::legacyTargetLevel( $target_level );
+		for ( $level = 1; $level <= $target; ++$level ) {
+			foreach ( self::LEGACY_CRITERIA[ $level ] as $criterion ) {
+				if ( $states[ $criterion ] === 0 ) {
+					if ( $level === 1 ) {
+						return __( 'A, partially conforming', 'jwp-a11y' );
+					}
+					if ( $level === 2 ) {
+						return __( 'A conforming / AA partially conforming', 'jwp-a11y' );
+					}
+					return __( 'AA conforming', 'jwp-a11y' );
+				}
 			}
-
-			$key            = isset( $yml['criterions'][ $criterion ] ) ? $criterion : str_replace( '.', '-', (string) $criterion );
-			$criterion_data = $yml['criterions'][ $key ] ?? array();
-			$level          = self::criterionLevelLabel( $criterion_data );
-			if ( $level !== '' ) {
-				$failed_levels[ $level ] = true;
-			}
 		}
 
-		if ( isset( $failed_levels['A'] ) ) {
-			return __( 'A, partially conforming', 'jwp-a11y' );
+		if ( $target === 1 ) {
+			return __( 'A conforming', 'jwp-a11y' );
 		}
-
-		if ( isset( $failed_levels['AA'] ) ) {
-			return __( 'A conforming / AA partially conforming', 'jwp-a11y' );
-		}
-
-		if ( isset( $failed_levels['AAA'] ) ) {
-			return __( 'AA conforming', 'jwp-a11y' );
-		}
-
-		return __( 'AA conforming', 'jwp-a11y' );
+		return $target === 3 ? __( 'AAA conforming', 'jwp-a11y' ) : __( 'AA conforming', 'jwp-a11y' );
 	}
 
 	private static function shouldDisplayCriterion( $criterion_data, $target_level ) {

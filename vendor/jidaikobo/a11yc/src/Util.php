@@ -184,32 +184,11 @@ class Util
 
     public static function enuniqueUri($uri, $base_uri = '')
     {
-        if (empty($uri)) {
+        if ($uri === null || $uri === '') {
             return '';
         }
-        $base_url = $base_uri;
-        if (empty($base_url) && defined('A11YC_URL')) {
-            $base_url = (new UrlResolver())->hostFromUrl(A11YC_URL);
-        }
-        if (empty($base_url)) {
-            return self::urldec($uri);
-        }
 
-        if (strlen($uri) >= 2 && $uri[0] == '/' && $uri[1] != '/') {
-            $uri = $base_url . $uri;
-        } elseif (strlen($uri) >= 2 && substr($uri, 0, 2) == './') {
-            $uri = $base_url . substr($uri, 1);
-        } elseif (strlen($uri) >= 3 && substr($uri, 0, 3) == '../') {
-            $strs = explode('../', $uri);
-            $uri = $base_url . '/' . end($strs);
-        } elseif (strlen($uri) >= 3 && substr($uri, 0, 2) == '//') {
-            $strs = explode('//', $uri);
-            $uri = substr($base_url, 0, strpos($base_url, ':')) . '://' . end($strs);
-        } elseif (strpos($uri, 'http') !== 0) {
-            $uri = $base_url . '/' . $uri;
-        }
-
-        return self::urldec($uri);
+        return (new UrlResolver())->normalize((string) $uri, $base_uri ?: null);
     }
 
     public static function docHtmlWhitelist($txt)

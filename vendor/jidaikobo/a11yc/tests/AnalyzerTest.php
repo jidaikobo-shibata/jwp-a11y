@@ -85,6 +85,67 @@ final class AnalyzerTest extends TestCase
         );
     }
 
+    public function testImageReferencesResolveAgainstDocumentUrl(): void
+    {
+        $analyzer = new Analyzer();
+        $base = 'https://example.com/dir/page.html';
+        foreach (array(
+            '/a.png' => 'https://example.com/a.png',
+            'a.png' => 'https://example.com/dir/a.png',
+            '../a.png' => 'https://example.com/a.png',
+            './a.png' => 'https://example.com/dir/a.png',
+            'a%2Fb.png' => 'https://example.com/dir/a%2Fb.png',
+            'https://example.com/a%20b.png' => 'https://example.com/a%20b.png',
+        ) as $reference => $expected) {
+            $images = $analyzer->extractImages('<img src="' . $reference . '" alt="sample">', array('url' => $base));
+            self::assertSame($expected, $images[0]['src']);
+        }
+    }
+
+    public function testZeroAlternativeTextIsNotEmpty(): void
+    {
+        $analyzer = new Analyzer();
+        $options = array('url' => 'https://example.com/', 'checks' => array('AltAttrOfImg'));
+        foreach (array('0', '1', '') as $alt) {
+            $html = '<img src="/a.png" alt="' . $alt . '">';
+            $result = $analyzer->analyzeHtml($html, $options);
+            self::assertSame($alt === '', in_array('alt_attr_of_empty', array_column($result['issues'], 'id'), true));
+            self::assertSame($alt, $analyzer->extractImages($html, $options)[0]['alt']);
+        }
+    }
+
+    public function testButtonImagesAreImportantRegardlessOfAttributes(): void
+    {
+        $analyzer = new Analyzer();
+        foreach (array('<button>', '<button type="button">', '<BUTTON>') as $opening) {
+            $images = $analyzer->extractImages(
+                $opening . '<img src="/a.png" alt="Go"></button>',
+                array('url' => 'https://example.com/')
+            );
+            self::assertCount(1, $images);
+            self::assertSame('img (button)', $images[0]['element']);
+            self::assertTrue($images[0]['is_important']);
+        }
+    }
+
+    public function testLanguageOverrideSelectsMatchingResources(): void
+    {
+        $analyzer = new Analyzer();
+        $html = '<img src="/a.png">';
+        $options = array('url' => 'https://example.com/', 'checks' => array('AltAttrOfImg'));
+        $ja = $analyzer->analyzeHtml($html, $options + array('lang' => 'ja'));
+        $en = $analyzer->analyzeHtml($html, $options + array('lang' => 'en'));
+        self::assertNotEmpty($ja['issues'][0]['message']);
+        self::assertNotEmpty($en['issues'][0]['message']);
+        self::assertNotSame($ja['issues'][0]['message'], $en['issues'][0]['message']);
+        self::assertSame($ja['issues'][0]['message'], $analyzer->analyzeHtml($html, $options)['issues'][0]['message']);
+        $explicit = $analyzer->analyzeHtml($html, $options + array(
+            'lang' => 'en',
+            'resource_path' => A11YC_RESOURCE_PATH,
+        ));
+        self::assertSame($ja['issues'][0]['message'], $explicit['issues'][0]['message']);
+    }
+
     public function testCheckRegistryScansAvailableChecks(): void
     {
         $available = CheckRegistry::availableChecks();

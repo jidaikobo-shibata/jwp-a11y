@@ -64,26 +64,28 @@ final class PostAnalysis {
 
 		self::$analyzing_posts[ $post_id ] = true;
 
-		$content = self::buildPostContent( $post_id, $post );
-		if ( $content === '' ) {
-			delete_post_meta( $post_id, Plugin::metaKey() );
+		try {
+			$content = self::buildPostContent( $post_id, $post );
+			if ( $content === '' ) {
+				delete_post_meta( $post_id, Plugin::metaKey() );
+				return;
+			}
+
+			$analyzer = new \Jidaikobo\A11yc\Analyzer();
+			$result   = $analyzer->analyzeHtml(
+				self::buildAnalysisDocument( $content, $post ),
+				array(
+					'url'  => self::postUrl( $post_id ),
+					'lang' => \JwpA11y\Compatibility::currentLanguage(),
+				)
+			);
+
+			$result['analyzed_at'] = current_time( 'mysql' );
+			update_post_meta( $post_id, Plugin::metaKey(), $result );
+			\JwpA11y\EditorNotices::storePendingNotice( $post_id, $result );
+		} finally {
 			unset( self::$analyzing_posts[ $post_id ] );
-			return;
 		}
-
-		$analyzer = new \Jidaikobo\A11yc\Analyzer();
-		$result   = $analyzer->analyzeHtml(
-			self::buildAnalysisDocument( $content, $post ),
-			array(
-				'url'  => self::postUrl( $post_id ),
-				'lang' => \JwpA11y\Compatibility::currentLanguage(),
-			)
-		);
-
-		$result['analyzed_at'] = current_time( 'mysql' );
-		update_post_meta( $post_id, Plugin::metaKey(), $result );
-		\JwpA11y\EditorNotices::storePendingNotice( $post_id, $result );
-		unset( self::$analyzing_posts[ $post_id ] );
 	}
 
 	private static function buildPostContent( $post_id, \WP_Post $post ) {

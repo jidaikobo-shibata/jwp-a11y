@@ -207,21 +207,19 @@ final class EditorNotices {
 		echo '.then(function(response){ return response.json(); })';
 		echo '.then(function(payload){';
 		echo 'if(!payload||!payload.success){ button.disabled=false; return; }';
-		echo 'var item = button.closest("li");';
-		echo 'var notice = button.closest(".notice.notice-warning");';
-		echo 'if(item){';
+		echo 'var item=button.closest("li");';
+		echo 'if(item&&item.parentElement){';
+		echo 'var list=item.parentElement;';
+		echo 'var container=list.parentElement;';
 		echo 'item.remove();';
-		echo 'if(notice){';
-		echo 'var remain=notice.querySelectorAll("li").length;';
-		echo 'if(remain===0){ notice.remove(); }';
+		echo 'if(container&&!container.querySelector(".jwp-a11y-hidden-notices")){';
+		echo 'var message=document.createElement("p");';
+		echo 'message.className="jwp-a11y-hidden-notices";';
+		echo 'message.textContent=' . wp_json_encode( __( 'Some notices are hidden.', 'jwp-a11y' ) ) . ';';
+		echo 'container.appendChild(message);';
 		echo '}';
-		echo 'return;';
-		echo '}';
-		echo 'button.remove();';
-		echo 'if(notice){';
-		echo 'var remainAfter=notice.querySelectorAll("li").length;';
-		echo 'if(remainAfter===0){ notice.remove(); }';
-		echo '}';
+		echo 'if(!list.querySelector("li")){list.remove();}';
+		echo '}else{button.remove();}';
 		echo '})';
 		echo '.catch(function(){ button.disabled=false; });';
 		echo '});';
@@ -294,8 +292,9 @@ final class EditorNotices {
 	 * @return array<string, mixed>
 	 */
 	private static function buildNoticePayload( $post_id, $result ) {
-		$summary = isset( $result['summary'] ) && is_array( $result['summary'] ) ? $result['summary'] : array();
-		$issues  = self::splitIssues( $result );
+		$summary          = isset( $result['summary'] ) && is_array( $result['summary'] ) ? $result['summary'] : array();
+		$issues           = self::splitIssues( $result );
+		$all_notice_count = count( $issues['notices'] );
 		if ( $post_id > 0 ) {
 			$issues['notices'] = array_values(
 				array_filter(
@@ -308,26 +307,33 @@ final class EditorNotices {
 		}
 		$error_count  = intval( $summary['error_count'] ?? 0 );
 		$notice_count = count( $issues['notices'] );
+		$hidden_count = $all_notice_count - $notice_count;
+		$notice_html  = self::buildNoticeIssueHtml(
+			__( 'There may be accessibility issues', 'jwp-a11y' ),
+			$issues['notices'],
+			true,
+			$post_id
+		);
+		if ( $hidden_count > 0 ) {
+			$notice_html .= '<p class="jwp-a11y-hidden-notices">' . esc_html__( 'Some notices are hidden.', 'jwp-a11y' ) . '</p>';
+		}
+		$is_success = $error_count === 0 && $all_notice_count === 0;
 
 		return array(
-			'errorCount'     => $error_count,
-			'noticeCount'    => $notice_count,
-			'errorHtml'      => self::buildNoticeIssueHtml(
+			'errorCount'        => $error_count,
+			'noticeCount'       => $notice_count,
+			'hiddenNoticeCount' => $hidden_count,
+			'errorHtml'         => self::buildNoticeIssueHtml(
 				__( 'Accessibility issues were detected', 'jwp-a11y' ),
 				$issues['errors'],
 				false,
 				$post_id
 			),
-			'noticeHtml'     => self::buildNoticeIssueHtml(
-				__( 'There may be accessibility issues', 'jwp-a11y' ),
-				$issues['notices'],
-				true,
-				$post_id
-			),
-			'successHtml'    => ( $error_count === 0 && $notice_count === 0 )
+			'noticeHtml'        => $notice_html,
+			'successHtml'       => $is_success
 				? self::buildSuccessNoticeHtml()
 				: '',
-			'successMessage' => ( $error_count === 0 && $notice_count === 0 )
+			'successMessage'    => $is_success
 				? __( 'No accessibility issues were detected', 'jwp-a11y' )
 				: '',
 		);

@@ -13,6 +13,7 @@ if ( ! in_array( $site_host, $allowed_hosts, true ) ) {
 global $wpdb;
 
 $fixture_version = 990001;
+$older_version   = 990000;
 $fixture_user    = 'jwp_a11y_e2e';
 $fixture_email   = 'jwp-a11y-e2e@localhost.invalid';
 $fixture_pass    = getenv( 'JWP_A11Y_E2E_PASSWORD' );
@@ -93,8 +94,9 @@ if ( ! $table_exists ) {
 }
 
 $wpdb->delete( $table, array( 'version' => $fixture_version ), array( '%d' ) );
+$wpdb->delete( $table, array( 'version' => $older_version ), array( '%d' ) );
 
-$insert_fixture = static function ( $key, $url, $value ) use ( $wpdb, $table, $fixture_version ) {
+$insert_fixture = static function ( $key, $url, $value, $version = null ) use ( $wpdb, $table, $fixture_version ) {
 	$result = $wpdb->insert(
 		$table,
 		array(
@@ -103,7 +105,7 @@ $insert_fixture = static function ( $key, $url, $value ) use ( $wpdb, $table, $f
 			'url'      => $url,
 			'value'    => wp_json_encode( $value ),
 			'is_array' => 1,
-			'version'  => $fixture_version,
+			'version'  => $version ?? $fixture_version,
 		),
 		array( '%d', '%s', '%s', '%s', '%d', '%d' )
 	);
@@ -111,6 +113,22 @@ $insert_fixture = static function ( $key, $url, $value ) use ( $wpdb, $table, $f
 		WP_CLI::error( 'Could not insert E2E legacy fixture row.' );
 	}
 };
+
+// A distinct historical version lets navigation tests detect a switch to the latest results.
+$insert_fixture( 'setting', 'common', array(
+	'policy'       => '<p>Historical E2E policy fixture.</p>',
+	'show_results' => true,
+	'title'        => 'Historical E2E Report',
+	'target_level' => 2,
+), $older_version );
+$insert_fixture( 'page', $tested_url, array(
+	'url'   => $tested_url,
+	'title' => 'Historical E2E tested page',
+	'trash' => false,
+), $older_version );
+$insert_fixture( 'result', $tested_url, array(
+	'1-1-1' => array( 'result' => 2, 'memo' => 'Historical E2E pass memo.' ),
+), $older_version );
 
 $insert_fixture(
 	'setting',
@@ -132,6 +150,7 @@ $insert_fixture(
 	'common',
 	array(
 		(string) $fixture_version => array( 'name' => 'E2E fixture version' ),
+		(string) $older_version => array( 'name' => 'Historical E2E fixture version' ),
 	)
 );
 $insert_fixture(

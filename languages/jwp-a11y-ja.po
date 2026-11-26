@@ -163,3 +163,12 @@ msgstr "適合レベル %s"
 
 msgid "For Better Web Accessibility"
 msgstr "ウェブアクセシビリティの確保のために"
+
+msgid "Test results incomplete"
+msgstr "試験結果が不完全です"
+
+msgid "A conforming"
+msgstr "A 準拠"
+
+msgid "Some notices are hidden."
+msgstr "非表示に設定された注意事項があります。"

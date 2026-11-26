@@ -49,7 +49,7 @@ class AltAttrOfImg extends Validate
             );
 
             \Jidaikobo\A11yc\ValidationRecorder::recordErrorOrPass(
-                empty($attrs['alt']),
+                $attrs['alt'] === '',
                 $url,
                 'alt_attr_of_empty',
                 $k,

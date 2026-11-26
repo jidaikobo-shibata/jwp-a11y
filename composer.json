@@ -5,7 +5,7 @@
   "license": "GPL-2.0-or-later",
   "require": {
     "php": ">=8.3",
-    "jidaikobo/a11yc": "^7.2.5"
+    "jidaikobo/a11yc": "^7.2.6"
   },
   "require-dev": {
     "dealerdirect/phpcodesniffer-composer-installer": "^1.1",

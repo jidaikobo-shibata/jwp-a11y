@@ -29,6 +29,11 @@ final class RuntimeConfig
             return $resource_path;
         }
 
+        $lang = self::overrideValue('lang');
+        if (in_array($lang, array('ja', 'en'), true)) {
+            return self::rootPath() . '/resources/' . $lang;
+        }
+
         if (defined('A11YC_RESOURCE_PATH')) {
             return A11YC_RESOURCE_PATH;
         }

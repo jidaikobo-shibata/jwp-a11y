@@ -25,7 +25,6 @@ final class Plugin {
 
 		\JwpA11y\Compatibility::defineConstants();
 
-		add_action( 'save_post', array( '\\JwpA11y\\PostAnalysis', 'analyzePostOnSave' ), 20, 3 );
 		add_action( 'wp_after_insert_post', array( '\\JwpA11y\\PostAnalysis', 'analyzePostAfterInsert' ), 20, 3 );
 		add_action( 'admin_notices', array( '\\JwpA11y\\EditorNotices', 'renderEditScreenNotice' ) );
 		add_action( 'admin_print_footer_scripts', array( '\\JwpA11y\\EditorNotices', 'printSuppressNoticeScript' ) );

@@ -90,9 +90,9 @@ class Image
 
     private static function getButton($n, $str, $retvals, $context = null)
     {
-        preg_match_all('/\<button [^\>]+\>.+?\<\/button\>/is', $str, $as);
+        preg_match_all('/\<button(?:\s[^\>]*)?\>.*?\<\/button\>/is', $str, $as);
         foreach ($as[0] as $v) {
-            if (strpos($v, '<img ') === false) {
+            if (! preg_match('/<img(?:\s|\/?>)/i', $v)) {
                 continue;
             }
 
@@ -147,13 +147,13 @@ class Image
     private static function tidyAlt($k, $v, $retvals)
     {
         if (isset($v['attrs']['alt'])) {
-            if (empty($v['attrs']['alt'])) {
+            if ($v['attrs']['alt'] === '') {
                 $retvals[$k]['attrs']['alt'] = '';
             } else {
                 $alt = str_replace('　', ' ', $v['attrs']['alt']);
                 $alt = trim($alt);
 
-                if (empty($alt)) {
+                if ($alt === '') {
                     $retvals[$k]['attrs']['alt'] = '===a11yc_alt_of_blank_chars===';
                 } else {
                     $retvals[$k]['attrs']['alt'] = $v['attrs']['alt'];

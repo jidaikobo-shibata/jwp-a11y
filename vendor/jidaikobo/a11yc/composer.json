@@ -5,6 +5,7 @@
   "license": "MIT",
   "require": {
     "php": ">=8.3",
+    "ext-mbstring": "*",
     "guzzlehttp/guzzle": "^7.15.2",
     "symfony/polyfill-intl-idn": "^1.38.1"
   },
@@ -13,7 +14,7 @@
     "phpstan/phpstan": "^2.2",
     "phpunit/phpunit": "^12.5.22",
     "slevomat/coding-standard": "^8.30",
-    "symfony/yaml": "^7.4",
+    "symfony/yaml": "^7.4.23",
     "squizlabs/php_codesniffer": "^4.0.1"
   },
   "autoload": {

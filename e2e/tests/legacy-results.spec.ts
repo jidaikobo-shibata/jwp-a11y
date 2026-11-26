@@ -33,3 +33,23 @@ test('legacy result shortcode renders URL list and individual result', async ({ 
   await expect(page.locator('.jwp-a11y-results')).toContainText('E2E failure memo.');
   await expect(page.locator('tr.a11yc_not_passed')).toBeVisible();
 });
+
+
+test('historical version persists through report, URL list, detail and back navigation', async ({ page }) => {
+  const fixture = readFixtureState();
+  await page.goto(fixture.resultsPageUrl);
+  await page.locator('#a11yc_version').selectOption('990000');
+  await page.locator('form').filter({ has: page.locator('#a11yc_version') }).locator('button[type="submit"]').click();
+  await expect(page.locator('.jwp-a11y-results')).toContainText('Historical E2E policy fixture.');
+  await page.locator('.jwp-a11y-results a[href*="a11yc_report=1"]').first().click();
+  await expect(page.locator('.jwp-a11y-results')).toContainText('Historical E2E Report');
+  await expect(page.locator('.jwp-a11y-results')).toContainText(/試験結果が不完全です|Test results incomplete/);
+  await page.locator('.jwp-a11y-results a[href*="a11yc_page=1"]').first().click();
+  await expect(page.locator('.jwp-a11y-results')).toContainText('Historical E2E tested page');
+  await page.locator('.jwp-a11y-results a[href*="a11yc_each=1"]').first().click();
+  await expect(page.locator('.jwp-a11y-results')).toContainText('Historical E2E pass memo.');
+  await expect(page.locator('.jwp-a11y-results')).toContainText(/試験結果が不完全です|Test results incomplete/);
+  await page.locator('.jwp-a11y-results a[href*="a11yc_page=1"]').first().click();
+  await expect(page).toHaveURL(/a11yc_version=990000/);
+  await expect(page.locator('.jwp-a11y-results')).toContainText('Historical E2E tested page');
+});

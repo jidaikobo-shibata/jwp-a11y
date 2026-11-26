@@ -3,7 +3,8 @@
 namespace Jidaikobo\A11yc;
 
 use Jidaikobo\A11yc\Arr;
-use Jidaikobo\A11yc\Util;
+use GuzzleHttp\Psr7\Uri;
+use GuzzleHttp\Psr7\UriResolver;
 
 final class UrlResolver
 {
@@ -39,19 +40,24 @@ final class UrlResolver
 
     public function normalize(string $url, ?string $base_url = null): string
     {
-        $url = trim($url);
+        $url = trim(str_replace('&amp;', '&', $url));
         if ($url === '') {
             return '';
         }
 
-        if (strpos($url, 'http://') === 0 || strpos($url, 'https://') === 0) {
-            return Util::urldec($url);
+        if (($base_url === null || $base_url === '') && defined('A11YC_URL')) {
+            $base_url = $this->hostFromUrl(A11YC_URL);
         }
 
-        if ($base_url) {
-            return Util::enuniqueUri($url, $base_url);
-        }
+        try {
+            $reference = new Uri($url);
+            if ($base_url === null || $base_url === '') {
+                return (string) $reference;
+            }
 
-        return Util::enuniqueUri($url);
+            return (string) UriResolver::resolve(new Uri($base_url), $reference);
+        } catch (\InvalidArgumentException $e) {
+            return $url;
+        }
     }
 }

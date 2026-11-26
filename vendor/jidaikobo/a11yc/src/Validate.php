@@ -16,7 +16,7 @@ class Validate
         return str_replace(array('+', '/', '*', '='), '', base64_encode($html));
     }
 
-    protected static function css($url, ValidationContext $runtime = null)
+    protected static function css($url, ?ValidationContext $runtime = null)
     {
         $ua = $runtime instanceof ValidationContext ? $runtime->userAgent : 'using';
         return CssAnalysis::fetchCss($url, $ua);

@@ -5,7 +5,7 @@ Tags: accessibility, checker, WCAG, JIS X 8341-3
 Requires PHP: 8.3
 Requires at least: 6.0
 Tested up to: 7.1
-Stable tag: 5.3.4
+Stable tag: 5.3.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,6 +33,11 @@ This version focuses on three practical tasks:
 4. Edit a post and save it to run the accessibility check.
 
 == Changelog ==
+
+= 5.3.5 =
+update bundled jidaikobo/a11yc to 7.2.6 with accessibility analysis and relative URL fixes
+update bundled Guzzle to 7.17.0 and related runtime dependencies
+confirm compatibility with WordPress 7.1.5
 
 = 5.3.4 =
 update bundled jidaikobo/a11yc to 7.2.5 with outbound request protection fixes
